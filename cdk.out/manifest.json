@@ -1,0 +1,565 @@
+{
+  "version": "36.0.0",
+  "artifacts": {
+    "IotPipelineStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "IotPipelineStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "IotPipelineStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://008195334540/us-east-1",
+      "properties": {
+        "templateFile": "IotPipelineStack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::008195334540:role/cdk-hnb659fds-deploy-role-008195334540-us-east-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::008195334540:role/cdk-hnb659fds-cfn-exec-role-008195334540-us-east-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-008195334540-us-east-1/780ef0cb356405f9e1f97a09f08c1d1c1ce925e225e2b8ab2009414e48a208f7.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "IotPipelineStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::008195334540:role/cdk-hnb659fds-lookup-role-008195334540-us-east-1",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "IotPipelineStack.assets"
+      ],
+      "metadata": {
+        "/IotPipelineStack/IotDataBucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IotDataBucket90DE0005"
+          }
+        ],
+        "/IotPipelineStack/IotDataBucket/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IotDataBucketPolicyE3EEA0D7"
+          }
+        ],
+        "/IotPipelineStack/IotDataBucket/AutoDeleteObjectsCustomResource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IotDataBucketAutoDeleteObjectsCustomResource9AC837CB"
+          }
+        ],
+        "/IotPipelineStack/IotDataBucket/Notifications/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IotDataBucketNotifications443E0F35"
+          }
+        ],
+        "/IotPipelineStack/IotDataBucket/AllowBucketNotificationsToIotPipelineStackiottriggerpipelineA1C596FC": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IotDataBucketAllowBucketNotificationsToIotPipelineStackiottriggerpipelineA1C596FC14EF044C"
+          }
+        ],
+        "/IotPipelineStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092"
+          }
+        ],
+        "/IotPipelineStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F"
+          }
+        ],
+        "/IotPipelineStack/FileProcessingJobs": [
+          {
+            "type": "aws:cdk:hasPhysicalName",
+            "data": {
+              "Ref": "FileProcessingJobs5B1A1641"
+            }
+          }
+        ],
+        "/IotPipelineStack/FileProcessingJobs/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FileProcessingJobs5B1A1641"
+          }
+        ],
+        "/IotPipelineStack/Notifications/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "Notifications87298708"
+          }
+        ],
+        "/IotPipelineStack/BatchVpc/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BatchVpc4B2AEB5B"
+          }
+        ],
+        "/IotPipelineStack/BatchVpc/PublicSubnet1/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BatchVpcPublicSubnet1Subnet31633A1F"
+          }
+        ],
+        "/IotPipelineStack/BatchVpc/PublicSubnet1/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BatchVpcPublicSubnet1RouteTableF9405838"
+          }
+        ],
+        "/IotPipelineStack/BatchVpc/PublicSubnet1/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BatchVpcPublicSubnet1RouteTableAssociation9973DB5D"
+          }
+        ],
+        "/IotPipelineStack/BatchVpc/PublicSubnet1/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BatchVpcPublicSubnet1DefaultRoute2131DB86"
+          }
+        ],
+        "/IotPipelineStack/BatchVpc/PublicSubnet2/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BatchVpcPublicSubnet2Subnet31AA024F"
+          }
+        ],
+        "/IotPipelineStack/BatchVpc/PublicSubnet2/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BatchVpcPublicSubnet2RouteTableFA91774D"
+          }
+        ],
+        "/IotPipelineStack/BatchVpc/PublicSubnet2/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BatchVpcPublicSubnet2RouteTableAssociation71A8C499"
+          }
+        ],
+        "/IotPipelineStack/BatchVpc/PublicSubnet2/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BatchVpcPublicSubnet2DefaultRoute3C769CCF"
+          }
+        ],
+        "/IotPipelineStack/BatchVpc/IGW": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BatchVpcIGWF728C04F"
+          }
+        ],
+        "/IotPipelineStack/BatchVpc/VPCGW": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BatchVpcVPCGWE0E8C261"
+          }
+        ],
+        "/IotPipelineStack/BatchJobRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BatchJobRole37A83758"
+          }
+        ],
+        "/IotPipelineStack/BatchJobRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BatchJobRoleDefaultPolicy72C1097B"
+          }
+        ],
+        "/IotPipelineStack/ComputeEnv/SecurityGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ComputeEnvSecurityGroup1946AFCC"
+          }
+        ],
+        "/IotPipelineStack/ComputeEnv/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ComputeEnv2C40ACC2"
+          }
+        ],
+        "/IotPipelineStack/JobQueue/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "JobQueueEE3AD499"
+          }
+        ],
+        "/IotPipelineStack/BatchContainer/ExecutionRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BatchContainerExecutionRoleB5A032EF"
+          }
+        ],
+        "/IotPipelineStack/BatchContainer/ExecutionRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BatchContainerExecutionRoleDefaultPolicy757B7694"
+          }
+        ],
+        "/IotPipelineStack/BatchContainer/LogGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BatchContainerLogGroup6D9030F9"
+          }
+        ],
+        "/IotPipelineStack/JobDefinition/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "JobDefinition24FFE3ED"
+          }
+        ],
+        "/IotPipelineStack/iot-presigned-url/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "iotpresignedurlServiceRole829ECD1E"
+          }
+        ],
+        "/IotPipelineStack/iot-presigned-url/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "iotpresignedurlServiceRoleDefaultPolicy36AB3DE5"
+          }
+        ],
+        "/IotPipelineStack/iot-presigned-url/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "iotpresignedurlF8E207F7"
+          }
+        ],
+        "/IotPipelineStack/iot-presigned-url/LogRetention/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "iotpresignedurlLogRetentionCFA0AA8A"
+          }
+        ],
+        "/IotPipelineStack/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB"
+          }
+        ],
+        "/IotPipelineStack/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB"
+          }
+        ],
+        "/IotPipelineStack/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A"
+          }
+        ],
+        "/IotPipelineStack/iot-get-status/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "iotgetstatusServiceRoleCEC5AAFE"
+          }
+        ],
+        "/IotPipelineStack/iot-get-status/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "iotgetstatusServiceRoleDefaultPolicy0703AFAC"
+          }
+        ],
+        "/IotPipelineStack/iot-get-status/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "iotgetstatus1B26DE32"
+          }
+        ],
+        "/IotPipelineStack/iot-get-status/LogRetention/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "iotgetstatusLogRetentionBF410E11"
+          }
+        ],
+        "/IotPipelineStack/iot-trigger-pipeline/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "iottriggerpipelineServiceRole35232E09"
+          }
+        ],
+        "/IotPipelineStack/iot-trigger-pipeline/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "iottriggerpipelineServiceRoleDefaultPolicy0B7F548E"
+          }
+        ],
+        "/IotPipelineStack/iot-trigger-pipeline/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "iottriggerpipeline5F8B4DE7"
+          }
+        ],
+        "/IotPipelineStack/iot-trigger-pipeline/LogRetention/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "iottriggerpipelineLogRetention6494168F"
+          }
+        ],
+        "/IotPipelineStack/iot-save-results/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "iotsaveresultsServiceRoleA6C9563E"
+          }
+        ],
+        "/IotPipelineStack/iot-save-results/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "iotsaveresultsServiceRoleDefaultPolicy5B867393"
+          }
+        ],
+        "/IotPipelineStack/iot-save-results/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "iotsaveresultsF6342EB3"
+          }
+        ],
+        "/IotPipelineStack/iot-save-results/LogRetention/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "iotsaveresultsLogRetention83A7E96A"
+          }
+        ],
+        "/IotPipelineStack/iot-notify/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "iotnotifyServiceRoleF63D016A"
+          }
+        ],
+        "/IotPipelineStack/iot-notify/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "iotnotifyServiceRoleDefaultPolicyCE0C69F3"
+          }
+        ],
+        "/IotPipelineStack/iot-notify/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "iotnotifyEBE4242A"
+          }
+        ],
+        "/IotPipelineStack/iot-notify/LogRetention/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "iotnotifyLogRetention56DA13F0"
+          }
+        ],
+        "/IotPipelineStack/StateMachineLogs/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "StateMachineLogs3CB16D3C"
+          }
+        ],
+        "/IotPipelineStack/Pipeline/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineRoleD68726F7"
+          }
+        ],
+        "/IotPipelineStack/Pipeline/Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineRoleDefaultPolicyC7A05455"
+          }
+        ],
+        "/IotPipelineStack/Pipeline/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineC660917D"
+          }
+        ],
+        "/IotPipelineStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BucketNotificationsHandler050a0587b7544547bf325f094a3db834RoleB6FB88EC"
+          }
+        ],
+        "/IotPipelineStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BucketNotificationsHandler050a0587b7544547bf325f094a3db834RoleDefaultPolicy2CF63D36"
+          }
+        ],
+        "/IotPipelineStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BucketNotificationsHandler050a0587b7544547bf325f094a3db8347ECC3691"
+          }
+        ],
+        "/IotPipelineStack/IotPipelineApi/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IotPipelineApi5220724E"
+          }
+        ],
+        "/IotPipelineStack/IotPipelineApi/CloudWatchRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IotPipelineApiCloudWatchRole001B93A8"
+          }
+        ],
+        "/IotPipelineStack/IotPipelineApi/Account": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IotPipelineApiAccountA52E7C85"
+          }
+        ],
+        "/IotPipelineStack/IotPipelineApi/Deployment/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IotPipelineApiDeployment4395B75De2b3e5ae230df092f29cda2838fed42c"
+          }
+        ],
+        "/IotPipelineStack/IotPipelineApi/DeploymentStage.prod/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IotPipelineApiDeploymentStageprodBCDA6F38"
+          }
+        ],
+        "/IotPipelineStack/IotPipelineApi/Endpoint": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IotPipelineApiEndpointCBFC9BF0"
+          }
+        ],
+        "/IotPipelineStack/IotPipelineApi/Default/OPTIONS/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IotPipelineApiOPTIONSDA76B3A0"
+          }
+        ],
+        "/IotPipelineStack/IotPipelineApi/Default/upload/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IotPipelineApiupload77D8AE2B"
+          }
+        ],
+        "/IotPipelineStack/IotPipelineApi/Default/upload/OPTIONS/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IotPipelineApiuploadOPTIONS48A045C3"
+          }
+        ],
+        "/IotPipelineStack/IotPipelineApi/Default/upload/POST/ApiPermission.IotPipelineStackIotPipelineApi65289365.POST..upload": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IotPipelineApiuploadPOSTApiPermissionIotPipelineStackIotPipelineApi65289365POSTuploadE6AE95FA"
+          }
+        ],
+        "/IotPipelineStack/IotPipelineApi/Default/upload/POST/ApiPermission.Test.IotPipelineStackIotPipelineApi65289365.POST..upload": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IotPipelineApiuploadPOSTApiPermissionTestIotPipelineStackIotPipelineApi65289365POSTupload98BD74BC"
+          }
+        ],
+        "/IotPipelineStack/IotPipelineApi/Default/upload/POST/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IotPipelineApiuploadPOSTABEF0C17"
+          }
+        ],
+        "/IotPipelineStack/IotPipelineApi/Default/status/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IotPipelineApistatus29CE5035"
+          }
+        ],
+        "/IotPipelineStack/IotPipelineApi/Default/status/OPTIONS/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IotPipelineApistatusOPTIONS114A9092"
+          }
+        ],
+        "/IotPipelineStack/IotPipelineApi/Default/status/GET/ApiPermission.IotPipelineStackIotPipelineApi65289365.GET..status": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IotPipelineApistatusGETApiPermissionIotPipelineStackIotPipelineApi65289365GETstatus8781C033"
+          }
+        ],
+        "/IotPipelineStack/IotPipelineApi/Default/status/GET/ApiPermission.Test.IotPipelineStackIotPipelineApi65289365.GET..status": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IotPipelineApistatusGETApiPermissionTestIotPipelineStackIotPipelineApi65289365GETstatusC64E23A6"
+          }
+        ],
+        "/IotPipelineStack/IotPipelineApi/Default/status/GET/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IotPipelineApistatusGETABC6CE85"
+          }
+        ],
+        "/IotPipelineStack/ApiUrl": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiUrl"
+          }
+        ],
+        "/IotPipelineStack/BucketName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BucketName"
+          }
+        ],
+        "/IotPipelineStack/TableName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TableName"
+          }
+        ],
+        "/IotPipelineStack/TopicArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TopicArn"
+          }
+        ],
+        "/IotPipelineStack/StateMachineArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "StateMachineArn"
+          }
+        ],
+        "/IotPipelineStack/JobQueueArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "JobQueueArn"
+          }
+        ],
+        "/IotPipelineStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/IotPipelineStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/IotPipelineStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "IotPipelineStack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}

@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IoT Pipeline Portal — AWS Serverless Demo</title>
+  <style>
+    :root {
+      --bg:        #0D1B2A;
+      --surface:   #1A2B3C;
+      --border:    #243B55;
+      --orange:    #FF9900;
+      --teal:      #00B4D8;
+      --green:     #10B981;
+      --red:       #EF4444;
+      --yellow:    #F59E0B;
+      --text:      #E2E8F0;
+      --muted:     #8BA3BE;
+      --radius:    10px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── Header ──────────────────────────────────────── */
+    header {
+      background: var(--surface);
+      border-bottom: 2px solid var(--orange);
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .logo span { color: var(--orange); }
+    .header-badge {
+      background: rgba(255,153,0,0.12);
+      border: 1px solid var(--orange);
+      color: var(--orange);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── Layout ──────────────────────────────────────── */
+    main {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 24px;
+    }
+
+    /* ── Setup Banner ─────────────────────────────────── */
+    #setup-banner {
+      background: rgba(255,153,0,0.08);
+      border: 1px solid var(--orange);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin-bottom: 28px;
+      display: none;
+    }
+    #setup-banner h3 { color: var(--orange); margin-bottom: 8px; font-size: 14px; }
+    #setup-banner p  { color: var(--muted); font-size: 13px; margin-bottom: 14px; }
+    .api-input-row {
+      display: flex;
+      gap: 10px;
+    }
+    .api-input-row input {
+      flex: 1;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 14px;
+      color: var(--text);
+      font-size: 13px;
+      font-family: 'Consolas', monospace;
+    }
+    .api-input-row input:focus {
+      outline: none;
+      border-color: var(--orange);
+    }
+    .btn-orange {
+      background: var(--orange);
+      color: #000;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 20px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .btn-orange:hover { background: #e88a00; }
+
+    /* ── Upload Area ─────────────────────────────────── */
+    .upload-card {
+      background: var(--surface);
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 40px 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      margin-bottom: 32px;
+      position: relative;
+    }
+    .upload-card.dragover {
+      border-color: var(--orange);
+      background: rgba(255,153,0,0.05);
+    }
+    .upload-icon {
+      font-size: 42px;
+      margin-bottom: 12px;
+    }
+    .upload-card h2 {
+      font-size: 18px;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .upload-card p {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+    #file-input { display: none; }
+
+    .upload-progress {
+      display: none;
+      margin-top: 16px;
+    }
+    .progress-bar-wrap {
+      background: var(--bg);
+      border-radius: 4px;
+      height: 6px;
+      overflow: hidden;
+      margin-bottom: 6px;
+    }
+    .progress-bar {
+      height: 100%;
+      background: var(--orange);
+      width: 0%;
+      transition: width 0.3s;
+    }
+    .progress-label {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* ── Stats Row ────────────────────────────────────── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+    }
+    .stat-label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-bottom: 6px;
+    }
+    .stat-value {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .stat-value.orange { color: var(--orange); }
+    .stat-value.yellow { color: var(--yellow); }
+    .stat-value.green  { color: var(--green);  }
+    .stat-value.teal   { color: var(--teal);   }
+
+    /* ── Jobs Table ──────────────────────────────────── */
+    .table-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .table-header h3 {
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .refresh-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .dot-pulse {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+    .dot-pulse.active { animation: pulse 1.2s infinite; }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--surface);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    thead th {
+      background: rgba(0,0,0,0.3);
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+    tbody tr {
+      border-top: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+    tbody tr:hover { background: rgba(255,153,0,0.04); }
+    tbody td {
+      padding: 14px 16px;
+      font-size: 13px;
+      vertical-align: middle;
+    }
+    .file-name {
+      font-weight: 600;
+      color: var(--text);
+      max-width: 220px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .file-size { color: var(--muted); font-size: 12px; }
+
+    /* Status badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
+    .badge-pending {
+      background: rgba(245,158,11,0.15);
+      color: var(--yellow);
+      border: 1px solid rgba(245,158,11,0.3);
+    }
+    .badge-processing {
+      background: rgba(0,180,216,0.15);
+      color: var(--teal);
+      border: 1px solid rgba(0,180,216,0.3);
+    }
+    .badge-processed {
+      background: rgba(16,185,129,0.15);
+      color: var(--green);
+      border: 1px solid rgba(16,185,129,0.3);
+    }
+    .badge-failed {
+      background: rgba(239,68,68,0.15);
+      color: var(--red);
+      border: 1px solid rgba(239,68,68,0.3);
+    }
+    .badge-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+    .badge-processing .badge-dot { animation: pulse 1s infinite; }
+
+    .metric { color: var(--text); font-family: 'Consolas', monospace; font-size: 12px; }
+    .metric-na { color: var(--border); }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+    }
+    .empty-state .icon { font-size: 40px; margin-bottom: 12px; }
+    .empty-state p { font-size: 14px; }
+
+    /* ── Footer ──────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 32px;
+      color: var(--muted);
+      font-size: 12px;
+      border-top: 1px solid var(--border);
+      margin-top: 48px;
+    }
+    footer span { color: var(--orange); }
+
+    /* ── Toast ───────────────────────────────────────── */
+    #toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 999;
+    }
+    .toast {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--green);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 13px;
+      min-width: 280px;
+      animation: slide-in 0.3s ease;
+    }
+    .toast.error { border-left-color: var(--red); }
+    .toast.info  { border-left-color: var(--teal); }
+    @keyframes slide-in {
+      from { transform: translateX(100%); opacity: 0; }
+      to   { transform: translateX(0);   opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+      <rect width="32" height="32" rx="6" fill="#FF9900"/>
+      <path d="M8 22 L16 10 L24 22 M11 18 L21 18" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    IoT Pipeline <span>Portal</span>
+  </div>
+  <div class="header-badge">AWS SERVERLESS DEMO</div>
+</header>
+
+<main>
+
+  <!-- Setup Banner (aparece quando config.json não existe) -->
+  <div id="setup-banner">
+    <h3>⚙️ Configuração necessária</h3>
+    <p>Cole a URL da API Gateway gerada pelo <code>cdk deploy</code>.</p>
+    <div class="api-input-row">
+      <input type="text" id="api-url-input" placeholder="https://xxxxxxx.execute-api.us-east-1.amazonaws.com/prod" />
+      <button class="btn-orange" onclick="saveApiUrl()">Salvar</button>
+    </div>
+  </div>
+
+  <!-- Upload Area -->
+  <div class="upload-card" id="drop-zone">
+    <div class="upload-icon">📂</div>
+    <h2>Upload de Arquivo CSV</h2>
+    <p>Arraste e solte um arquivo CSV de sensores IoT ou clique para selecionar</p>
+    <button class="btn-orange" onclick="document.getElementById('file-input').click()">
+      Selecionar arquivo
+    </button>
+    <input type="file" id="file-input" accept=".csv" />
+
+    <div class="upload-progress" id="upload-progress">
+      <div class="progress-bar-wrap">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+      <div class="progress-label" id="progress-label">Preparando upload...</div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-label">Total de Jobs</div>
+      <div class="stat-value orange" id="stat-total">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Pendente / Processando</div>
+      <div class="stat-value yellow" id="stat-pending">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Processados</div>
+      <div class="stat-value green" id="stat-processed">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Registros Totais</div>
+      <div class="stat-value teal" id="stat-records">—</div>
+    </div>
+  </div>
+
+  <!-- Jobs Table -->
+  <div class="table-header">
+    <h3>Jobs de Processamento</h3>
+    <div class="refresh-indicator">
+      <div class="dot-pulse" id="poll-dot"></div>
+      <span id="poll-label">Conectando...</span>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Arquivo</th>
+        <th>Tamanho</th>
+        <th>Upload</th>
+        <th>Status</th>
+        <th>Registros</th>
+        <th>Anomalias</th>
+        <th>Tempo Batch</th>
+      </tr>
+    </thead>
+    <tbody id="jobs-tbody">
+      <tr>
+        <td colspan="7">
+          <div class="empty-state">
+            <div class="icon">🚀</div>
+            <p>Nenhum job ainda. Faça upload de um CSV para começar.</p>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</main>
+
+<footer>
+  <p>
+    <span>IoT Pipeline</span> · AWS Lambda · AWS Batch · Step Functions · DynamoDB · API Gateway
+    · CDK Python
+  </p>
+</footer>
+
+<div id="toast-container"></div>
+
+<script>
+  // ── Config ─────────────────────────────────────────────────────
+  let API_URL = '';
+  let pollInterval = null;
+
+  async function loadConfig() {
+    try {
+      // Tenta carregar config.json gerado pelo `cdk deploy --outputs-file frontend/config.json`
+      const cfg = await fetch('./config.json').then(r => {
+        if (!r.ok) throw new Error('not found');
+        return r.json();
+      });
+      const stack = cfg['IotPipelineStack'] || Object.values(cfg)[0] || {};
+      API_URL = (stack['ApiUrl'] || stack['IotPipelineApiUrl'] || '').replace(/\/$/, '');
+    } catch {
+      // Fallback: localStorage (usuário digitou manualmente)
+      API_URL = localStorage.getItem('iot_api_url') || '';
+    }
+
+    if (!API_URL) {
+      document.getElementById('setup-banner').style.display = 'block';
+    } else {
+      startPolling();
+    }
+  }
+
+  function saveApiUrl() {
+    const input = document.getElementById('api-url-input').value.trim().replace(/\/$/, '');
+    if (!input.startsWith('http')) {
+      toast('URL inválida. Use o formato: https://...', 'error');
+      return;
+    }
+    API_URL = input;
+    localStorage.setItem('iot_api_url', API_URL);
+    document.getElementById('setup-banner').style.display = 'none';
+    toast('API URL configurada com sucesso!', 'success');
+    startPolling();
+  }
+
+  // ── Upload ─────────────────────────────────────────────────────
+  const dropZone  = document.getElementById('drop-zone');
+  const fileInput = document.getElementById('file-input');
+
+  dropZone.addEventListener('dragover', e => {
+    e.preventDefault();
+    dropZone.classList.add('dragover');
+  });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
+    const file = e.dataTransfer.files[0];
+    if (file) uploadFile(file);
+  });
+  fileInput.addEventListener('change', () => {
+    if (fileInput.files[0]) uploadFile(fileInput.files[0]);
+  });
+
+  async function uploadFile(file) {
+    if (!API_URL) {
+      document.getElementById('setup-banner').style.display = 'block';
+      toast('Configure a API URL primeiro.', 'error');
+      return;
+    }
+    if (!file.name.toLowerCase().endsWith('.csv')) {
+      toast('Apenas arquivos .csv são suportados.', 'error');
+      return;
+    }
+
+    showProgress(true, 'Obtendo URL de upload...');
+    setProgress(10);
+
+    try {
+      // 1. Solicita presigned URL
+      const res = await fetch(`${API_URL}/upload`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ file_name: file.name, file_size: file.size }),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const { upload_url, job_id } = await res.json();
+
+      setProgress(20, `Enviando ${formatBytes(file.size)} para o S3...`);
+
+      // 2. PUT direto no S3 com presigned URL (sem passar pelo Lambda/API)
+      const xhr = new XMLHttpRequest();
+      xhr.upload.onprogress = e => {
+        if (e.lengthComputable) {
+          const pct = Math.round((e.loaded / e.total) * 70) + 20;
+          setProgress(pct, `Enviando... ${formatBytes(e.loaded)} / ${formatBytes(e.total)}`);
+        }
+      };
+      await new Promise((resolve, reject) => {
+        xhr.onload = () => xhr.status === 200 ? resolve() : reject(new Error(`S3 ${xhr.status}`));
+        xhr.onerror = reject;
+        xhr.open('PUT', upload_url);
+        xhr.setRequestHeader('Content-Type', 'text/csv');
+        xhr.send(file);
+      });
+
+      setProgress(100, 'Upload concluído! Pipeline iniciado...');
+      toast(`✅ ${file.name} enviado. Pipeline em execução!`, 'success');
+
+      // Aguarda 1s e recarrega a tabela
+      await new Promise(r => setTimeout(r, 1000));
+      showProgress(false);
+      fileInput.value = '';
+      await fetchStatus();
+
+    } catch (err) {
+      console.error(err);
+      showProgress(false);
+      toast(`Erro no upload: ${err.message}`, 'error');
+    }
+  }
+
+  function showProgress(visible, label = '') {
+    const el = document.getElementById('upload-progress');
+    el.style.display = visible ? 'block' : 'none';
+    if (label) document.getElementById('progress-label').textContent = label;
+  }
+  function setProgress(pct, label = '') {
+    document.getElementById('progress-bar').style.width = `${pct}%`;
+    if (label) document.getElementById('progress-label').textContent = label;
+  }
+
+  // ── Status Polling ─────────────────────────────────────────────
+  function startPolling() {
+    fetchStatus();
+    if (pollInterval) clearInterval(pollInterval);
+    pollInterval = setInterval(fetchStatus, 3000);
+  }
+
+  async function fetchStatus() {
+    if (!API_URL) return;
+    try {
+      const res = await fetch(`${API_URL}/status`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const { jobs } = await res.json();
+      renderTable(jobs);
+      updateStats(jobs);
+      updatePollIndicator(jobs);
+    } catch (err) {
+      console.error('[poll]', err);
+      document.getElementById('poll-label').textContent = 'Erro ao conectar';
+    }
+  }
+
+  function updatePollIndicator(jobs) {
+    const hasPending = jobs.some(j => ['PENDING','PROCESSING'].includes(j.status));
+    const dot   = document.getElementById('poll-dot');
+    const label = document.getElementById('poll-label');
+    dot.classList.toggle('active', hasPending);
+    label.textContent = hasPending ? 'Monitorando...' : 'Atualizado';
+  }
+
+  // ── Table Rendering ────────────────────────────────────────────
+  function renderTable(jobs) {
+    const tbody = document.getElementById('jobs-tbody');
+    if (!jobs || jobs.length === 0) {
+      tbody.innerHTML = `
+        <tr><td colspan="7">
+          <div class="empty-state">
+            <div class="icon">🚀</div>
+            <p>Nenhum job ainda. Faça upload de um CSV para começar.</p>
+          </div>
+        </td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = jobs.map(job => {
+      const badge     = statusBadge(job.status);
+      const size      = job.file_size ? formatBytes(Number(job.file_size)) : '—';
+      const uploaded  = job.uploaded_at ? formatDate(job.uploaded_at) : '—';
+      const records   = job.records_processed != null
+        ? `<span class="metric">${Number(job.records_processed).toLocaleString('pt-BR')}</span>` : '<span class="metric-na">—</span>';
+      const anomalies = job.anomalies_detected != null
+        ? `<span class="metric">${Number(job.anomalies_detected).toLocaleString('pt-BR')}</span>` : '<span class="metric-na">—</span>';
+      const time      = job.processing_time_seconds != null
+        ? `<span class="metric">${Number(job.processing_time_seconds).toFixed(1)}s</span>` : '<span class="metric-na">—</span>';
+
+      return `<tr>
+        <td><div class="file-name" title="${esc(job.file_name)}">${esc(job.file_name)}</div></td>
+        <td class="file-size">${size}</td>
+        <td style="color:var(--muted);font-size:12px">${uploaded}</td>
+        <td>${badge}</td>
+        <td>${records}</td>
+        <td>${anomalies}</td>
+        <td>${time}</td>
+      </tr>`;
+    }).join('');
+  }
+
+  function updateStats(jobs) {
+    const pending   = jobs.filter(j => ['PENDING','PROCESSING'].includes(j.status)).length;
+    const processed = jobs.filter(j => j.status === 'PROCESSED').length;
+    const totalRec  = jobs.reduce((s, j) => s + Number(j.records_processed || 0), 0);
+
+    document.getElementById('stat-total').textContent     = jobs.length;
+    document.getElementById('stat-pending').textContent   = pending;
+    document.getElementById('stat-processed').textContent = processed;
+    document.getElementById('stat-records').textContent   =
+      totalRec > 0 ? totalRec.toLocaleString('pt-BR') : '—';
+  }
+
+  function statusBadge(status) {
+    const map = {
+      PENDING:    ['badge-pending',    '🟡', 'Pendente'],
+      PROCESSING: ['badge-processing', '🔵', 'Processando'],
+      PROCESSED:  ['badge-processed',  '🟢', 'Processado'],
+      FAILED:     ['badge-failed',     '🔴', 'Falha'],
+    };
+    const [cls, , label] = map[status] || ['badge-pending', '⚪', status];
+    return `<span class="badge ${cls}"><span class="badge-dot"></span>${label}</span>`;
+  }
+
+  // ── Utils ──────────────────────────────────────────────────────
+  function formatBytes(bytes) {
+    if (bytes === 0) return '0 B';
+    const k = 1024, sizes = ['B','KB','MB','GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return `${(bytes / Math.pow(k, i)).toFixed(1)} ${sizes[i]}`;
+  }
+  function formatDate(iso) {
+    try {
+      return new Date(iso).toLocaleString('pt-BR', {
+        day:'2-digit', month:'2-digit',
+        hour:'2-digit', minute:'2-digit',
+      });
+    } catch { return iso; }
+  }
+  function esc(str) {
+    return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function toast(msg, type = 'success') {
+    const el = document.createElement('div');
+    el.className = `toast ${type === 'error' ? 'error' : type === 'info' ? 'info' : ''}`;
+    el.textContent = msg;
+    document.getElementById('toast-container').appendChild(el);
+    setTimeout(() => el.remove(), 4000);
+  }
+
+  // ── Init ───────────────────────────────────────────────────────
+  loadConfig();
+</script>
+</body>
+</html>
