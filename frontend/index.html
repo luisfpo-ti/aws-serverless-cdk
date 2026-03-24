@@ -456,6 +456,9 @@
   // ── Config ─────────────────────────────────────────────────────
   let API_URL = '';
   let pollInterval = null;
+  // Jobs cujo upload falhou no browser — ficam órfãos no DynamoDB como PENDING
+  // Ocultamos da tabela para não confundir até que o usuário recarregue a página
+  const pendingCleanup = new Set();
 
   async function loadConfig() {
     // Prioridade 1: config.json gerado por `cdk deploy` ou pelo build do Amplify (via env var API_URL)
@@ -524,15 +527,20 @@
     showProgress(true, 'Obtendo URL de upload...');
     setProgress(10);
 
+    let job_id = null;
+
     try {
       // 1. Solicita presigned URL via API Gateway → Lambda
+      // (já cria o registro no DynamoDB como PENDING)
       const res = await fetch(`${API_URL}/upload`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ file_name: file.name, file_size: file.size }),
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const { upload_url } = await res.json();
+      const data = await res.json();
+      job_id = data.job_id;
+      const upload_url = data.upload_url;
 
       setProgress(20, `Enviando ${formatBytes(file.size)} para o S3...`);
 
@@ -545,10 +553,9 @@
         }
       };
       await new Promise((resolve, reject) => {
-        xhr.onload = () => xhr.status === 200 ? resolve() : reject(new Error(`S3 ${xhr.status}`));
-        xhr.onerror = reject;
+        xhr.onload = () => xhr.status === 200 ? resolve() : reject(new Error(`Falha no upload S3 (status ${xhr.status}). Verifique o CORS do bucket.`));
+        xhr.onerror = () => reject(new Error('Erro de rede ao enviar para S3. Possível problema de CORS.'));
         xhr.open('PUT', upload_url);
-        xhr.setRequestHeader('Content-Type', 'text/csv');
         xhr.send(file);
       });
 
@@ -563,7 +570,16 @@
     } catch (err) {
       console.error(err);
       showProgress(false);
-      toast(`Erro no upload: ${err.message}`, 'error');
+
+      // Se o S3 falhou mas o job_id já foi criado, marca como UPLOAD_FAILED localmente
+      // para não deixar o usuário confuso com um job "Pendente" que nunca vai processar
+      if (job_id) {
+        toast(`❌ Upload falhou — job ${job_id.slice(0,8)}... removido da fila. Tente novamente.`, 'error');
+        // Remove o job órfão da view local até o próximo poll
+        pendingCleanup.add(job_id);
+      } else {
+        toast(`Erro no upload: ${err.message}`, 'error');
+      }
     }
   }
 
@@ -611,6 +627,20 @@
   function renderTable(jobs) {
     const tbody = document.getElementById('jobs-tbody');
     if (!jobs || jobs.length === 0) {
+      tbody.innerHTML = `
+        <tr><td colspan="9">
+          <div class="empty-state">
+            <div class="icon">🏦</div>
+            <p>Nenhuma conciliação ainda. Faça upload de um extrato CSV para começar.</p>
+          </div>
+        </td></tr>`;
+      return;
+    }
+
+    // Oculta jobs órfãos (upload falhou no browser — arquivo nunca chegou ao S3)
+    jobs = jobs.filter(j => !pendingCleanup.has(j.job_id));
+
+    if (!jobs.length) {
       tbody.innerHTML = `
         <tr><td colspan="9">
           <div class="empty-state">
