@@ -210,7 +210,7 @@
    "Type": "AWS::Lambda::Function",
    "Properties": {
     "Code": {
-     "S3Bucket": "cdk-hnb659fds-assets-008195334540-us-east-1",
+     "S3Bucket": "cdk-hnb659fds-assets-008195334540-us-east-2",
      "S3Key": "b7f33614a69548d6bafe224d751a7ef238cde19097415e553fe8b63a4c8fd8a6.zip"
     },
     "Timeout": 900,
@@ -299,7 +299,7 @@
   "BatchVpcPublicSubnet1Subnet31633A1F": {
    "Type": "AWS::EC2::Subnet",
    "Properties": {
-    "AvailabilityZone": "us-east-1a",
+    "AvailabilityZone": "us-east-2a",
     "CidrBlock": "10.0.0.0/24",
     "MapPublicIpOnLaunch": true,
     "Tags": [
@@ -376,7 +376,7 @@
   "BatchVpcPublicSubnet2Subnet31AA024F": {
    "Type": "AWS::EC2::Subnet",
    "Properties": {
-    "AvailabilityZone": "us-east-1b",
+    "AvailabilityZone": "us-east-2b",
     "CidrBlock": "10.0.1.0/24",
     "MapPublicIpOnLaunch": true,
     "Tags": [
@@ -700,7 +700,7 @@
         "ecr:GetDownloadUrlForLayer"
        ],
        "Effect": "Allow",
-       "Resource": "arn:aws:ecr:us-east-1:008195334540:repository/cdk-hnb659fds-container-assets-008195334540-us-east-1"
+       "Resource": "arn:aws:ecr:us-east-2:008195334540:repository/cdk-hnb659fds-container-assets-008195334540-us-east-2"
       },
       {
        "Action": "ecr:GetAuthorizationToken",
@@ -752,7 +752,7 @@
      },
      "FargatePlatformConfiguration": {},
      "Image": {
-      "Fn::Sub": "008195334540.dkr.ecr.us-east-1.${AWS::URLSuffix}/cdk-hnb659fds-container-assets-008195334540-us-east-1:66d4e86b39e8930ad587f9638673d336013fe452ba159f0afa364a3e38a92d1d"
+      "Fn::Sub": "008195334540.dkr.ecr.us-east-2.${AWS::URLSuffix}/cdk-hnb659fds-container-assets-008195334540-us-east-2:66d4e86b39e8930ad587f9638673d336013fe452ba159f0afa364a3e38a92d1d"
      },
      "JobRoleArn": {
       "Fn::GetAtt": [
@@ -767,7 +767,7 @@
         "Ref": "BatchContainerLogGroup6D9030F9"
        },
        "awslogs-stream-prefix": "iot-batch",
-       "awslogs-region": "us-east-1"
+       "awslogs-region": "us-east-2"
       }
      },
      "NetworkConfiguration": {
@@ -908,7 +908,7 @@
    "Type": "AWS::Lambda::Function",
    "Properties": {
     "Code": {
-     "S3Bucket": "cdk-hnb659fds-assets-008195334540-us-east-1",
+     "S3Bucket": "cdk-hnb659fds-assets-008195334540-us-east-2",
      "S3Key": "962e87d7a8093d85cdf21c0b3be93e650d41743c4d7fce05221199f7c45787de.zip"
     },
     "Environment": {
@@ -1040,7 +1040,7 @@
     "Runtime": "nodejs18.x",
     "Timeout": 900,
     "Code": {
-     "S3Bucket": "cdk-hnb659fds-assets-008195334540-us-east-1",
+     "S3Bucket": "cdk-hnb659fds-assets-008195334540-us-east-2",
      "S3Key": "4e26bf2d0a26f2097fb2b261f22bb51e3f6b4b52635777b1e54edbd8e2d58c35.zip"
     },
     "Role": {
@@ -1150,7 +1150,7 @@
    "Type": "AWS::Lambda::Function",
    "Properties": {
     "Code": {
-     "S3Bucket": "cdk-hnb659fds-assets-008195334540-us-east-1",
+     "S3Bucket": "cdk-hnb659fds-assets-008195334540-us-east-2",
      "S3Key": "a8d0e2e988699bdcd6db5295b9abd1c323563722e7a7bdccdf591b27b86a2eb4.zip"
     },
     "Environment": {
@@ -1304,7 +1304,7 @@
    "Type": "AWS::Lambda::Function",
    "Properties": {
     "Code": {
-     "S3Bucket": "cdk-hnb659fds-assets-008195334540-us-east-1",
+     "S3Bucket": "cdk-hnb659fds-assets-008195334540-us-east-2",
      "S3Key": "5fca89dcd2b5519d662d6058d3f3ee25d9804cbc52672040a6db4ec21655b7d0.zip"
     },
     "Environment": {
@@ -1454,7 +1454,7 @@
    "Type": "AWS::Lambda::Function",
    "Properties": {
     "Code": {
-     "S3Bucket": "cdk-hnb659fds-assets-008195334540-us-east-1",
+     "S3Bucket": "cdk-hnb659fds-assets-008195334540-us-east-2",
      "S3Key": "746be93931189a37b9c146649a3a7067f5dea41205b5b45d4d21a7c9df45f40e.zip"
     },
     "Environment": {
@@ -1611,7 +1611,7 @@
    "Type": "AWS::Lambda::Function",
    "Properties": {
     "Code": {
-     "S3Bucket": "cdk-hnb659fds-assets-008195334540-us-east-1",
+     "S3Bucket": "cdk-hnb659fds-assets-008195334540-us-east-2",
      "S3Key": "2a5f361471f4561c99ac3cff9b819207b91ccd83bdaca78c10c31ddb39117108.zip"
     },
     "Environment": {
@@ -1695,7 +1695,7 @@
        "Action": "sts:AssumeRole",
        "Effect": "Allow",
        "Principal": {
-        "Service": "states.us-east-1.amazonaws.com"
+        "Service": "states.us-east-2.amazonaws.com"
        }
       }
      ],
@@ -1716,6 +1716,9 @@
         "batch:DescribeJobs",
         "batch:SubmitJob",
         "batch:TerminateJob",
+        "events:DescribeRule",
+        "events:PutRule",
+        "events:PutTargets",
         "logs:CreateLogDelivery",
         "logs:DeleteLogDelivery",
         "logs:DescribeLogGroups",
@@ -1777,15 +1780,6 @@
          ]
         }
        ]
-      },
-      {
-       "Action": [
-        "events:DescribeRule",
-        "events:PutRule",
-        "events:PutTargets"
-       ],
-       "Effect": "Allow",
-       "Resource": "arn:aws:events:us-east-1:008195334540:rule/StepFunctionsGetEventsForBatchJobsRule"
       }
      ],
      "Version": "2012-10-17"
@@ -1805,8 +1799,8 @@
    "Type": "AWS::StepFunctions::StateMachine",
    "Properties": {
     "DefinitionS3Location": {
-     "Bucket": "cdk-hnb659fds-assets-008195334540-us-east-1",
-     "Key": "a7b518bb491a1124b3a1dc337a546d76d7e5fda13c44bb87b0516c2ea7ebaaf6.json"
+     "Bucket": "cdk-hnb659fds-assets-008195334540-us-east-2",
+     "Key": "e31330d4b722f4de8f8767b1f289953815e4ba3803cdd63f0c4b8962838d452a.json"
     },
     "DefinitionSubstitutions": {
      "SaveResultsFunctionArn": {
@@ -2017,7 +2011,7 @@
     "aws:cdk:path": "IotPipelineStack/IotPipelineApi/Account"
    }
   },
-  "IotPipelineApiDeployment4395B75De2b3e5ae230df092f29cda2838fed42c": {
+  "IotPipelineApiDeployment4395B75D721193c61c9a67cd465637921ebb65f1": {
    "Type": "AWS::ApiGateway::Deployment",
    "Properties": {
     "Description": "API Gateway do Portal de Processamento IoT — Demo Serverless AWS",
@@ -2042,7 +2036,7 @@
    "Type": "AWS::ApiGateway::Stage",
    "Properties": {
     "DeploymentId": {
-     "Ref": "IotPipelineApiDeployment4395B75De2b3e5ae230df092f29cda2838fed42c"
+     "Ref": "IotPipelineApiDeployment4395B75D721193c61c9a67cd465637921ebb65f1"
     },
     "MethodSettings": [
      {
@@ -2188,7 +2182,7 @@
      "Fn::Join": [
       "",
       [
-       "arn:aws:execute-api:us-east-1:008195334540:",
+       "arn:aws:execute-api:us-east-2:008195334540:",
        {
         "Ref": "IotPipelineApi5220724E"
        },
@@ -2220,7 +2214,7 @@
      "Fn::Join": [
       "",
       [
-       "arn:aws:execute-api:us-east-1:008195334540:",
+       "arn:aws:execute-api:us-east-2:008195334540:",
        {
         "Ref": "IotPipelineApi5220724E"
        },
@@ -2245,7 +2239,7 @@
       "Fn::Join": [
        "",
        [
-        "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/",
+        "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/",
         {
          "Fn::GetAtt": [
           "iotpresignedurlF8E207F7",
@@ -2355,7 +2349,7 @@
      "Fn::Join": [
       "",
       [
-       "arn:aws:execute-api:us-east-1:008195334540:",
+       "arn:aws:execute-api:us-east-2:008195334540:",
        {
         "Ref": "IotPipelineApi5220724E"
        },
@@ -2387,7 +2381,7 @@
      "Fn::Join": [
       "",
       [
-       "arn:aws:execute-api:us-east-1:008195334540:",
+       "arn:aws:execute-api:us-east-2:008195334540:",
        {
         "Ref": "IotPipelineApi5220724E"
        },
@@ -2412,7 +2406,7 @@
       "Fn::Join": [
        "",
        [
-        "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/",
+        "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/",
         {
          "Fn::GetAtt": [
           "iotgetstatus1B26DE32",
@@ -2460,7 +2454,7 @@
       {
        "Ref": "IotPipelineApi5220724E"
       },
-      ".execute-api.us-east-1.",
+      ".execute-api.us-east-2.",
       {
        "Ref": "AWS::URLSuffix"
       },
@@ -2483,7 +2477,7 @@
       {
        "Ref": "IotPipelineApi5220724E"
       },
-      ".execute-api.us-east-1.",
+      ".execute-api.us-east-2.",
       {
        "Ref": "AWS::URLSuffix"
       },

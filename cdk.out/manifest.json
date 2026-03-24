@@ -1,559 +1,475 @@
 {
   "version": "36.0.0",
   "artifacts": {
-    "IotPipelineStack.assets": {
+    "BankReconciliationStack.assets": {
       "type": "cdk:asset-manifest",
       "properties": {
-        "file": "IotPipelineStack.assets.json",
+        "file": "BankReconciliationStack.assets.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
       }
     },
-    "IotPipelineStack": {
+    "BankReconciliationStack": {
       "type": "aws:cloudformation:stack",
-      "environment": "aws://008195334540/us-east-1",
+      "environment": "aws://008195334540/us-east-2",
       "properties": {
-        "templateFile": "IotPipelineStack.template.json",
+        "templateFile": "BankReconciliationStack.template.json",
         "terminationProtection": false,
         "validateOnSynth": false,
-        "assumeRoleArn": "arn:${AWS::Partition}:iam::008195334540:role/cdk-hnb659fds-deploy-role-008195334540-us-east-1",
-        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::008195334540:role/cdk-hnb659fds-cfn-exec-role-008195334540-us-east-1",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-008195334540-us-east-1/780ef0cb356405f9e1f97a09f08c1d1c1ce925e225e2b8ab2009414e48a208f7.json",
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::008195334540:role/cdk-hnb659fds-deploy-role-008195334540-us-east-2",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::008195334540:role/cdk-hnb659fds-cfn-exec-role-008195334540-us-east-2",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-008195334540-us-east-2/363388cbcbcf99073e2ba1503dd5c24725bf51fb525cbf8f635e938ddb81d333.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
-          "IotPipelineStack.assets"
+          "BankReconciliationStack.assets"
         ],
         "lookupRole": {
-          "arn": "arn:${AWS::Partition}:iam::008195334540:role/cdk-hnb659fds-lookup-role-008195334540-us-east-1",
+          "arn": "arn:${AWS::Partition}:iam::008195334540:role/cdk-hnb659fds-lookup-role-008195334540-us-east-2",
           "requiresBootstrapStackVersion": 8,
           "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
         }
       },
       "dependencies": [
-        "IotPipelineStack.assets"
+        "BankReconciliationStack.assets"
       ],
       "metadata": {
-        "/IotPipelineStack/IotDataBucket/Resource": [
+        "/BankReconciliationStack/ExtratoBucket/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "IotDataBucket90DE0005"
+            "data": "ExtratoBucket258726BD"
           }
         ],
-        "/IotPipelineStack/IotDataBucket/Policy/Resource": [
+        "/BankReconciliationStack/ExtratoBucket/Policy/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "IotDataBucketPolicyE3EEA0D7"
+            "data": "ExtratoBucketPolicy73FA21C0"
           }
         ],
-        "/IotPipelineStack/IotDataBucket/AutoDeleteObjectsCustomResource/Default": [
+        "/BankReconciliationStack/ExtratoBucket/AutoDeleteObjectsCustomResource/Default": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "IotDataBucketAutoDeleteObjectsCustomResource9AC837CB"
+            "data": "ExtratoBucketAutoDeleteObjectsCustomResource18D9E140"
           }
         ],
-        "/IotPipelineStack/IotDataBucket/Notifications/Resource": [
+        "/BankReconciliationStack/ExtratoBucket/Notifications/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "IotDataBucketNotifications443E0F35"
+            "data": "ExtratoBucketNotificationsC7129835"
           }
         ],
-        "/IotPipelineStack/IotDataBucket/AllowBucketNotificationsToIotPipelineStackiottriggerpipelineA1C596FC": [
+        "/BankReconciliationStack/ExtratoBucket/AllowBucketNotificationsToBankReconciliationStackrecontriggerpipeline50439745": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "IotDataBucketAllowBucketNotificationsToIotPipelineStackiottriggerpipelineA1C596FC14EF044C"
+            "data": "ExtratoBucketAllowBucketNotificationsToBankReconciliationStackrecontriggerpipeline50439745347F7920"
           }
         ],
-        "/IotPipelineStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role": [
+        "/BankReconciliationStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role": [
           {
             "type": "aws:cdk:logicalId",
             "data": "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092"
           }
         ],
-        "/IotPipelineStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler": [
+        "/BankReconciliationStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler": [
           {
             "type": "aws:cdk:logicalId",
             "data": "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F"
           }
         ],
-        "/IotPipelineStack/FileProcessingJobs": [
+        "/BankReconciliationStack/ConciliacaoJobs": [
           {
             "type": "aws:cdk:hasPhysicalName",
             "data": {
-              "Ref": "FileProcessingJobs5B1A1641"
+              "Ref": "ConciliacaoJobs119D6557"
             }
           }
         ],
-        "/IotPipelineStack/FileProcessingJobs/Resource": [
+        "/BankReconciliationStack/ConciliacaoJobs/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "FileProcessingJobs5B1A1641"
+            "data": "ConciliacaoJobs119D6557"
           }
         ],
-        "/IotPipelineStack/Notifications/Resource": [
+        "/BankReconciliationStack/Notifications/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "Notifications87298708"
           }
         ],
-        "/IotPipelineStack/BatchVpc/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "BatchVpc4B2AEB5B"
-          }
-        ],
-        "/IotPipelineStack/BatchVpc/PublicSubnet1/Subnet": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "BatchVpcPublicSubnet1Subnet31633A1F"
-          }
-        ],
-        "/IotPipelineStack/BatchVpc/PublicSubnet1/RouteTable": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "BatchVpcPublicSubnet1RouteTableF9405838"
-          }
-        ],
-        "/IotPipelineStack/BatchVpc/PublicSubnet1/RouteTableAssociation": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "BatchVpcPublicSubnet1RouteTableAssociation9973DB5D"
-          }
-        ],
-        "/IotPipelineStack/BatchVpc/PublicSubnet1/DefaultRoute": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "BatchVpcPublicSubnet1DefaultRoute2131DB86"
-          }
-        ],
-        "/IotPipelineStack/BatchVpc/PublicSubnet2/Subnet": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "BatchVpcPublicSubnet2Subnet31AA024F"
-          }
-        ],
-        "/IotPipelineStack/BatchVpc/PublicSubnet2/RouteTable": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "BatchVpcPublicSubnet2RouteTableFA91774D"
-          }
-        ],
-        "/IotPipelineStack/BatchVpc/PublicSubnet2/RouteTableAssociation": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "BatchVpcPublicSubnet2RouteTableAssociation71A8C499"
-          }
-        ],
-        "/IotPipelineStack/BatchVpc/PublicSubnet2/DefaultRoute": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "BatchVpcPublicSubnet2DefaultRoute3C769CCF"
-          }
-        ],
-        "/IotPipelineStack/BatchVpc/IGW": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "BatchVpcIGWF728C04F"
-          }
-        ],
-        "/IotPipelineStack/BatchVpc/VPCGW": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "BatchVpcVPCGWE0E8C261"
-          }
-        ],
-        "/IotPipelineStack/BatchJobRole/Resource": [
+        "/BankReconciliationStack/BatchJobRole/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "BatchJobRole37A83758"
           }
         ],
-        "/IotPipelineStack/BatchJobRole/DefaultPolicy/Resource": [
+        "/BankReconciliationStack/BatchJobRole/DefaultPolicy/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "BatchJobRoleDefaultPolicy72C1097B"
           }
         ],
-        "/IotPipelineStack/ComputeEnv/SecurityGroup/Resource": [
+        "/BankReconciliationStack/ComputeEnv/SecurityGroup/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "ComputeEnvSecurityGroup1946AFCC"
           }
         ],
-        "/IotPipelineStack/ComputeEnv/Resource": [
+        "/BankReconciliationStack/ComputeEnv/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "ComputeEnv2C40ACC2"
           }
         ],
-        "/IotPipelineStack/JobQueue/Resource": [
+        "/BankReconciliationStack/JobQueue/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "JobQueueEE3AD499"
           }
         ],
-        "/IotPipelineStack/BatchContainer/ExecutionRole/Resource": [
+        "/BankReconciliationStack/BatchContainer/ExecutionRole/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "BatchContainerExecutionRoleB5A032EF"
           }
         ],
-        "/IotPipelineStack/BatchContainer/ExecutionRole/DefaultPolicy/Resource": [
+        "/BankReconciliationStack/BatchContainer/ExecutionRole/DefaultPolicy/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "BatchContainerExecutionRoleDefaultPolicy757B7694"
           }
         ],
-        "/IotPipelineStack/BatchContainer/LogGroup/Resource": [
+        "/BankReconciliationStack/BatchContainer/LogGroup/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "BatchContainerLogGroup6D9030F9"
           }
         ],
-        "/IotPipelineStack/JobDefinition/Resource": [
+        "/BankReconciliationStack/JobDefinition/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "JobDefinition24FFE3ED"
           }
         ],
-        "/IotPipelineStack/iot-presigned-url/ServiceRole/Resource": [
+        "/BankReconciliationStack/recon-presigned-url-logs/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "iotpresignedurlServiceRole829ECD1E"
+            "data": "reconpresignedurllogs0ACB7FA0"
           }
         ],
-        "/IotPipelineStack/iot-presigned-url/ServiceRole/DefaultPolicy/Resource": [
+        "/BankReconciliationStack/recon-presigned-url/ServiceRole/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "iotpresignedurlServiceRoleDefaultPolicy36AB3DE5"
+            "data": "reconpresignedurlServiceRoleB6FD84A6"
           }
         ],
-        "/IotPipelineStack/iot-presigned-url/Resource": [
+        "/BankReconciliationStack/recon-presigned-url/ServiceRole/DefaultPolicy/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "iotpresignedurlF8E207F7"
+            "data": "reconpresignedurlServiceRoleDefaultPolicyA07CDF3E"
           }
         ],
-        "/IotPipelineStack/iot-presigned-url/LogRetention/Resource": [
+        "/BankReconciliationStack/recon-presigned-url/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "iotpresignedurlLogRetentionCFA0AA8A"
+            "data": "reconpresignedurlC557D3F9"
           }
         ],
-        "/IotPipelineStack/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/ServiceRole/Resource": [
+        "/BankReconciliationStack/recon-get-status-logs/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB"
+            "data": "recongetstatuslogs4763B92E"
           }
         ],
-        "/IotPipelineStack/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/ServiceRole/DefaultPolicy/Resource": [
+        "/BankReconciliationStack/recon-get-status/ServiceRole/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB"
+            "data": "recongetstatusServiceRole72EA8A98"
           }
         ],
-        "/IotPipelineStack/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/Resource": [
+        "/BankReconciliationStack/recon-get-status/ServiceRole/DefaultPolicy/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A"
+            "data": "recongetstatusServiceRoleDefaultPolicyA83C01A9"
           }
         ],
-        "/IotPipelineStack/iot-get-status/ServiceRole/Resource": [
+        "/BankReconciliationStack/recon-get-status/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "iotgetstatusServiceRoleCEC5AAFE"
+            "data": "recongetstatusE8F208D9"
           }
         ],
-        "/IotPipelineStack/iot-get-status/ServiceRole/DefaultPolicy/Resource": [
+        "/BankReconciliationStack/recon-trigger-pipeline-logs/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "iotgetstatusServiceRoleDefaultPolicy0703AFAC"
+            "data": "recontriggerpipelinelogsE8E0E20B"
           }
         ],
-        "/IotPipelineStack/iot-get-status/Resource": [
+        "/BankReconciliationStack/recon-trigger-pipeline/ServiceRole/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "iotgetstatus1B26DE32"
+            "data": "recontriggerpipelineServiceRole0C0305EB"
           }
         ],
-        "/IotPipelineStack/iot-get-status/LogRetention/Resource": [
+        "/BankReconciliationStack/recon-trigger-pipeline/ServiceRole/DefaultPolicy/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "iotgetstatusLogRetentionBF410E11"
+            "data": "recontriggerpipelineServiceRoleDefaultPolicy66197708"
           }
         ],
-        "/IotPipelineStack/iot-trigger-pipeline/ServiceRole/Resource": [
+        "/BankReconciliationStack/recon-trigger-pipeline/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "iottriggerpipelineServiceRole35232E09"
+            "data": "recontriggerpipeline9262C2B2"
           }
         ],
-        "/IotPipelineStack/iot-trigger-pipeline/ServiceRole/DefaultPolicy/Resource": [
+        "/BankReconciliationStack/recon-save-results-logs/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "iottriggerpipelineServiceRoleDefaultPolicy0B7F548E"
+            "data": "reconsaveresultslogsA3A9383D"
           }
         ],
-        "/IotPipelineStack/iot-trigger-pipeline/Resource": [
+        "/BankReconciliationStack/recon-save-results/ServiceRole/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "iottriggerpipeline5F8B4DE7"
+            "data": "reconsaveresultsServiceRole428B7BD9"
           }
         ],
-        "/IotPipelineStack/iot-trigger-pipeline/LogRetention/Resource": [
+        "/BankReconciliationStack/recon-save-results/ServiceRole/DefaultPolicy/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "iottriggerpipelineLogRetention6494168F"
+            "data": "reconsaveresultsServiceRoleDefaultPolicyF7F13D84"
           }
         ],
-        "/IotPipelineStack/iot-save-results/ServiceRole/Resource": [
+        "/BankReconciliationStack/recon-save-results/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "iotsaveresultsServiceRoleA6C9563E"
+            "data": "reconsaveresultsF2E08194"
           }
         ],
-        "/IotPipelineStack/iot-save-results/ServiceRole/DefaultPolicy/Resource": [
+        "/BankReconciliationStack/recon-notify-logs/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "iotsaveresultsServiceRoleDefaultPolicy5B867393"
+            "data": "reconnotifylogsBF81F10F"
           }
         ],
-        "/IotPipelineStack/iot-save-results/Resource": [
+        "/BankReconciliationStack/recon-notify/ServiceRole/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "iotsaveresultsF6342EB3"
+            "data": "reconnotifyServiceRoleE4525C56"
           }
         ],
-        "/IotPipelineStack/iot-save-results/LogRetention/Resource": [
+        "/BankReconciliationStack/recon-notify/ServiceRole/DefaultPolicy/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "iotsaveresultsLogRetention83A7E96A"
+            "data": "reconnotifyServiceRoleDefaultPolicy9B85FCFE"
           }
         ],
-        "/IotPipelineStack/iot-notify/ServiceRole/Resource": [
+        "/BankReconciliationStack/recon-notify/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "iotnotifyServiceRoleF63D016A"
+            "data": "reconnotify816F4C88"
           }
         ],
-        "/IotPipelineStack/iot-notify/ServiceRole/DefaultPolicy/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "iotnotifyServiceRoleDefaultPolicyCE0C69F3"
-          }
-        ],
-        "/IotPipelineStack/iot-notify/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "iotnotifyEBE4242A"
-          }
-        ],
-        "/IotPipelineStack/iot-notify/LogRetention/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "iotnotifyLogRetention56DA13F0"
-          }
-        ],
-        "/IotPipelineStack/StateMachineLogs/Resource": [
+        "/BankReconciliationStack/StateMachineLogs/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "StateMachineLogs3CB16D3C"
           }
         ],
-        "/IotPipelineStack/Pipeline/Role/Resource": [
+        "/BankReconciliationStack/Pipeline/Role/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "PipelineRoleD68726F7"
           }
         ],
-        "/IotPipelineStack/Pipeline/Role/DefaultPolicy/Resource": [
+        "/BankReconciliationStack/Pipeline/Role/DefaultPolicy/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "PipelineRoleDefaultPolicyC7A05455"
           }
         ],
-        "/IotPipelineStack/Pipeline/Resource": [
+        "/BankReconciliationStack/Pipeline/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "PipelineC660917D"
           }
         ],
-        "/IotPipelineStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/Resource": [
+        "/BankReconciliationStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "BucketNotificationsHandler050a0587b7544547bf325f094a3db834RoleB6FB88EC"
           }
         ],
-        "/IotPipelineStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/DefaultPolicy/Resource": [
+        "/BankReconciliationStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/DefaultPolicy/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "BucketNotificationsHandler050a0587b7544547bf325f094a3db834RoleDefaultPolicy2CF63D36"
           }
         ],
-        "/IotPipelineStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Resource": [
+        "/BankReconciliationStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "BucketNotificationsHandler050a0587b7544547bf325f094a3db8347ECC3691"
           }
         ],
-        "/IotPipelineStack/IotPipelineApi/Resource": [
+        "/BankReconciliationStack/BankReconciliationApi/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "IotPipelineApi5220724E"
+            "data": "BankReconciliationApi24CDB576"
           }
         ],
-        "/IotPipelineStack/IotPipelineApi/CloudWatchRole/Resource": [
+        "/BankReconciliationStack/BankReconciliationApi/CloudWatchRole/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "IotPipelineApiCloudWatchRole001B93A8"
+            "data": "BankReconciliationApiCloudWatchRoleC3976DF5"
           }
         ],
-        "/IotPipelineStack/IotPipelineApi/Account": [
+        "/BankReconciliationStack/BankReconciliationApi/Account": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "IotPipelineApiAccountA52E7C85"
+            "data": "BankReconciliationApiAccountF2FB6B8A"
           }
         ],
-        "/IotPipelineStack/IotPipelineApi/Deployment/Resource": [
+        "/BankReconciliationStack/BankReconciliationApi/Deployment/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "IotPipelineApiDeployment4395B75De2b3e5ae230df092f29cda2838fed42c"
+            "data": "BankReconciliationApiDeploymentB6B813F45d2b997650c543e23ecd1130ec004f82"
           }
         ],
-        "/IotPipelineStack/IotPipelineApi/DeploymentStage.prod/Resource": [
+        "/BankReconciliationStack/BankReconciliationApi/DeploymentStage.prod/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "IotPipelineApiDeploymentStageprodBCDA6F38"
+            "data": "BankReconciliationApiDeploymentStageprod4E84B801"
           }
         ],
-        "/IotPipelineStack/IotPipelineApi/Endpoint": [
+        "/BankReconciliationStack/BankReconciliationApi/Endpoint": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "IotPipelineApiEndpointCBFC9BF0"
+            "data": "BankReconciliationApiEndpoint939AEE7D"
           }
         ],
-        "/IotPipelineStack/IotPipelineApi/Default/OPTIONS/Resource": [
+        "/BankReconciliationStack/BankReconciliationApi/Default/OPTIONS/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "IotPipelineApiOPTIONSDA76B3A0"
+            "data": "BankReconciliationApiOPTIONSA7E2A9F4"
           }
         ],
-        "/IotPipelineStack/IotPipelineApi/Default/upload/Resource": [
+        "/BankReconciliationStack/BankReconciliationApi/Default/upload/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "IotPipelineApiupload77D8AE2B"
+            "data": "BankReconciliationApiupload140C2487"
           }
         ],
-        "/IotPipelineStack/IotPipelineApi/Default/upload/OPTIONS/Resource": [
+        "/BankReconciliationStack/BankReconciliationApi/Default/upload/OPTIONS/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "IotPipelineApiuploadOPTIONS48A045C3"
+            "data": "BankReconciliationApiuploadOPTIONSD395366F"
           }
         ],
-        "/IotPipelineStack/IotPipelineApi/Default/upload/POST/ApiPermission.IotPipelineStackIotPipelineApi65289365.POST..upload": [
+        "/BankReconciliationStack/BankReconciliationApi/Default/upload/POST/ApiPermission.BankReconciliationStackBankReconciliationApi48940206.POST..upload": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "IotPipelineApiuploadPOSTApiPermissionIotPipelineStackIotPipelineApi65289365POSTuploadE6AE95FA"
+            "data": "BankReconciliationApiuploadPOSTApiPermissionBankReconciliationStackBankReconciliationApi48940206POSTupload90815956"
           }
         ],
-        "/IotPipelineStack/IotPipelineApi/Default/upload/POST/ApiPermission.Test.IotPipelineStackIotPipelineApi65289365.POST..upload": [
+        "/BankReconciliationStack/BankReconciliationApi/Default/upload/POST/ApiPermission.Test.BankReconciliationStackBankReconciliationApi48940206.POST..upload": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "IotPipelineApiuploadPOSTApiPermissionTestIotPipelineStackIotPipelineApi65289365POSTupload98BD74BC"
+            "data": "BankReconciliationApiuploadPOSTApiPermissionTestBankReconciliationStackBankReconciliationApi48940206POSTupload6F5134AC"
           }
         ],
-        "/IotPipelineStack/IotPipelineApi/Default/upload/POST/Resource": [
+        "/BankReconciliationStack/BankReconciliationApi/Default/upload/POST/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "IotPipelineApiuploadPOSTABEF0C17"
+            "data": "BankReconciliationApiuploadPOSTBE31D20F"
           }
         ],
-        "/IotPipelineStack/IotPipelineApi/Default/status/Resource": [
+        "/BankReconciliationStack/BankReconciliationApi/Default/status/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "IotPipelineApistatus29CE5035"
+            "data": "BankReconciliationApistatus8F6B34DB"
           }
         ],
-        "/IotPipelineStack/IotPipelineApi/Default/status/OPTIONS/Resource": [
+        "/BankReconciliationStack/BankReconciliationApi/Default/status/OPTIONS/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "IotPipelineApistatusOPTIONS114A9092"
+            "data": "BankReconciliationApistatusOPTIONS2D8E5D8A"
           }
         ],
-        "/IotPipelineStack/IotPipelineApi/Default/status/GET/ApiPermission.IotPipelineStackIotPipelineApi65289365.GET..status": [
+        "/BankReconciliationStack/BankReconciliationApi/Default/status/GET/ApiPermission.BankReconciliationStackBankReconciliationApi48940206.GET..status": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "IotPipelineApistatusGETApiPermissionIotPipelineStackIotPipelineApi65289365GETstatus8781C033"
+            "data": "BankReconciliationApistatusGETApiPermissionBankReconciliationStackBankReconciliationApi48940206GETstatus8496072C"
           }
         ],
-        "/IotPipelineStack/IotPipelineApi/Default/status/GET/ApiPermission.Test.IotPipelineStackIotPipelineApi65289365.GET..status": [
+        "/BankReconciliationStack/BankReconciliationApi/Default/status/GET/ApiPermission.Test.BankReconciliationStackBankReconciliationApi48940206.GET..status": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "IotPipelineApistatusGETApiPermissionTestIotPipelineStackIotPipelineApi65289365GETstatusC64E23A6"
+            "data": "BankReconciliationApistatusGETApiPermissionTestBankReconciliationStackBankReconciliationApi48940206GETstatusE7E75AE7"
           }
         ],
-        "/IotPipelineStack/IotPipelineApi/Default/status/GET/Resource": [
+        "/BankReconciliationStack/BankReconciliationApi/Default/status/GET/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "IotPipelineApistatusGETABC6CE85"
+            "data": "BankReconciliationApistatusGETD79E4F51"
           }
         ],
-        "/IotPipelineStack/ApiUrl": [
+        "/BankReconciliationStack/ApiUrl": [
           {
             "type": "aws:cdk:logicalId",
             "data": "ApiUrl"
           }
         ],
-        "/IotPipelineStack/BucketName": [
+        "/BankReconciliationStack/BucketName": [
           {
             "type": "aws:cdk:logicalId",
             "data": "BucketName"
           }
         ],
-        "/IotPipelineStack/TableName": [
+        "/BankReconciliationStack/TableName": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TableName"
           }
         ],
-        "/IotPipelineStack/TopicArn": [
+        "/BankReconciliationStack/TopicArn": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TopicArn"
           }
         ],
-        "/IotPipelineStack/StateMachineArn": [
+        "/BankReconciliationStack/StateMachineArn": [
           {
             "type": "aws:cdk:logicalId",
             "data": "StateMachineArn"
           }
         ],
-        "/IotPipelineStack/JobQueueArn": [
+        "/BankReconciliationStack/JobQueueArn": [
           {
             "type": "aws:cdk:logicalId",
             "data": "JobQueueArn"
           }
         ],
-        "/IotPipelineStack/CDKMetadata/Default": [
+        "/BankReconciliationStack/CDKMetadata/Default": [
           {
             "type": "aws:cdk:logicalId",
             "data": "CDKMetadata"
           }
         ],
-        "/IotPipelineStack/BootstrapVersion": [
+        "/BankReconciliationStack/BootstrapVersion": [
           {
             "type": "aws:cdk:logicalId",
             "data": "BootstrapVersion"
           }
         ],
-        "/IotPipelineStack/CheckBootstrapVersion": [
+        "/BankReconciliationStack/CheckBootstrapVersion": [
           {
             "type": "aws:cdk:logicalId",
             "data": "CheckBootstrapVersion"
           }
         ]
       },
-      "displayName": "IotPipelineStack"
+      "displayName": "BankReconciliationStack"
     },
     "Tree": {
       "type": "cdk:tree",

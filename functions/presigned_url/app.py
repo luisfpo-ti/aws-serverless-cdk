@@ -1,9 +1,9 @@
 """
-Lambda: iot-presigned-url
+Lambda: recon-presigned-url
 POST /upload
 
-Recebe: { "file_name": "sensors.csv", "file_size": 524288000 }
-Retorna: { "upload_url": "https://...", "job_id": "uuid", "s3_key": "input/uuid/sensors.csv" }
+Recebe: { "file_name": "extrato_janeiro.csv", "file_size": 5242880 }
+Retorna: { "upload_url": "https://...", "job_id": "uuid", "s3_key": "input/uuid/extrato_janeiro.csv" }
 
 Fluxo:
   1. Gera um UUID como job_id

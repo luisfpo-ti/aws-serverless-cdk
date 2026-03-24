@@ -4,17 +4,17 @@
     "id": "App",
     "path": "",
     "children": {
-      "IotPipelineStack": {
-        "id": "IotPipelineStack",
-        "path": "IotPipelineStack",
+      "BankReconciliationStack": {
+        "id": "BankReconciliationStack",
+        "path": "BankReconciliationStack",
         "children": {
-          "IotDataBucket": {
-            "id": "IotDataBucket",
-            "path": "IotPipelineStack/IotDataBucket",
+          "ExtratoBucket": {
+            "id": "ExtratoBucket",
+            "path": "BankReconciliationStack/ExtratoBucket",
             "children": {
               "Resource": {
                 "id": "Resource",
-                "path": "IotPipelineStack/IotDataBucket/Resource",
+                "path": "BankReconciliationStack/ExtratoBucket/Resource",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::S3::Bucket",
                   "aws:cdk:cloudformation:props": {
@@ -51,16 +51,16 @@
               },
               "Policy": {
                 "id": "Policy",
-                "path": "IotPipelineStack/IotDataBucket/Policy",
+                "path": "BankReconciliationStack/ExtratoBucket/Policy",
                 "children": {
                   "Resource": {
                     "id": "Resource",
-                    "path": "IotPipelineStack/IotDataBucket/Policy/Resource",
+                    "path": "BankReconciliationStack/ExtratoBucket/Policy/Resource",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::S3::BucketPolicy",
                       "aws:cdk:cloudformation:props": {
                         "bucket": {
-                          "Ref": "IotDataBucket90DE0005"
+                          "Ref": "ExtratoBucket258726BD"
                         },
                         "policyDocument": {
                           "Statement": [
@@ -83,7 +83,7 @@
                               "Resource": [
                                 {
                                   "Fn::GetAtt": [
-                                    "IotDataBucket90DE0005",
+                                    "ExtratoBucket258726BD",
                                     "Arn"
                                   ]
                                 },
@@ -93,7 +93,7 @@
                                     [
                                       {
                                         "Fn::GetAtt": [
-                                          "IotDataBucket90DE0005",
+                                          "ExtratoBucket258726BD",
                                           "Arn"
                                         ]
                                       },
@@ -121,11 +121,11 @@
               },
               "AutoDeleteObjectsCustomResource": {
                 "id": "AutoDeleteObjectsCustomResource",
-                "path": "IotPipelineStack/IotDataBucket/AutoDeleteObjectsCustomResource",
+                "path": "BankReconciliationStack/ExtratoBucket/AutoDeleteObjectsCustomResource",
                 "children": {
                   "Default": {
                     "id": "Default",
-                    "path": "IotPipelineStack/IotDataBucket/AutoDeleteObjectsCustomResource/Default",
+                    "path": "BankReconciliationStack/ExtratoBucket/AutoDeleteObjectsCustomResource/Default",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.CfnResource",
                       "version": "2.122.0"
@@ -139,11 +139,11 @@
               },
               "Notifications": {
                 "id": "Notifications",
-                "path": "IotPipelineStack/IotDataBucket/Notifications",
+                "path": "BankReconciliationStack/ExtratoBucket/Notifications",
                 "children": {
                   "Resource": {
                     "id": "Resource",
-                    "path": "IotPipelineStack/IotDataBucket/Notifications/Resource",
+                    "path": "BankReconciliationStack/ExtratoBucket/Notifications/Resource",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.CfnResource",
                       "version": "2.122.0"
@@ -155,16 +155,16 @@
                   "version": "10.4.2"
                 }
               },
-              "AllowBucketNotificationsToIotPipelineStackiottriggerpipelineA1C596FC": {
-                "id": "AllowBucketNotificationsToIotPipelineStackiottriggerpipelineA1C596FC",
-                "path": "IotPipelineStack/IotDataBucket/AllowBucketNotificationsToIotPipelineStackiottriggerpipelineA1C596FC",
+              "AllowBucketNotificationsToBankReconciliationStackrecontriggerpipeline50439745": {
+                "id": "AllowBucketNotificationsToBankReconciliationStackrecontriggerpipeline50439745",
+                "path": "BankReconciliationStack/ExtratoBucket/AllowBucketNotificationsToBankReconciliationStackrecontriggerpipeline50439745",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
                   "aws:cdk:cloudformation:props": {
                     "action": "lambda:InvokeFunction",
                     "functionName": {
                       "Fn::GetAtt": [
-                        "iottriggerpipeline5F8B4DE7",
+                        "recontriggerpipeline9262C2B2",
                         "Arn"
                       ]
                     },
@@ -172,7 +172,7 @@
                     "sourceAccount": "008195334540",
                     "sourceArn": {
                       "Fn::GetAtt": [
-                        "IotDataBucket90DE0005",
+                        "ExtratoBucket258726BD",
                         "Arn"
                       ]
                     }
@@ -191,11 +191,11 @@
           },
           "Custom::S3AutoDeleteObjectsCustomResourceProvider": {
             "id": "Custom::S3AutoDeleteObjectsCustomResourceProvider",
-            "path": "IotPipelineStack/Custom::S3AutoDeleteObjectsCustomResourceProvider",
+            "path": "BankReconciliationStack/Custom::S3AutoDeleteObjectsCustomResourceProvider",
             "children": {
               "Staging": {
                 "id": "Staging",
-                "path": "IotPipelineStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Staging",
+                "path": "BankReconciliationStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Staging",
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.AssetStaging",
                   "version": "2.122.0"
@@ -203,7 +203,7 @@
               },
               "Role": {
                 "id": "Role",
-                "path": "IotPipelineStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role",
+                "path": "BankReconciliationStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role",
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.CfnResource",
                   "version": "2.122.0"
@@ -211,7 +211,7 @@
               },
               "Handler": {
                 "id": "Handler",
-                "path": "IotPipelineStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler",
+                "path": "BankReconciliationStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler",
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.CfnResource",
                   "version": "2.122.0"
@@ -223,13 +223,13 @@
               "version": "2.122.0"
             }
           },
-          "FileProcessingJobs": {
-            "id": "FileProcessingJobs",
-            "path": "IotPipelineStack/FileProcessingJobs",
+          "ConciliacaoJobs": {
+            "id": "ConciliacaoJobs",
+            "path": "BankReconciliationStack/ConciliacaoJobs",
             "children": {
               "Resource": {
                 "id": "Resource",
-                "path": "IotPipelineStack/FileProcessingJobs/Resource",
+                "path": "BankReconciliationStack/ConciliacaoJobs/Resource",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::DynamoDB::Table",
                   "aws:cdk:cloudformation:props": {
@@ -246,7 +246,7 @@
                         "keyType": "HASH"
                       }
                     ],
-                    "tableName": "FileProcessingJobs"
+                    "tableName": "ConciliacaoJobs"
                   }
                 },
                 "constructInfo": {
@@ -256,7 +256,7 @@
               },
               "ScalingRole": {
                 "id": "ScalingRole",
-                "path": "IotPipelineStack/FileProcessingJobs/ScalingRole",
+                "path": "BankReconciliationStack/ConciliacaoJobs/ScalingRole",
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.Resource",
                   "version": "2.122.0"
@@ -270,15 +270,15 @@
           },
           "Notifications": {
             "id": "Notifications",
-            "path": "IotPipelineStack/Notifications",
+            "path": "BankReconciliationStack/Notifications",
             "children": {
               "Resource": {
                 "id": "Resource",
-                "path": "IotPipelineStack/Notifications/Resource",
+                "path": "BankReconciliationStack/Notifications/Resource",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::SNS::Topic",
                   "aws:cdk:cloudformation:props": {
-                    "topicName": "iot-pipeline-notifications"
+                    "topicName": "bank-reconciliation-notifications"
                   }
                 },
                 "constructInfo": {
@@ -292,308 +292,47 @@
               "version": "2.122.0"
             }
           },
-          "BatchVpc": {
-            "id": "BatchVpc",
-            "path": "IotPipelineStack/BatchVpc",
+          "DefaultVpc": {
+            "id": "DefaultVpc",
+            "path": "BankReconciliationStack/DefaultVpc",
             "children": {
-              "Resource": {
-                "id": "Resource",
-                "path": "IotPipelineStack/BatchVpc/Resource",
-                "attributes": {
-                  "aws:cdk:cloudformation:type": "AWS::EC2::VPC",
-                  "aws:cdk:cloudformation:props": {
-                    "cidrBlock": "10.0.0.0/16",
-                    "enableDnsHostnames": true,
-                    "enableDnsSupport": true,
-                    "instanceTenancy": "default",
-                    "tags": [
-                      {
-                        "key": "Name",
-                        "value": "IotPipelineStack/BatchVpc"
-                      }
-                    ]
-                  }
-                },
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.aws_ec2.CfnVPC",
-                  "version": "2.122.0"
-                }
-              },
               "PublicSubnet1": {
                 "id": "PublicSubnet1",
-                "path": "IotPipelineStack/BatchVpc/PublicSubnet1",
-                "children": {
-                  "Subnet": {
-                    "id": "Subnet",
-                    "path": "IotPipelineStack/BatchVpc/PublicSubnet1/Subnet",
-                    "attributes": {
-                      "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
-                      "aws:cdk:cloudformation:props": {
-                        "availabilityZone": "us-east-1a",
-                        "cidrBlock": "10.0.0.0/24",
-                        "mapPublicIpOnLaunch": true,
-                        "tags": [
-                          {
-                            "key": "aws-cdk:subnet-name",
-                            "value": "Public"
-                          },
-                          {
-                            "key": "aws-cdk:subnet-type",
-                            "value": "Public"
-                          },
-                          {
-                            "key": "Name",
-                            "value": "IotPipelineStack/BatchVpc/PublicSubnet1"
-                          }
-                        ],
-                        "vpcId": {
-                          "Ref": "BatchVpc4B2AEB5B"
-                        }
-                      }
-                    },
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.aws_ec2.CfnSubnet",
-                      "version": "2.122.0"
-                    }
-                  },
-                  "Acl": {
-                    "id": "Acl",
-                    "path": "IotPipelineStack/BatchVpc/PublicSubnet1/Acl",
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.Resource",
-                      "version": "2.122.0"
-                    }
-                  },
-                  "RouteTable": {
-                    "id": "RouteTable",
-                    "path": "IotPipelineStack/BatchVpc/PublicSubnet1/RouteTable",
-                    "attributes": {
-                      "aws:cdk:cloudformation:type": "AWS::EC2::RouteTable",
-                      "aws:cdk:cloudformation:props": {
-                        "tags": [
-                          {
-                            "key": "Name",
-                            "value": "IotPipelineStack/BatchVpc/PublicSubnet1"
-                          }
-                        ],
-                        "vpcId": {
-                          "Ref": "BatchVpc4B2AEB5B"
-                        }
-                      }
-                    },
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.aws_ec2.CfnRouteTable",
-                      "version": "2.122.0"
-                    }
-                  },
-                  "RouteTableAssociation": {
-                    "id": "RouteTableAssociation",
-                    "path": "IotPipelineStack/BatchVpc/PublicSubnet1/RouteTableAssociation",
-                    "attributes": {
-                      "aws:cdk:cloudformation:type": "AWS::EC2::SubnetRouteTableAssociation",
-                      "aws:cdk:cloudformation:props": {
-                        "routeTableId": {
-                          "Ref": "BatchVpcPublicSubnet1RouteTableF9405838"
-                        },
-                        "subnetId": {
-                          "Ref": "BatchVpcPublicSubnet1Subnet31633A1F"
-                        }
-                      }
-                    },
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.aws_ec2.CfnSubnetRouteTableAssociation",
-                      "version": "2.122.0"
-                    }
-                  },
-                  "DefaultRoute": {
-                    "id": "DefaultRoute",
-                    "path": "IotPipelineStack/BatchVpc/PublicSubnet1/DefaultRoute",
-                    "attributes": {
-                      "aws:cdk:cloudformation:type": "AWS::EC2::Route",
-                      "aws:cdk:cloudformation:props": {
-                        "destinationCidrBlock": "0.0.0.0/0",
-                        "gatewayId": {
-                          "Ref": "BatchVpcIGWF728C04F"
-                        },
-                        "routeTableId": {
-                          "Ref": "BatchVpcPublicSubnet1RouteTableF9405838"
-                        }
-                      }
-                    },
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.aws_ec2.CfnRoute",
-                      "version": "2.122.0"
-                    }
-                  }
-                },
+                "path": "BankReconciliationStack/DefaultVpc/PublicSubnet1",
                 "constructInfo": {
-                  "fqn": "aws-cdk-lib.aws_ec2.PublicSubnet",
+                  "fqn": "aws-cdk-lib.Resource",
                   "version": "2.122.0"
                 }
               },
               "PublicSubnet2": {
                 "id": "PublicSubnet2",
-                "path": "IotPipelineStack/BatchVpc/PublicSubnet2",
-                "children": {
-                  "Subnet": {
-                    "id": "Subnet",
-                    "path": "IotPipelineStack/BatchVpc/PublicSubnet2/Subnet",
-                    "attributes": {
-                      "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
-                      "aws:cdk:cloudformation:props": {
-                        "availabilityZone": "us-east-1b",
-                        "cidrBlock": "10.0.1.0/24",
-                        "mapPublicIpOnLaunch": true,
-                        "tags": [
-                          {
-                            "key": "aws-cdk:subnet-name",
-                            "value": "Public"
-                          },
-                          {
-                            "key": "aws-cdk:subnet-type",
-                            "value": "Public"
-                          },
-                          {
-                            "key": "Name",
-                            "value": "IotPipelineStack/BatchVpc/PublicSubnet2"
-                          }
-                        ],
-                        "vpcId": {
-                          "Ref": "BatchVpc4B2AEB5B"
-                        }
-                      }
-                    },
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.aws_ec2.CfnSubnet",
-                      "version": "2.122.0"
-                    }
-                  },
-                  "Acl": {
-                    "id": "Acl",
-                    "path": "IotPipelineStack/BatchVpc/PublicSubnet2/Acl",
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.Resource",
-                      "version": "2.122.0"
-                    }
-                  },
-                  "RouteTable": {
-                    "id": "RouteTable",
-                    "path": "IotPipelineStack/BatchVpc/PublicSubnet2/RouteTable",
-                    "attributes": {
-                      "aws:cdk:cloudformation:type": "AWS::EC2::RouteTable",
-                      "aws:cdk:cloudformation:props": {
-                        "tags": [
-                          {
-                            "key": "Name",
-                            "value": "IotPipelineStack/BatchVpc/PublicSubnet2"
-                          }
-                        ],
-                        "vpcId": {
-                          "Ref": "BatchVpc4B2AEB5B"
-                        }
-                      }
-                    },
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.aws_ec2.CfnRouteTable",
-                      "version": "2.122.0"
-                    }
-                  },
-                  "RouteTableAssociation": {
-                    "id": "RouteTableAssociation",
-                    "path": "IotPipelineStack/BatchVpc/PublicSubnet2/RouteTableAssociation",
-                    "attributes": {
-                      "aws:cdk:cloudformation:type": "AWS::EC2::SubnetRouteTableAssociation",
-                      "aws:cdk:cloudformation:props": {
-                        "routeTableId": {
-                          "Ref": "BatchVpcPublicSubnet2RouteTableFA91774D"
-                        },
-                        "subnetId": {
-                          "Ref": "BatchVpcPublicSubnet2Subnet31AA024F"
-                        }
-                      }
-                    },
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.aws_ec2.CfnSubnetRouteTableAssociation",
-                      "version": "2.122.0"
-                    }
-                  },
-                  "DefaultRoute": {
-                    "id": "DefaultRoute",
-                    "path": "IotPipelineStack/BatchVpc/PublicSubnet2/DefaultRoute",
-                    "attributes": {
-                      "aws:cdk:cloudformation:type": "AWS::EC2::Route",
-                      "aws:cdk:cloudformation:props": {
-                        "destinationCidrBlock": "0.0.0.0/0",
-                        "gatewayId": {
-                          "Ref": "BatchVpcIGWF728C04F"
-                        },
-                        "routeTableId": {
-                          "Ref": "BatchVpcPublicSubnet2RouteTableFA91774D"
-                        }
-                      }
-                    },
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.aws_ec2.CfnRoute",
-                      "version": "2.122.0"
-                    }
-                  }
-                },
+                "path": "BankReconciliationStack/DefaultVpc/PublicSubnet2",
                 "constructInfo": {
-                  "fqn": "aws-cdk-lib.aws_ec2.PublicSubnet",
+                  "fqn": "aws-cdk-lib.Resource",
                   "version": "2.122.0"
                 }
               },
-              "IGW": {
-                "id": "IGW",
-                "path": "IotPipelineStack/BatchVpc/IGW",
-                "attributes": {
-                  "aws:cdk:cloudformation:type": "AWS::EC2::InternetGateway",
-                  "aws:cdk:cloudformation:props": {
-                    "tags": [
-                      {
-                        "key": "Name",
-                        "value": "IotPipelineStack/BatchVpc"
-                      }
-                    ]
-                  }
-                },
+              "PublicSubnet3": {
+                "id": "PublicSubnet3",
+                "path": "BankReconciliationStack/DefaultVpc/PublicSubnet3",
                 "constructInfo": {
-                  "fqn": "aws-cdk-lib.aws_ec2.CfnInternetGateway",
-                  "version": "2.122.0"
-                }
-              },
-              "VPCGW": {
-                "id": "VPCGW",
-                "path": "IotPipelineStack/BatchVpc/VPCGW",
-                "attributes": {
-                  "aws:cdk:cloudformation:type": "AWS::EC2::VPCGatewayAttachment",
-                  "aws:cdk:cloudformation:props": {
-                    "internetGatewayId": {
-                      "Ref": "BatchVpcIGWF728C04F"
-                    },
-                    "vpcId": {
-                      "Ref": "BatchVpc4B2AEB5B"
-                    }
-                  }
-                },
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.aws_ec2.CfnVPCGatewayAttachment",
+                  "fqn": "aws-cdk-lib.Resource",
                   "version": "2.122.0"
                 }
               }
             },
             "constructInfo": {
-              "fqn": "aws-cdk-lib.aws_ec2.Vpc",
+              "fqn": "aws-cdk-lib.Resource",
               "version": "2.122.0"
             }
           },
-          "ProcessorImage": {
-            "id": "ProcessorImage",
-            "path": "IotPipelineStack/ProcessorImage",
+          "ReconciliacaoImage": {
+            "id": "ReconciliacaoImage",
+            "path": "BankReconciliationStack/ReconciliacaoImage",
             "children": {
               "Staging": {
                 "id": "Staging",
-                "path": "IotPipelineStack/ProcessorImage/Staging",
+                "path": "BankReconciliationStack/ReconciliacaoImage/Staging",
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.AssetStaging",
                   "version": "2.122.0"
@@ -601,7 +340,7 @@
               },
               "Repository": {
                 "id": "Repository",
-                "path": "IotPipelineStack/ProcessorImage/Repository",
+                "path": "BankReconciliationStack/ReconciliacaoImage/Repository",
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.aws_ecr.RepositoryBase",
                   "version": "2.122.0"
@@ -615,11 +354,11 @@
           },
           "BatchJobRole": {
             "id": "BatchJobRole",
-            "path": "IotPipelineStack/BatchJobRole",
+            "path": "BankReconciliationStack/BatchJobRole",
             "children": {
               "ImportBatchJobRole": {
                 "id": "ImportBatchJobRole",
-                "path": "IotPipelineStack/BatchJobRole/ImportBatchJobRole",
+                "path": "BankReconciliationStack/BatchJobRole/ImportBatchJobRole",
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.Resource",
                   "version": "2.122.0"
@@ -627,7 +366,7 @@
               },
               "Resource": {
                 "id": "Resource",
-                "path": "IotPipelineStack/BatchJobRole/Resource",
+                "path": "BankReconciliationStack/BatchJobRole/Resource",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::IAM::Role",
                   "aws:cdk:cloudformation:props": {
@@ -666,11 +405,11 @@
               },
               "DefaultPolicy": {
                 "id": "DefaultPolicy",
-                "path": "IotPipelineStack/BatchJobRole/DefaultPolicy",
+                "path": "BankReconciliationStack/BatchJobRole/DefaultPolicy",
                 "children": {
                   "Resource": {
                     "id": "Resource",
-                    "path": "IotPipelineStack/BatchJobRole/DefaultPolicy/Resource",
+                    "path": "BankReconciliationStack/BatchJobRole/DefaultPolicy/Resource",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
                       "aws:cdk:cloudformation:props": {
@@ -686,7 +425,7 @@
                               "Resource": [
                                 {
                                   "Fn::GetAtt": [
-                                    "IotDataBucket90DE0005",
+                                    "ExtratoBucket258726BD",
                                     "Arn"
                                   ]
                                 },
@@ -696,7 +435,7 @@
                                     [
                                       {
                                         "Fn::GetAtt": [
-                                          "IotDataBucket90DE0005",
+                                          "ExtratoBucket258726BD",
                                           "Arn"
                                         ]
                                       },
@@ -718,7 +457,7 @@
                               "Resource": [
                                 {
                                   "Fn::GetAtt": [
-                                    "FileProcessingJobs5B1A1641",
+                                    "ConciliacaoJobs119D6557",
                                     "Arn"
                                   ]
                                 },
@@ -757,19 +496,19 @@
           },
           "ComputeEnv": {
             "id": "ComputeEnv",
-            "path": "IotPipelineStack/ComputeEnv",
+            "path": "BankReconciliationStack/ComputeEnv",
             "children": {
               "SecurityGroup": {
                 "id": "SecurityGroup",
-                "path": "IotPipelineStack/ComputeEnv/SecurityGroup",
+                "path": "BankReconciliationStack/ComputeEnv/SecurityGroup",
                 "children": {
                   "Resource": {
                     "id": "Resource",
-                    "path": "IotPipelineStack/ComputeEnv/SecurityGroup/Resource",
+                    "path": "BankReconciliationStack/ComputeEnv/SecurityGroup/Resource",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroup",
                       "aws:cdk:cloudformation:props": {
-                        "groupDescription": "IotPipelineStack/ComputeEnv/SecurityGroup",
+                        "groupDescription": "BankReconciliationStack/ComputeEnv/SecurityGroup",
                         "securityGroupEgress": [
                           {
                             "cidrIp": "0.0.0.0/0",
@@ -777,9 +516,7 @@
                             "ipProtocol": "-1"
                           }
                         ],
-                        "vpcId": {
-                          "Ref": "BatchVpc4B2AEB5B"
-                        }
+                        "vpcId": "vpc-377c705f"
                       }
                     },
                     "constructInfo": {
@@ -795,7 +532,7 @@
               },
               "Resource": {
                 "id": "Resource",
-                "path": "IotPipelineStack/ComputeEnv/Resource",
+                "path": "BankReconciliationStack/ComputeEnv/Resource",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::Batch::ComputeEnvironment",
                   "aws:cdk:cloudformation:props": {
@@ -811,12 +548,9 @@
                         }
                       ],
                       "subnets": [
-                        {
-                          "Ref": "BatchVpcPublicSubnet1Subnet31633A1F"
-                        },
-                        {
-                          "Ref": "BatchVpcPublicSubnet2Subnet31AA024F"
-                        }
+                        "subnet-3d2a1e55",
+                        "subnet-895f3df3",
+                        "subnet-c68c598a"
                       ]
                     },
                     "replaceComputeEnvironment": false,
@@ -838,11 +572,11 @@
           },
           "JobQueue": {
             "id": "JobQueue",
-            "path": "IotPipelineStack/JobQueue",
+            "path": "BankReconciliationStack/JobQueue",
             "children": {
               "Resource": {
                 "id": "Resource",
-                "path": "IotPipelineStack/JobQueue/Resource",
+                "path": "BankReconciliationStack/JobQueue/Resource",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::Batch::JobQueue",
                   "aws:cdk:cloudformation:props": {
@@ -857,7 +591,7 @@
                         "order": 1
                       }
                     ],
-                    "jobQueueName": "iot-pipeline-queue",
+                    "jobQueueName": "bank-reconciliation-queue",
                     "priority": 1,
                     "state": "ENABLED"
                   }
@@ -875,15 +609,15 @@
           },
           "BatchContainer": {
             "id": "BatchContainer",
-            "path": "IotPipelineStack/BatchContainer",
+            "path": "BankReconciliationStack/BatchContainer",
             "children": {
               "ExecutionRole": {
                 "id": "ExecutionRole",
-                "path": "IotPipelineStack/BatchContainer/ExecutionRole",
+                "path": "BankReconciliationStack/BatchContainer/ExecutionRole",
                 "children": {
                   "ImportExecutionRole": {
                     "id": "ImportExecutionRole",
-                    "path": "IotPipelineStack/BatchContainer/ExecutionRole/ImportExecutionRole",
+                    "path": "BankReconciliationStack/BatchContainer/ExecutionRole/ImportExecutionRole",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.Resource",
                       "version": "2.122.0"
@@ -891,7 +625,7 @@
                   },
                   "Resource": {
                     "id": "Resource",
-                    "path": "IotPipelineStack/BatchContainer/ExecutionRole/Resource",
+                    "path": "BankReconciliationStack/BatchContainer/ExecutionRole/Resource",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::IAM::Role",
                       "aws:cdk:cloudformation:props": {
@@ -916,11 +650,11 @@
                   },
                   "DefaultPolicy": {
                     "id": "DefaultPolicy",
-                    "path": "IotPipelineStack/BatchContainer/ExecutionRole/DefaultPolicy",
+                    "path": "BankReconciliationStack/BatchContainer/ExecutionRole/DefaultPolicy",
                     "children": {
                       "Resource": {
                         "id": "Resource",
-                        "path": "IotPipelineStack/BatchContainer/ExecutionRole/DefaultPolicy/Resource",
+                        "path": "BankReconciliationStack/BatchContainer/ExecutionRole/DefaultPolicy/Resource",
                         "attributes": {
                           "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
                           "aws:cdk:cloudformation:props": {
@@ -946,7 +680,7 @@
                                     "ecr:GetDownloadUrlForLayer"
                                   ],
                                   "Effect": "Allow",
-                                  "Resource": "arn:aws:ecr:us-east-1:008195334540:repository/cdk-hnb659fds-container-assets-008195334540-us-east-1"
+                                  "Resource": "arn:aws:ecr:us-east-2:008195334540:repository/cdk-hnb659fds-container-assets-008195334540-us-east-2"
                                 },
                                 {
                                   "Action": "ecr:GetAuthorizationToken",
@@ -983,16 +717,14 @@
               },
               "LogGroup": {
                 "id": "LogGroup",
-                "path": "IotPipelineStack/BatchContainer/LogGroup",
+                "path": "BankReconciliationStack/BatchContainer/LogGroup",
                 "children": {
                   "Resource": {
                     "id": "Resource",
-                    "path": "IotPipelineStack/BatchContainer/LogGroup/Resource",
+                    "path": "BankReconciliationStack/BatchContainer/LogGroup/Resource",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::Logs::LogGroup",
-                      "aws:cdk:cloudformation:props": {
-                        "retentionInDays": 7
-                      }
+                      "aws:cdk:cloudformation:props": {}
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_logs.CfnLogGroup",
@@ -1013,23 +745,23 @@
           },
           "JobDefinition": {
             "id": "JobDefinition",
-            "path": "IotPipelineStack/JobDefinition",
+            "path": "BankReconciliationStack/JobDefinition",
             "children": {
               "Resource": {
                 "id": "Resource",
-                "path": "IotPipelineStack/JobDefinition/Resource",
+                "path": "BankReconciliationStack/JobDefinition/Resource",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::Batch::JobDefinition",
                   "aws:cdk:cloudformation:props": {
                     "containerProperties": {
                       "image": {
-                        "Fn::Sub": "008195334540.dkr.ecr.us-east-1.${AWS::URLSuffix}/cdk-hnb659fds-container-assets-008195334540-us-east-1:66d4e86b39e8930ad587f9638673d336013fe452ba159f0afa364a3e38a92d1d"
+                        "Fn::Sub": "008195334540.dkr.ecr.us-east-2.${AWS::URLSuffix}/cdk-hnb659fds-container-assets-008195334540-us-east-2:34b316b0e98f9a3efac677e4a1344f8b64d76d4b6809e2f9438711aa19d964ac"
                       },
                       "environment": [
                         {
                           "name": "DYNAMODB_TABLE",
                           "value": {
-                            "Ref": "FileProcessingJobs5B1A1641"
+                            "Ref": "ConciliacaoJobs119D6557"
                           }
                         }
                       ],
@@ -1051,8 +783,8 @@
                           "awslogs-group": {
                             "Ref": "BatchContainerLogGroup6D9030F9"
                           },
-                          "awslogs-stream-prefix": "iot-batch",
-                          "awslogs-region": "us-east-1"
+                          "awslogs-stream-prefix": "bank-recon-batch",
+                          "awslogs-region": "us-east-2"
                         }
                       },
                       "readonlyRootFilesystem": false,
@@ -1071,7 +803,7 @@
                         "assignPublicIp": "ENABLED"
                       }
                     },
-                    "jobDefinitionName": "iot-csv-processor",
+                    "jobDefinitionName": "bank-reconciliation-processor",
                     "platformCapabilities": [
                       "FARGATE"
                     ],
@@ -1091,17 +823,42 @@
               "version": "2.122.0"
             }
           },
-          "iot-presigned-url": {
-            "id": "iot-presigned-url",
-            "path": "IotPipelineStack/iot-presigned-url",
+          "recon-presigned-url-logs": {
+            "id": "recon-presigned-url-logs",
+            "path": "BankReconciliationStack/recon-presigned-url-logs",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "BankReconciliationStack/recon-presigned-url-logs/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Logs::LogGroup",
+                  "aws:cdk:cloudformation:props": {
+                    "logGroupName": "/aws/lambda/recon-presigned-url",
+                    "retentionInDays": 7
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_logs.CfnLogGroup",
+                  "version": "2.122.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_logs.LogGroup",
+              "version": "2.122.0"
+            }
+          },
+          "recon-presigned-url": {
+            "id": "recon-presigned-url",
+            "path": "BankReconciliationStack/recon-presigned-url",
             "children": {
               "ServiceRole": {
                 "id": "ServiceRole",
-                "path": "IotPipelineStack/iot-presigned-url/ServiceRole",
+                "path": "BankReconciliationStack/recon-presigned-url/ServiceRole",
                 "children": {
                   "ImportServiceRole": {
                     "id": "ImportServiceRole",
-                    "path": "IotPipelineStack/iot-presigned-url/ServiceRole/ImportServiceRole",
+                    "path": "BankReconciliationStack/recon-presigned-url/ServiceRole/ImportServiceRole",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.Resource",
                       "version": "2.122.0"
@@ -1109,7 +866,7 @@
                   },
                   "Resource": {
                     "id": "Resource",
-                    "path": "IotPipelineStack/iot-presigned-url/ServiceRole/Resource",
+                    "path": "BankReconciliationStack/recon-presigned-url/ServiceRole/Resource",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::IAM::Role",
                       "aws:cdk:cloudformation:props": {
@@ -1148,11 +905,11 @@
                   },
                   "DefaultPolicy": {
                     "id": "DefaultPolicy",
-                    "path": "IotPipelineStack/iot-presigned-url/ServiceRole/DefaultPolicy",
+                    "path": "BankReconciliationStack/recon-presigned-url/ServiceRole/DefaultPolicy",
                     "children": {
                       "Resource": {
                         "id": "Resource",
-                        "path": "IotPipelineStack/iot-presigned-url/ServiceRole/DefaultPolicy/Resource",
+                        "path": "BankReconciliationStack/recon-presigned-url/ServiceRole/DefaultPolicy/Resource",
                         "attributes": {
                           "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
                           "aws:cdk:cloudformation:props": {
@@ -1182,7 +939,7 @@
                                       [
                                         {
                                           "Fn::GetAtt": [
-                                            "IotDataBucket90DE0005",
+                                            "ExtratoBucket258726BD",
                                             "Arn"
                                           ]
                                         },
@@ -1203,7 +960,7 @@
                                   "Resource": [
                                     {
                                       "Fn::GetAtt": [
-                                        "FileProcessingJobs5B1A1641",
+                                        "ConciliacaoJobs119D6557",
                                         "Arn"
                                       ]
                                     },
@@ -1215,10 +972,10 @@
                               ],
                               "Version": "2012-10-17"
                             },
-                            "policyName": "iotpresignedurlServiceRoleDefaultPolicy36AB3DE5",
+                            "policyName": "reconpresignedurlServiceRoleDefaultPolicyA07CDF3E",
                             "roles": [
                               {
-                                "Ref": "iotpresignedurlServiceRole829ECD1E"
+                                "Ref": "reconpresignedurlServiceRoleB6FD84A6"
                               }
                             ]
                           }
@@ -1242,11 +999,11 @@
               },
               "Code": {
                 "id": "Code",
-                "path": "IotPipelineStack/iot-presigned-url/Code",
+                "path": "BankReconciliationStack/recon-presigned-url/Code",
                 "children": {
                   "Stage": {
                     "id": "Stage",
-                    "path": "IotPipelineStack/iot-presigned-url/Code/Stage",
+                    "path": "BankReconciliationStack/recon-presigned-url/Code/Stage",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.AssetStaging",
                       "version": "2.122.0"
@@ -1254,7 +1011,7 @@
                   },
                   "AssetBucket": {
                     "id": "AssetBucket",
-                    "path": "IotPipelineStack/iot-presigned-url/Code/AssetBucket",
+                    "path": "BankReconciliationStack/recon-presigned-url/Code/AssetBucket",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_s3.BucketBase",
                       "version": "2.122.0"
@@ -1268,29 +1025,34 @@
               },
               "Resource": {
                 "id": "Resource",
-                "path": "IotPipelineStack/iot-presigned-url/Resource",
+                "path": "BankReconciliationStack/recon-presigned-url/Resource",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
                   "aws:cdk:cloudformation:props": {
                     "code": {
-                      "s3Bucket": "cdk-hnb659fds-assets-008195334540-us-east-1",
-                      "s3Key": "962e87d7a8093d85cdf21c0b3be93e650d41743c4d7fce05221199f7c45787de.zip"
+                      "s3Bucket": "cdk-hnb659fds-assets-008195334540-us-east-2",
+                      "s3Key": "a5e94dae95878e2c7f83f724eeca7fc07e98d927cf75d1bc274075ced4046986.zip"
                     },
                     "environment": {
                       "variables": {
                         "BUCKET_NAME": {
-                          "Ref": "IotDataBucket90DE0005"
+                          "Ref": "ExtratoBucket258726BD"
                         },
                         "TABLE_NAME": {
-                          "Ref": "FileProcessingJobs5B1A1641"
+                          "Ref": "ConciliacaoJobs119D6557"
                         }
                       }
                     },
-                    "functionName": "iot-presigned-url",
+                    "functionName": "recon-presigned-url",
                     "handler": "app.lambda_handler",
+                    "loggingConfig": {
+                      "logGroup": {
+                        "Ref": "reconpresignedurllogs0ACB7FA0"
+                      }
+                    },
                     "role": {
                       "Fn::GetAtt": [
-                        "iotpresignedurlServiceRole829ECD1E",
+                        "reconpresignedurlServiceRoleB6FD84A6",
                         "Arn"
                       ]
                     },
@@ -1305,32 +1067,6 @@
                   "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
                   "version": "2.122.0"
                 }
-              },
-              "LogRetention": {
-                "id": "LogRetention",
-                "path": "IotPipelineStack/iot-presigned-url/LogRetention",
-                "children": {
-                  "Resource": {
-                    "id": "Resource",
-                    "path": "IotPipelineStack/iot-presigned-url/LogRetention/Resource",
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.CfnResource",
-                      "version": "2.122.0"
-                    }
-                  }
-                },
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.aws_logs.LogRetention",
-                  "version": "2.122.0"
-                }
-              },
-              "LogGroup": {
-                "id": "LogGroup",
-                "path": "IotPipelineStack/iot-presigned-url/LogGroup",
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.Resource",
-                  "version": "2.122.0"
-                }
               }
             },
             "constructInfo": {
@@ -1338,160 +1074,42 @@
               "version": "2.122.0"
             }
           },
-          "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a": {
-            "id": "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a",
-            "path": "IotPipelineStack/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a",
+          "recon-get-status-logs": {
+            "id": "recon-get-status-logs",
+            "path": "BankReconciliationStack/recon-get-status-logs",
             "children": {
-              "Code": {
-                "id": "Code",
-                "path": "IotPipelineStack/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/Code",
-                "children": {
-                  "Stage": {
-                    "id": "Stage",
-                    "path": "IotPipelineStack/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/Code/Stage",
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.AssetStaging",
-                      "version": "2.122.0"
-                    }
-                  },
-                  "AssetBucket": {
-                    "id": "AssetBucket",
-                    "path": "IotPipelineStack/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/Code/AssetBucket",
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
-                      "version": "2.122.0"
-                    }
-                  }
-                },
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
-                  "version": "2.122.0"
-                }
-              },
-              "ServiceRole": {
-                "id": "ServiceRole",
-                "path": "IotPipelineStack/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/ServiceRole",
-                "children": {
-                  "ImportServiceRole": {
-                    "id": "ImportServiceRole",
-                    "path": "IotPipelineStack/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/ServiceRole/ImportServiceRole",
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.Resource",
-                      "version": "2.122.0"
-                    }
-                  },
-                  "Resource": {
-                    "id": "Resource",
-                    "path": "IotPipelineStack/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/ServiceRole/Resource",
-                    "attributes": {
-                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
-                      "aws:cdk:cloudformation:props": {
-                        "assumeRolePolicyDocument": {
-                          "Statement": [
-                            {
-                              "Action": "sts:AssumeRole",
-                              "Effect": "Allow",
-                              "Principal": {
-                                "Service": "lambda.amazonaws.com"
-                              }
-                            }
-                          ],
-                          "Version": "2012-10-17"
-                        },
-                        "managedPolicyArns": [
-                          {
-                            "Fn::Join": [
-                              "",
-                              [
-                                "arn:",
-                                {
-                                  "Ref": "AWS::Partition"
-                                },
-                                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
-                              ]
-                            ]
-                          }
-                        ]
-                      }
-                    },
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
-                      "version": "2.122.0"
-                    }
-                  },
-                  "DefaultPolicy": {
-                    "id": "DefaultPolicy",
-                    "path": "IotPipelineStack/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/ServiceRole/DefaultPolicy",
-                    "children": {
-                      "Resource": {
-                        "id": "Resource",
-                        "path": "IotPipelineStack/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/ServiceRole/DefaultPolicy/Resource",
-                        "attributes": {
-                          "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
-                          "aws:cdk:cloudformation:props": {
-                            "policyDocument": {
-                              "Statement": [
-                                {
-                                  "Action": [
-                                    "logs:DeleteRetentionPolicy",
-                                    "logs:PutRetentionPolicy"
-                                  ],
-                                  "Effect": "Allow",
-                                  "Resource": "*"
-                                }
-                              ],
-                              "Version": "2012-10-17"
-                            },
-                            "policyName": "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB",
-                            "roles": [
-                              {
-                                "Ref": "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB"
-                              }
-                            ]
-                          }
-                        },
-                        "constructInfo": {
-                          "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
-                          "version": "2.122.0"
-                        }
-                      }
-                    },
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.aws_iam.Policy",
-                      "version": "2.122.0"
-                    }
-                  }
-                },
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.aws_iam.Role",
-                  "version": "2.122.0"
-                }
-              },
               "Resource": {
                 "id": "Resource",
-                "path": "IotPipelineStack/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/Resource",
+                "path": "BankReconciliationStack/recon-get-status-logs/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Logs::LogGroup",
+                  "aws:cdk:cloudformation:props": {
+                    "logGroupName": "/aws/lambda/recon-get-status",
+                    "retentionInDays": 7
+                  }
+                },
                 "constructInfo": {
-                  "fqn": "aws-cdk-lib.CfnResource",
+                  "fqn": "aws-cdk-lib.aws_logs.CfnLogGroup",
                   "version": "2.122.0"
                 }
               }
             },
             "constructInfo": {
-              "fqn": "constructs.Construct",
-              "version": "10.4.2"
+              "fqn": "aws-cdk-lib.aws_logs.LogGroup",
+              "version": "2.122.0"
             }
           },
-          "iot-get-status": {
-            "id": "iot-get-status",
-            "path": "IotPipelineStack/iot-get-status",
+          "recon-get-status": {
+            "id": "recon-get-status",
+            "path": "BankReconciliationStack/recon-get-status",
             "children": {
               "ServiceRole": {
                 "id": "ServiceRole",
-                "path": "IotPipelineStack/iot-get-status/ServiceRole",
+                "path": "BankReconciliationStack/recon-get-status/ServiceRole",
                 "children": {
                   "ImportServiceRole": {
                     "id": "ImportServiceRole",
-                    "path": "IotPipelineStack/iot-get-status/ServiceRole/ImportServiceRole",
+                    "path": "BankReconciliationStack/recon-get-status/ServiceRole/ImportServiceRole",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.Resource",
                       "version": "2.122.0"
@@ -1499,7 +1117,7 @@
                   },
                   "Resource": {
                     "id": "Resource",
-                    "path": "IotPipelineStack/iot-get-status/ServiceRole/Resource",
+                    "path": "BankReconciliationStack/recon-get-status/ServiceRole/Resource",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::IAM::Role",
                       "aws:cdk:cloudformation:props": {
@@ -1538,11 +1156,11 @@
                   },
                   "DefaultPolicy": {
                     "id": "DefaultPolicy",
-                    "path": "IotPipelineStack/iot-get-status/ServiceRole/DefaultPolicy",
+                    "path": "BankReconciliationStack/recon-get-status/ServiceRole/DefaultPolicy",
                     "children": {
                       "Resource": {
                         "id": "Resource",
-                        "path": "IotPipelineStack/iot-get-status/ServiceRole/DefaultPolicy/Resource",
+                        "path": "BankReconciliationStack/recon-get-status/ServiceRole/DefaultPolicy/Resource",
                         "attributes": {
                           "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
                           "aws:cdk:cloudformation:props": {
@@ -1571,7 +1189,7 @@
                                   "Resource": [
                                     {
                                       "Fn::GetAtt": [
-                                        "FileProcessingJobs5B1A1641",
+                                        "ConciliacaoJobs119D6557",
                                         "Arn"
                                       ]
                                     },
@@ -1583,10 +1201,10 @@
                               ],
                               "Version": "2012-10-17"
                             },
-                            "policyName": "iotgetstatusServiceRoleDefaultPolicy0703AFAC",
+                            "policyName": "recongetstatusServiceRoleDefaultPolicyA83C01A9",
                             "roles": [
                               {
-                                "Ref": "iotgetstatusServiceRoleCEC5AAFE"
+                                "Ref": "recongetstatusServiceRole72EA8A98"
                               }
                             ]
                           }
@@ -1610,11 +1228,11 @@
               },
               "Code": {
                 "id": "Code",
-                "path": "IotPipelineStack/iot-get-status/Code",
+                "path": "BankReconciliationStack/recon-get-status/Code",
                 "children": {
                   "Stage": {
                     "id": "Stage",
-                    "path": "IotPipelineStack/iot-get-status/Code/Stage",
+                    "path": "BankReconciliationStack/recon-get-status/Code/Stage",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.AssetStaging",
                       "version": "2.122.0"
@@ -1622,7 +1240,7 @@
                   },
                   "AssetBucket": {
                     "id": "AssetBucket",
-                    "path": "IotPipelineStack/iot-get-status/Code/AssetBucket",
+                    "path": "BankReconciliationStack/recon-get-status/Code/AssetBucket",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_s3.BucketBase",
                       "version": "2.122.0"
@@ -1636,26 +1254,31 @@
               },
               "Resource": {
                 "id": "Resource",
-                "path": "IotPipelineStack/iot-get-status/Resource",
+                "path": "BankReconciliationStack/recon-get-status/Resource",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
                   "aws:cdk:cloudformation:props": {
                     "code": {
-                      "s3Bucket": "cdk-hnb659fds-assets-008195334540-us-east-1",
+                      "s3Bucket": "cdk-hnb659fds-assets-008195334540-us-east-2",
                       "s3Key": "a8d0e2e988699bdcd6db5295b9abd1c323563722e7a7bdccdf591b27b86a2eb4.zip"
                     },
                     "environment": {
                       "variables": {
                         "TABLE_NAME": {
-                          "Ref": "FileProcessingJobs5B1A1641"
+                          "Ref": "ConciliacaoJobs119D6557"
                         }
                       }
                     },
-                    "functionName": "iot-get-status",
+                    "functionName": "recon-get-status",
                     "handler": "app.lambda_handler",
+                    "loggingConfig": {
+                      "logGroup": {
+                        "Ref": "recongetstatuslogs4763B92E"
+                      }
+                    },
                     "role": {
                       "Fn::GetAtt": [
-                        "iotgetstatusServiceRoleCEC5AAFE",
+                        "recongetstatusServiceRole72EA8A98",
                         "Arn"
                       ]
                     },
@@ -1670,32 +1293,6 @@
                   "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
                   "version": "2.122.0"
                 }
-              },
-              "LogRetention": {
-                "id": "LogRetention",
-                "path": "IotPipelineStack/iot-get-status/LogRetention",
-                "children": {
-                  "Resource": {
-                    "id": "Resource",
-                    "path": "IotPipelineStack/iot-get-status/LogRetention/Resource",
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.CfnResource",
-                      "version": "2.122.0"
-                    }
-                  }
-                },
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.aws_logs.LogRetention",
-                  "version": "2.122.0"
-                }
-              },
-              "LogGroup": {
-                "id": "LogGroup",
-                "path": "IotPipelineStack/iot-get-status/LogGroup",
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.Resource",
-                  "version": "2.122.0"
-                }
               }
             },
             "constructInfo": {
@@ -1703,17 +1300,42 @@
               "version": "2.122.0"
             }
           },
-          "iot-trigger-pipeline": {
-            "id": "iot-trigger-pipeline",
-            "path": "IotPipelineStack/iot-trigger-pipeline",
+          "recon-trigger-pipeline-logs": {
+            "id": "recon-trigger-pipeline-logs",
+            "path": "BankReconciliationStack/recon-trigger-pipeline-logs",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "BankReconciliationStack/recon-trigger-pipeline-logs/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Logs::LogGroup",
+                  "aws:cdk:cloudformation:props": {
+                    "logGroupName": "/aws/lambda/recon-trigger-pipeline",
+                    "retentionInDays": 7
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_logs.CfnLogGroup",
+                  "version": "2.122.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_logs.LogGroup",
+              "version": "2.122.0"
+            }
+          },
+          "recon-trigger-pipeline": {
+            "id": "recon-trigger-pipeline",
+            "path": "BankReconciliationStack/recon-trigger-pipeline",
             "children": {
               "ServiceRole": {
                 "id": "ServiceRole",
-                "path": "IotPipelineStack/iot-trigger-pipeline/ServiceRole",
+                "path": "BankReconciliationStack/recon-trigger-pipeline/ServiceRole",
                 "children": {
                   "ImportServiceRole": {
                     "id": "ImportServiceRole",
-                    "path": "IotPipelineStack/iot-trigger-pipeline/ServiceRole/ImportServiceRole",
+                    "path": "BankReconciliationStack/recon-trigger-pipeline/ServiceRole/ImportServiceRole",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.Resource",
                       "version": "2.122.0"
@@ -1721,7 +1343,7 @@
                   },
                   "Resource": {
                     "id": "Resource",
-                    "path": "IotPipelineStack/iot-trigger-pipeline/ServiceRole/Resource",
+                    "path": "BankReconciliationStack/recon-trigger-pipeline/ServiceRole/Resource",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::IAM::Role",
                       "aws:cdk:cloudformation:props": {
@@ -1760,11 +1382,11 @@
                   },
                   "DefaultPolicy": {
                     "id": "DefaultPolicy",
-                    "path": "IotPipelineStack/iot-trigger-pipeline/ServiceRole/DefaultPolicy",
+                    "path": "BankReconciliationStack/recon-trigger-pipeline/ServiceRole/DefaultPolicy",
                     "children": {
                       "Resource": {
                         "id": "Resource",
-                        "path": "IotPipelineStack/iot-trigger-pipeline/ServiceRole/DefaultPolicy/Resource",
+                        "path": "BankReconciliationStack/recon-trigger-pipeline/ServiceRole/DefaultPolicy/Resource",
                         "attributes": {
                           "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
                           "aws:cdk:cloudformation:props": {
@@ -1790,7 +1412,7 @@
                                   "Resource": [
                                     {
                                       "Fn::GetAtt": [
-                                        "FileProcessingJobs5B1A1641",
+                                        "ConciliacaoJobs119D6557",
                                         "Arn"
                                       ]
                                     },
@@ -1809,10 +1431,10 @@
                               ],
                               "Version": "2012-10-17"
                             },
-                            "policyName": "iottriggerpipelineServiceRoleDefaultPolicy0B7F548E",
+                            "policyName": "recontriggerpipelineServiceRoleDefaultPolicy66197708",
                             "roles": [
                               {
-                                "Ref": "iottriggerpipelineServiceRole35232E09"
+                                "Ref": "recontriggerpipelineServiceRole0C0305EB"
                               }
                             ]
                           }
@@ -1836,11 +1458,11 @@
               },
               "Code": {
                 "id": "Code",
-                "path": "IotPipelineStack/iot-trigger-pipeline/Code",
+                "path": "BankReconciliationStack/recon-trigger-pipeline/Code",
                 "children": {
                   "Stage": {
                     "id": "Stage",
-                    "path": "IotPipelineStack/iot-trigger-pipeline/Code/Stage",
+                    "path": "BankReconciliationStack/recon-trigger-pipeline/Code/Stage",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.AssetStaging",
                       "version": "2.122.0"
@@ -1848,7 +1470,7 @@
                   },
                   "AssetBucket": {
                     "id": "AssetBucket",
-                    "path": "IotPipelineStack/iot-trigger-pipeline/Code/AssetBucket",
+                    "path": "BankReconciliationStack/recon-trigger-pipeline/Code/AssetBucket",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_s3.BucketBase",
                       "version": "2.122.0"
@@ -1862,29 +1484,34 @@
               },
               "Resource": {
                 "id": "Resource",
-                "path": "IotPipelineStack/iot-trigger-pipeline/Resource",
+                "path": "BankReconciliationStack/recon-trigger-pipeline/Resource",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
                   "aws:cdk:cloudformation:props": {
                     "code": {
-                      "s3Bucket": "cdk-hnb659fds-assets-008195334540-us-east-1",
+                      "s3Bucket": "cdk-hnb659fds-assets-008195334540-us-east-2",
                       "s3Key": "5fca89dcd2b5519d662d6058d3f3ee25d9804cbc52672040a6db4ec21655b7d0.zip"
                     },
                     "environment": {
                       "variables": {
                         "TABLE_NAME": {
-                          "Ref": "FileProcessingJobs5B1A1641"
+                          "Ref": "ConciliacaoJobs119D6557"
                         },
                         "STATE_MACHINE_ARN": {
                           "Ref": "PipelineC660917D"
                         }
                       }
                     },
-                    "functionName": "iot-trigger-pipeline",
+                    "functionName": "recon-trigger-pipeline",
                     "handler": "app.lambda_handler",
+                    "loggingConfig": {
+                      "logGroup": {
+                        "Ref": "recontriggerpipelinelogsE8E0E20B"
+                      }
+                    },
                     "role": {
                       "Fn::GetAtt": [
-                        "iottriggerpipelineServiceRole35232E09",
+                        "recontriggerpipelineServiceRole0C0305EB",
                         "Arn"
                       ]
                     },
@@ -1899,32 +1526,6 @@
                   "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
                   "version": "2.122.0"
                 }
-              },
-              "LogRetention": {
-                "id": "LogRetention",
-                "path": "IotPipelineStack/iot-trigger-pipeline/LogRetention",
-                "children": {
-                  "Resource": {
-                    "id": "Resource",
-                    "path": "IotPipelineStack/iot-trigger-pipeline/LogRetention/Resource",
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.CfnResource",
-                      "version": "2.122.0"
-                    }
-                  }
-                },
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.aws_logs.LogRetention",
-                  "version": "2.122.0"
-                }
-              },
-              "LogGroup": {
-                "id": "LogGroup",
-                "path": "IotPipelineStack/iot-trigger-pipeline/LogGroup",
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.Resource",
-                  "version": "2.122.0"
-                }
               }
             },
             "constructInfo": {
@@ -1932,17 +1533,42 @@
               "version": "2.122.0"
             }
           },
-          "iot-save-results": {
-            "id": "iot-save-results",
-            "path": "IotPipelineStack/iot-save-results",
+          "recon-save-results-logs": {
+            "id": "recon-save-results-logs",
+            "path": "BankReconciliationStack/recon-save-results-logs",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "BankReconciliationStack/recon-save-results-logs/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Logs::LogGroup",
+                  "aws:cdk:cloudformation:props": {
+                    "logGroupName": "/aws/lambda/recon-save-results",
+                    "retentionInDays": 7
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_logs.CfnLogGroup",
+                  "version": "2.122.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_logs.LogGroup",
+              "version": "2.122.0"
+            }
+          },
+          "recon-save-results": {
+            "id": "recon-save-results",
+            "path": "BankReconciliationStack/recon-save-results",
             "children": {
               "ServiceRole": {
                 "id": "ServiceRole",
-                "path": "IotPipelineStack/iot-save-results/ServiceRole",
+                "path": "BankReconciliationStack/recon-save-results/ServiceRole",
                 "children": {
                   "ImportServiceRole": {
                     "id": "ImportServiceRole",
-                    "path": "IotPipelineStack/iot-save-results/ServiceRole/ImportServiceRole",
+                    "path": "BankReconciliationStack/recon-save-results/ServiceRole/ImportServiceRole",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.Resource",
                       "version": "2.122.0"
@@ -1950,7 +1576,7 @@
                   },
                   "Resource": {
                     "id": "Resource",
-                    "path": "IotPipelineStack/iot-save-results/ServiceRole/Resource",
+                    "path": "BankReconciliationStack/recon-save-results/ServiceRole/Resource",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::IAM::Role",
                       "aws:cdk:cloudformation:props": {
@@ -1989,11 +1615,11 @@
                   },
                   "DefaultPolicy": {
                     "id": "DefaultPolicy",
-                    "path": "IotPipelineStack/iot-save-results/ServiceRole/DefaultPolicy",
+                    "path": "BankReconciliationStack/recon-save-results/ServiceRole/DefaultPolicy",
                     "children": {
                       "Resource": {
                         "id": "Resource",
-                        "path": "IotPipelineStack/iot-save-results/ServiceRole/DefaultPolicy/Resource",
+                        "path": "BankReconciliationStack/recon-save-results/ServiceRole/DefaultPolicy/Resource",
                         "attributes": {
                           "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
                           "aws:cdk:cloudformation:props": {
@@ -2019,7 +1645,7 @@
                                   "Resource": [
                                     {
                                       "Fn::GetAtt": [
-                                        "FileProcessingJobs5B1A1641",
+                                        "ConciliacaoJobs119D6557",
                                         "Arn"
                                       ]
                                     },
@@ -2031,10 +1657,10 @@
                               ],
                               "Version": "2012-10-17"
                             },
-                            "policyName": "iotsaveresultsServiceRoleDefaultPolicy5B867393",
+                            "policyName": "reconsaveresultsServiceRoleDefaultPolicyF7F13D84",
                             "roles": [
                               {
-                                "Ref": "iotsaveresultsServiceRoleA6C9563E"
+                                "Ref": "reconsaveresultsServiceRole428B7BD9"
                               }
                             ]
                           }
@@ -2058,11 +1684,11 @@
               },
               "Code": {
                 "id": "Code",
-                "path": "IotPipelineStack/iot-save-results/Code",
+                "path": "BankReconciliationStack/recon-save-results/Code",
                 "children": {
                   "Stage": {
                     "id": "Stage",
-                    "path": "IotPipelineStack/iot-save-results/Code/Stage",
+                    "path": "BankReconciliationStack/recon-save-results/Code/Stage",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.AssetStaging",
                       "version": "2.122.0"
@@ -2070,7 +1696,7 @@
                   },
                   "AssetBucket": {
                     "id": "AssetBucket",
-                    "path": "IotPipelineStack/iot-save-results/Code/AssetBucket",
+                    "path": "BankReconciliationStack/recon-save-results/Code/AssetBucket",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_s3.BucketBase",
                       "version": "2.122.0"
@@ -2084,26 +1710,31 @@
               },
               "Resource": {
                 "id": "Resource",
-                "path": "IotPipelineStack/iot-save-results/Resource",
+                "path": "BankReconciliationStack/recon-save-results/Resource",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
                   "aws:cdk:cloudformation:props": {
                     "code": {
-                      "s3Bucket": "cdk-hnb659fds-assets-008195334540-us-east-1",
-                      "s3Key": "746be93931189a37b9c146649a3a7067f5dea41205b5b45d4d21a7c9df45f40e.zip"
+                      "s3Bucket": "cdk-hnb659fds-assets-008195334540-us-east-2",
+                      "s3Key": "b836f4e03855450533e71797cee9a3b2ded5a583c1ef722bebdda87673efe326.zip"
                     },
                     "environment": {
                       "variables": {
                         "TABLE_NAME": {
-                          "Ref": "FileProcessingJobs5B1A1641"
+                          "Ref": "ConciliacaoJobs119D6557"
                         }
                       }
                     },
-                    "functionName": "iot-save-results",
+                    "functionName": "recon-save-results",
                     "handler": "app.lambda_handler",
+                    "loggingConfig": {
+                      "logGroup": {
+                        "Ref": "reconsaveresultslogsA3A9383D"
+                      }
+                    },
                     "role": {
                       "Fn::GetAtt": [
-                        "iotsaveresultsServiceRoleA6C9563E",
+                        "reconsaveresultsServiceRole428B7BD9",
                         "Arn"
                       ]
                     },
@@ -2118,32 +1749,6 @@
                   "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
                   "version": "2.122.0"
                 }
-              },
-              "LogRetention": {
-                "id": "LogRetention",
-                "path": "IotPipelineStack/iot-save-results/LogRetention",
-                "children": {
-                  "Resource": {
-                    "id": "Resource",
-                    "path": "IotPipelineStack/iot-save-results/LogRetention/Resource",
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.CfnResource",
-                      "version": "2.122.0"
-                    }
-                  }
-                },
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.aws_logs.LogRetention",
-                  "version": "2.122.0"
-                }
-              },
-              "LogGroup": {
-                "id": "LogGroup",
-                "path": "IotPipelineStack/iot-save-results/LogGroup",
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.Resource",
-                  "version": "2.122.0"
-                }
               }
             },
             "constructInfo": {
@@ -2151,17 +1756,42 @@
               "version": "2.122.0"
             }
           },
-          "iot-notify": {
-            "id": "iot-notify",
-            "path": "IotPipelineStack/iot-notify",
+          "recon-notify-logs": {
+            "id": "recon-notify-logs",
+            "path": "BankReconciliationStack/recon-notify-logs",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "BankReconciliationStack/recon-notify-logs/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Logs::LogGroup",
+                  "aws:cdk:cloudformation:props": {
+                    "logGroupName": "/aws/lambda/recon-notify",
+                    "retentionInDays": 7
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_logs.CfnLogGroup",
+                  "version": "2.122.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_logs.LogGroup",
+              "version": "2.122.0"
+            }
+          },
+          "recon-notify": {
+            "id": "recon-notify",
+            "path": "BankReconciliationStack/recon-notify",
             "children": {
               "ServiceRole": {
                 "id": "ServiceRole",
-                "path": "IotPipelineStack/iot-notify/ServiceRole",
+                "path": "BankReconciliationStack/recon-notify/ServiceRole",
                 "children": {
                   "ImportServiceRole": {
                     "id": "ImportServiceRole",
-                    "path": "IotPipelineStack/iot-notify/ServiceRole/ImportServiceRole",
+                    "path": "BankReconciliationStack/recon-notify/ServiceRole/ImportServiceRole",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.Resource",
                       "version": "2.122.0"
@@ -2169,7 +1799,7 @@
                   },
                   "Resource": {
                     "id": "Resource",
-                    "path": "IotPipelineStack/iot-notify/ServiceRole/Resource",
+                    "path": "BankReconciliationStack/recon-notify/ServiceRole/Resource",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::IAM::Role",
                       "aws:cdk:cloudformation:props": {
@@ -2208,11 +1838,11 @@
                   },
                   "DefaultPolicy": {
                     "id": "DefaultPolicy",
-                    "path": "IotPipelineStack/iot-notify/ServiceRole/DefaultPolicy",
+                    "path": "BankReconciliationStack/recon-notify/ServiceRole/DefaultPolicy",
                     "children": {
                       "Resource": {
                         "id": "Resource",
-                        "path": "IotPipelineStack/iot-notify/ServiceRole/DefaultPolicy/Resource",
+                        "path": "BankReconciliationStack/recon-notify/ServiceRole/DefaultPolicy/Resource",
                         "attributes": {
                           "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
                           "aws:cdk:cloudformation:props": {
@@ -2248,7 +1878,7 @@
                                   "Resource": [
                                     {
                                       "Fn::GetAtt": [
-                                        "FileProcessingJobs5B1A1641",
+                                        "ConciliacaoJobs119D6557",
                                         "Arn"
                                       ]
                                     },
@@ -2260,10 +1890,10 @@
                               ],
                               "Version": "2012-10-17"
                             },
-                            "policyName": "iotnotifyServiceRoleDefaultPolicyCE0C69F3",
+                            "policyName": "reconnotifyServiceRoleDefaultPolicy9B85FCFE",
                             "roles": [
                               {
-                                "Ref": "iotnotifyServiceRoleF63D016A"
+                                "Ref": "reconnotifyServiceRoleE4525C56"
                               }
                             ]
                           }
@@ -2287,11 +1917,11 @@
               },
               "Code": {
                 "id": "Code",
-                "path": "IotPipelineStack/iot-notify/Code",
+                "path": "BankReconciliationStack/recon-notify/Code",
                 "children": {
                   "Stage": {
                     "id": "Stage",
-                    "path": "IotPipelineStack/iot-notify/Code/Stage",
+                    "path": "BankReconciliationStack/recon-notify/Code/Stage",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.AssetStaging",
                       "version": "2.122.0"
@@ -2299,7 +1929,7 @@
                   },
                   "AssetBucket": {
                     "id": "AssetBucket",
-                    "path": "IotPipelineStack/iot-notify/Code/AssetBucket",
+                    "path": "BankReconciliationStack/recon-notify/Code/AssetBucket",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_s3.BucketBase",
                       "version": "2.122.0"
@@ -2313,13 +1943,13 @@
               },
               "Resource": {
                 "id": "Resource",
-                "path": "IotPipelineStack/iot-notify/Resource",
+                "path": "BankReconciliationStack/recon-notify/Resource",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
                   "aws:cdk:cloudformation:props": {
                     "code": {
-                      "s3Bucket": "cdk-hnb659fds-assets-008195334540-us-east-1",
-                      "s3Key": "2a5f361471f4561c99ac3cff9b819207b91ccd83bdaca78c10c31ddb39117108.zip"
+                      "s3Bucket": "cdk-hnb659fds-assets-008195334540-us-east-2",
+                      "s3Key": "52e524936ce35ca4fa08e8168cc8baf875592fbaf0e52bec3846e77745d1921d.zip"
                     },
                     "environment": {
                       "variables": {
@@ -2327,15 +1957,20 @@
                           "Ref": "Notifications87298708"
                         },
                         "TABLE_NAME": {
-                          "Ref": "FileProcessingJobs5B1A1641"
+                          "Ref": "ConciliacaoJobs119D6557"
                         }
                       }
                     },
-                    "functionName": "iot-notify",
+                    "functionName": "recon-notify",
                     "handler": "app.lambda_handler",
+                    "loggingConfig": {
+                      "logGroup": {
+                        "Ref": "reconnotifylogsBF81F10F"
+                      }
+                    },
                     "role": {
                       "Fn::GetAtt": [
-                        "iotnotifyServiceRoleF63D016A",
+                        "reconnotifyServiceRoleE4525C56",
                         "Arn"
                       ]
                     },
@@ -2350,32 +1985,6 @@
                   "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
                   "version": "2.122.0"
                 }
-              },
-              "LogRetention": {
-                "id": "LogRetention",
-                "path": "IotPipelineStack/iot-notify/LogRetention",
-                "children": {
-                  "Resource": {
-                    "id": "Resource",
-                    "path": "IotPipelineStack/iot-notify/LogRetention/Resource",
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.CfnResource",
-                      "version": "2.122.0"
-                    }
-                  }
-                },
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.aws_logs.LogRetention",
-                  "version": "2.122.0"
-                }
-              },
-              "LogGroup": {
-                "id": "LogGroup",
-                "path": "IotPipelineStack/iot-notify/LogGroup",
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.Resource",
-                  "version": "2.122.0"
-                }
               }
             },
             "constructInfo": {
@@ -2385,11 +1994,11 @@
           },
           "StateMachineLogs": {
             "id": "StateMachineLogs",
-            "path": "IotPipelineStack/StateMachineLogs",
+            "path": "BankReconciliationStack/StateMachineLogs",
             "children": {
               "Resource": {
                 "id": "Resource",
-                "path": "IotPipelineStack/StateMachineLogs/Resource",
+                "path": "BankReconciliationStack/StateMachineLogs/Resource",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::Logs::LogGroup",
                   "aws:cdk:cloudformation:props": {
@@ -2409,15 +2018,15 @@
           },
           "Pipeline": {
             "id": "Pipeline",
-            "path": "IotPipelineStack/Pipeline",
+            "path": "BankReconciliationStack/Pipeline",
             "children": {
               "Role": {
                 "id": "Role",
-                "path": "IotPipelineStack/Pipeline/Role",
+                "path": "BankReconciliationStack/Pipeline/Role",
                 "children": {
                   "ImportRole": {
                     "id": "ImportRole",
-                    "path": "IotPipelineStack/Pipeline/Role/ImportRole",
+                    "path": "BankReconciliationStack/Pipeline/Role/ImportRole",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.Resource",
                       "version": "2.122.0"
@@ -2425,7 +2034,7 @@
                   },
                   "Resource": {
                     "id": "Resource",
-                    "path": "IotPipelineStack/Pipeline/Role/Resource",
+                    "path": "BankReconciliationStack/Pipeline/Role/Resource",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::IAM::Role",
                       "aws:cdk:cloudformation:props": {
@@ -2435,7 +2044,7 @@
                               "Action": "sts:AssumeRole",
                               "Effect": "Allow",
                               "Principal": {
-                                "Service": "states.us-east-1.amazonaws.com"
+                                "Service": "states.us-east-2.amazonaws.com"
                               }
                             }
                           ],
@@ -2450,11 +2059,11 @@
                   },
                   "DefaultPolicy": {
                     "id": "DefaultPolicy",
-                    "path": "IotPipelineStack/Pipeline/Role/DefaultPolicy",
+                    "path": "BankReconciliationStack/Pipeline/Role/DefaultPolicy",
                     "children": {
                       "Resource": {
                         "id": "Resource",
-                        "path": "IotPipelineStack/Pipeline/Role/DefaultPolicy/Resource",
+                        "path": "BankReconciliationStack/Pipeline/Role/DefaultPolicy/Resource",
                         "attributes": {
                           "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
                           "aws:cdk:cloudformation:props": {
@@ -2465,6 +2074,9 @@
                                     "batch:DescribeJobs",
                                     "batch:SubmitJob",
                                     "batch:TerminateJob",
+                                    "events:DescribeRule",
+                                    "events:PutRule",
+                                    "events:PutTargets",
                                     "logs:CreateLogDelivery",
                                     "logs:DeleteLogDelivery",
                                     "logs:DescribeLogGroups",
@@ -2487,13 +2099,13 @@
                                   "Resource": [
                                     {
                                       "Fn::GetAtt": [
-                                        "iotnotifyEBE4242A",
+                                        "reconnotify816F4C88",
                                         "Arn"
                                       ]
                                     },
                                     {
                                       "Fn::GetAtt": [
-                                        "iotsaveresultsF6342EB3",
+                                        "reconsaveresultsF2E08194",
                                         "Arn"
                                       ]
                                     },
@@ -2503,7 +2115,7 @@
                                         [
                                           {
                                             "Fn::GetAtt": [
-                                              "iotnotifyEBE4242A",
+                                              "reconnotify816F4C88",
                                               "Arn"
                                             ]
                                           },
@@ -2517,7 +2129,7 @@
                                         [
                                           {
                                             "Fn::GetAtt": [
-                                              "iotsaveresultsF6342EB3",
+                                              "reconsaveresultsF2E08194",
                                               "Arn"
                                             ]
                                           },
@@ -2526,15 +2138,6 @@
                                       ]
                                     }
                                   ]
-                                },
-                                {
-                                  "Action": [
-                                    "events:DescribeRule",
-                                    "events:PutRule",
-                                    "events:PutTargets"
-                                  ],
-                                  "Effect": "Allow",
-                                  "Resource": "arn:aws:events:us-east-1:008195334540:rule/StepFunctionsGetEventsForBatchJobsRule"
                                 }
                               ],
                               "Version": "2012-10-17"
@@ -2566,11 +2169,11 @@
               },
               "DefinitionBody": {
                 "id": "DefinitionBody",
-                "path": "IotPipelineStack/Pipeline/DefinitionBody",
+                "path": "BankReconciliationStack/Pipeline/DefinitionBody",
                 "children": {
                   "Stage": {
                     "id": "Stage",
-                    "path": "IotPipelineStack/Pipeline/DefinitionBody/Stage",
+                    "path": "BankReconciliationStack/Pipeline/DefinitionBody/Stage",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.AssetStaging",
                       "version": "2.122.0"
@@ -2578,7 +2181,7 @@
                   },
                   "AssetBucket": {
                     "id": "AssetBucket",
-                    "path": "IotPipelineStack/Pipeline/DefinitionBody/AssetBucket",
+                    "path": "BankReconciliationStack/Pipeline/DefinitionBody/AssetBucket",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_s3.BucketBase",
                       "version": "2.122.0"
@@ -2592,24 +2195,24 @@
               },
               "Resource": {
                 "id": "Resource",
-                "path": "IotPipelineStack/Pipeline/Resource",
+                "path": "BankReconciliationStack/Pipeline/Resource",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::StepFunctions::StateMachine",
                   "aws:cdk:cloudformation:props": {
                     "definitionS3Location": {
-                      "bucket": "cdk-hnb659fds-assets-008195334540-us-east-1",
-                      "key": "a7b518bb491a1124b3a1dc337a546d76d7e5fda13c44bb87b0516c2ea7ebaaf6.json"
+                      "bucket": "cdk-hnb659fds-assets-008195334540-us-east-2",
+                      "key": "e31330d4b722f4de8f8767b1f289953815e4ba3803cdd63f0c4b8962838d452a.json"
                     },
                     "definitionSubstitutions": {
                       "SaveResultsFunctionArn": {
                         "Fn::GetAtt": [
-                          "iotsaveresultsF6342EB3",
+                          "reconsaveresultsF2E08194",
                           "Arn"
                         ]
                       },
                       "NotifyFunctionArn": {
                         "Fn::GetAtt": [
-                          "iotnotifyEBE4242A",
+                          "reconnotify816F4C88",
                           "Arn"
                         ]
                       },
@@ -2645,7 +2248,7 @@
                         "Arn"
                       ]
                     },
-                    "stateMachineName": "iot-pipeline",
+                    "stateMachineName": "bank-reconciliation-pipeline",
                     "stateMachineType": "STANDARD",
                     "tracingConfiguration": {
                       "enabled": true
@@ -2665,15 +2268,15 @@
           },
           "BucketNotificationsHandler050a0587b7544547bf325f094a3db834": {
             "id": "BucketNotificationsHandler050a0587b7544547bf325f094a3db834",
-            "path": "IotPipelineStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834",
+            "path": "BankReconciliationStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834",
             "children": {
               "Role": {
                 "id": "Role",
-                "path": "IotPipelineStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role",
+                "path": "BankReconciliationStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role",
                 "children": {
                   "ImportRole": {
                     "id": "ImportRole",
-                    "path": "IotPipelineStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/ImportRole",
+                    "path": "BankReconciliationStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/ImportRole",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.Resource",
                       "version": "2.122.0"
@@ -2681,7 +2284,7 @@
                   },
                   "Resource": {
                     "id": "Resource",
-                    "path": "IotPipelineStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/Resource",
+                    "path": "BankReconciliationStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/Resource",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::IAM::Role",
                       "aws:cdk:cloudformation:props": {
@@ -2720,11 +2323,11 @@
                   },
                   "DefaultPolicy": {
                     "id": "DefaultPolicy",
-                    "path": "IotPipelineStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/DefaultPolicy",
+                    "path": "BankReconciliationStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/DefaultPolicy",
                     "children": {
                       "Resource": {
                         "id": "Resource",
-                        "path": "IotPipelineStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/DefaultPolicy/Resource",
+                        "path": "BankReconciliationStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/DefaultPolicy/Resource",
                         "attributes": {
                           "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
                           "aws:cdk:cloudformation:props": {
@@ -2765,7 +2368,7 @@
               },
               "Resource": {
                 "id": "Resource",
-                "path": "IotPipelineStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Resource",
+                "path": "BankReconciliationStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Resource",
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.CfnResource",
                   "version": "2.122.0"
@@ -2777,18 +2380,18 @@
               "version": "10.4.2"
             }
           },
-          "IotPipelineApi": {
-            "id": "IotPipelineApi",
-            "path": "IotPipelineStack/IotPipelineApi",
+          "BankReconciliationApi": {
+            "id": "BankReconciliationApi",
+            "path": "BankReconciliationStack/BankReconciliationApi",
             "children": {
               "Resource": {
                 "id": "Resource",
-                "path": "IotPipelineStack/IotPipelineApi/Resource",
+                "path": "BankReconciliationStack/BankReconciliationApi/Resource",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::ApiGateway::RestApi",
                   "aws:cdk:cloudformation:props": {
-                    "description": "API Gateway do Portal de Processamento IoT — Demo Serverless AWS",
-                    "name": "iot-pipeline-api"
+                    "description": "API Gateway do Portal de Conciliação Bancária — Demo Serverless AWS",
+                    "name": "bank-reconciliation-api"
                   }
                 },
                 "constructInfo": {
@@ -2798,11 +2401,11 @@
               },
               "CloudWatchRole": {
                 "id": "CloudWatchRole",
-                "path": "IotPipelineStack/IotPipelineApi/CloudWatchRole",
+                "path": "BankReconciliationStack/BankReconciliationApi/CloudWatchRole",
                 "children": {
                   "ImportCloudWatchRole": {
                     "id": "ImportCloudWatchRole",
-                    "path": "IotPipelineStack/IotPipelineApi/CloudWatchRole/ImportCloudWatchRole",
+                    "path": "BankReconciliationStack/BankReconciliationApi/CloudWatchRole/ImportCloudWatchRole",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.Resource",
                       "version": "2.122.0"
@@ -2810,7 +2413,7 @@
                   },
                   "Resource": {
                     "id": "Resource",
-                    "path": "IotPipelineStack/IotPipelineApi/CloudWatchRole/Resource",
+                    "path": "BankReconciliationStack/BankReconciliationApi/CloudWatchRole/Resource",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::IAM::Role",
                       "aws:cdk:cloudformation:props": {
@@ -2855,13 +2458,13 @@
               },
               "Account": {
                 "id": "Account",
-                "path": "IotPipelineStack/IotPipelineApi/Account",
+                "path": "BankReconciliationStack/BankReconciliationApi/Account",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::ApiGateway::Account",
                   "aws:cdk:cloudformation:props": {
                     "cloudWatchRoleArn": {
                       "Fn::GetAtt": [
-                        "IotPipelineApiCloudWatchRole001B93A8",
+                        "BankReconciliationApiCloudWatchRoleC3976DF5",
                         "Arn"
                       ]
                     }
@@ -2874,17 +2477,17 @@
               },
               "Deployment": {
                 "id": "Deployment",
-                "path": "IotPipelineStack/IotPipelineApi/Deployment",
+                "path": "BankReconciliationStack/BankReconciliationApi/Deployment",
                 "children": {
                   "Resource": {
                     "id": "Resource",
-                    "path": "IotPipelineStack/IotPipelineApi/Deployment/Resource",
+                    "path": "BankReconciliationStack/BankReconciliationApi/Deployment/Resource",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::ApiGateway::Deployment",
                       "aws:cdk:cloudformation:props": {
-                        "description": "API Gateway do Portal de Processamento IoT — Demo Serverless AWS",
+                        "description": "API Gateway do Portal de Conciliação Bancária — Demo Serverless AWS",
                         "restApiId": {
-                          "Ref": "IotPipelineApi5220724E"
+                          "Ref": "BankReconciliationApi24CDB576"
                         }
                       }
                     },
@@ -2901,16 +2504,16 @@
               },
               "DeploymentStage.prod": {
                 "id": "DeploymentStage.prod",
-                "path": "IotPipelineStack/IotPipelineApi/DeploymentStage.prod",
+                "path": "BankReconciliationStack/BankReconciliationApi/DeploymentStage.prod",
                 "children": {
                   "Resource": {
                     "id": "Resource",
-                    "path": "IotPipelineStack/IotPipelineApi/DeploymentStage.prod/Resource",
+                    "path": "BankReconciliationStack/BankReconciliationApi/DeploymentStage.prod/Resource",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::ApiGateway::Stage",
                       "aws:cdk:cloudformation:props": {
                         "deploymentId": {
-                          "Ref": "IotPipelineApiDeployment4395B75De2b3e5ae230df092f29cda2838fed42c"
+                          "Ref": "BankReconciliationApiDeploymentB6B813F45d2b997650c543e23ecd1130ec004f82"
                         },
                         "methodSettings": [
                           {
@@ -2922,7 +2525,7 @@
                           }
                         ],
                         "restApiId": {
-                          "Ref": "IotPipelineApi5220724E"
+                          "Ref": "BankReconciliationApi24CDB576"
                         },
                         "stageName": "prod",
                         "tracingEnabled": true
@@ -2941,7 +2544,7 @@
               },
               "Endpoint": {
                 "id": "Endpoint",
-                "path": "IotPipelineStack/IotPipelineApi/Endpoint",
+                "path": "BankReconciliationStack/BankReconciliationApi/Endpoint",
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.CfnOutput",
                   "version": "2.122.0"
@@ -2949,15 +2552,15 @@
               },
               "Default": {
                 "id": "Default",
-                "path": "IotPipelineStack/IotPipelineApi/Default",
+                "path": "BankReconciliationStack/BankReconciliationApi/Default",
                 "children": {
                   "OPTIONS": {
                     "id": "OPTIONS",
-                    "path": "IotPipelineStack/IotPipelineApi/Default/OPTIONS",
+                    "path": "BankReconciliationStack/BankReconciliationApi/Default/OPTIONS",
                     "children": {
                       "Resource": {
                         "id": "Resource",
-                        "path": "IotPipelineStack/IotPipelineApi/Default/OPTIONS/Resource",
+                        "path": "BankReconciliationStack/BankReconciliationApi/Default/OPTIONS/Resource",
                         "attributes": {
                           "aws:cdk:cloudformation:type": "AWS::ApiGateway::Method",
                           "aws:cdk:cloudformation:props": {
@@ -2992,12 +2595,12 @@
                             ],
                             "resourceId": {
                               "Fn::GetAtt": [
-                                "IotPipelineApi5220724E",
+                                "BankReconciliationApi24CDB576",
                                 "RootResourceId"
                               ]
                             },
                             "restApiId": {
-                              "Ref": "IotPipelineApi5220724E"
+                              "Ref": "BankReconciliationApi24CDB576"
                             }
                           }
                         },
@@ -3014,23 +2617,23 @@
                   },
                   "upload": {
                     "id": "upload",
-                    "path": "IotPipelineStack/IotPipelineApi/Default/upload",
+                    "path": "BankReconciliationStack/BankReconciliationApi/Default/upload",
                     "children": {
                       "Resource": {
                         "id": "Resource",
-                        "path": "IotPipelineStack/IotPipelineApi/Default/upload/Resource",
+                        "path": "BankReconciliationStack/BankReconciliationApi/Default/upload/Resource",
                         "attributes": {
                           "aws:cdk:cloudformation:type": "AWS::ApiGateway::Resource",
                           "aws:cdk:cloudformation:props": {
                             "parentId": {
                               "Fn::GetAtt": [
-                                "IotPipelineApi5220724E",
+                                "BankReconciliationApi24CDB576",
                                 "RootResourceId"
                               ]
                             },
                             "pathPart": "upload",
                             "restApiId": {
-                              "Ref": "IotPipelineApi5220724E"
+                              "Ref": "BankReconciliationApi24CDB576"
                             }
                           }
                         },
@@ -3041,11 +2644,11 @@
                       },
                       "OPTIONS": {
                         "id": "OPTIONS",
-                        "path": "IotPipelineStack/IotPipelineApi/Default/upload/OPTIONS",
+                        "path": "BankReconciliationStack/BankReconciliationApi/Default/upload/OPTIONS",
                         "children": {
                           "Resource": {
                             "id": "Resource",
-                            "path": "IotPipelineStack/IotPipelineApi/Default/upload/OPTIONS/Resource",
+                            "path": "BankReconciliationStack/BankReconciliationApi/Default/upload/OPTIONS/Resource",
                             "attributes": {
                               "aws:cdk:cloudformation:type": "AWS::ApiGateway::Method",
                               "aws:cdk:cloudformation:props": {
@@ -3079,10 +2682,10 @@
                                   }
                                 ],
                                 "resourceId": {
-                                  "Ref": "IotPipelineApiupload77D8AE2B"
+                                  "Ref": "BankReconciliationApiupload140C2487"
                                 },
                                 "restApiId": {
-                                  "Ref": "IotPipelineApi5220724E"
+                                  "Ref": "BankReconciliationApi24CDB576"
                                 }
                               }
                             },
@@ -3099,18 +2702,18 @@
                       },
                       "POST": {
                         "id": "POST",
-                        "path": "IotPipelineStack/IotPipelineApi/Default/upload/POST",
+                        "path": "BankReconciliationStack/BankReconciliationApi/Default/upload/POST",
                         "children": {
-                          "ApiPermission.IotPipelineStackIotPipelineApi65289365.POST..upload": {
-                            "id": "ApiPermission.IotPipelineStackIotPipelineApi65289365.POST..upload",
-                            "path": "IotPipelineStack/IotPipelineApi/Default/upload/POST/ApiPermission.IotPipelineStackIotPipelineApi65289365.POST..upload",
+                          "ApiPermission.BankReconciliationStackBankReconciliationApi48940206.POST..upload": {
+                            "id": "ApiPermission.BankReconciliationStackBankReconciliationApi48940206.POST..upload",
+                            "path": "BankReconciliationStack/BankReconciliationApi/Default/upload/POST/ApiPermission.BankReconciliationStackBankReconciliationApi48940206.POST..upload",
                             "attributes": {
                               "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
                               "aws:cdk:cloudformation:props": {
                                 "action": "lambda:InvokeFunction",
                                 "functionName": {
                                   "Fn::GetAtt": [
-                                    "iotpresignedurlF8E207F7",
+                                    "reconpresignedurlC557D3F9",
                                     "Arn"
                                   ]
                                 },
@@ -3119,13 +2722,13 @@
                                   "Fn::Join": [
                                     "",
                                     [
-                                      "arn:aws:execute-api:us-east-1:008195334540:",
+                                      "arn:aws:execute-api:us-east-2:008195334540:",
                                       {
-                                        "Ref": "IotPipelineApi5220724E"
+                                        "Ref": "BankReconciliationApi24CDB576"
                                       },
                                       "/",
                                       {
-                                        "Ref": "IotPipelineApiDeploymentStageprodBCDA6F38"
+                                        "Ref": "BankReconciliationApiDeploymentStageprod4E84B801"
                                       },
                                       "/POST/upload"
                                     ]
@@ -3138,16 +2741,16 @@
                               "version": "2.122.0"
                             }
                           },
-                          "ApiPermission.Test.IotPipelineStackIotPipelineApi65289365.POST..upload": {
-                            "id": "ApiPermission.Test.IotPipelineStackIotPipelineApi65289365.POST..upload",
-                            "path": "IotPipelineStack/IotPipelineApi/Default/upload/POST/ApiPermission.Test.IotPipelineStackIotPipelineApi65289365.POST..upload",
+                          "ApiPermission.Test.BankReconciliationStackBankReconciliationApi48940206.POST..upload": {
+                            "id": "ApiPermission.Test.BankReconciliationStackBankReconciliationApi48940206.POST..upload",
+                            "path": "BankReconciliationStack/BankReconciliationApi/Default/upload/POST/ApiPermission.Test.BankReconciliationStackBankReconciliationApi48940206.POST..upload",
                             "attributes": {
                               "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
                               "aws:cdk:cloudformation:props": {
                                 "action": "lambda:InvokeFunction",
                                 "functionName": {
                                   "Fn::GetAtt": [
-                                    "iotpresignedurlF8E207F7",
+                                    "reconpresignedurlC557D3F9",
                                     "Arn"
                                   ]
                                 },
@@ -3156,9 +2759,9 @@
                                   "Fn::Join": [
                                     "",
                                     [
-                                      "arn:aws:execute-api:us-east-1:008195334540:",
+                                      "arn:aws:execute-api:us-east-2:008195334540:",
                                       {
-                                        "Ref": "IotPipelineApi5220724E"
+                                        "Ref": "BankReconciliationApi24CDB576"
                                       },
                                       "/test-invoke-stage/POST/upload"
                                     ]
@@ -3173,7 +2776,7 @@
                           },
                           "Resource": {
                             "id": "Resource",
-                            "path": "IotPipelineStack/IotPipelineApi/Default/upload/POST/Resource",
+                            "path": "BankReconciliationStack/BankReconciliationApi/Default/upload/POST/Resource",
                             "attributes": {
                               "aws:cdk:cloudformation:type": "AWS::ApiGateway::Method",
                               "aws:cdk:cloudformation:props": {
@@ -3185,10 +2788,10 @@
                                     "Fn::Join": [
                                       "",
                                       [
-                                        "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/",
+                                        "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/",
                                         {
                                           "Fn::GetAtt": [
-                                            "iotpresignedurlF8E207F7",
+                                            "reconpresignedurlC557D3F9",
                                             "Arn"
                                           ]
                                         },
@@ -3210,10 +2813,10 @@
                                   }
                                 ],
                                 "resourceId": {
-                                  "Ref": "IotPipelineApiupload77D8AE2B"
+                                  "Ref": "BankReconciliationApiupload140C2487"
                                 },
                                 "restApiId": {
-                                  "Ref": "IotPipelineApi5220724E"
+                                  "Ref": "BankReconciliationApi24CDB576"
                                 }
                               }
                             },
@@ -3236,23 +2839,23 @@
                   },
                   "status": {
                     "id": "status",
-                    "path": "IotPipelineStack/IotPipelineApi/Default/status",
+                    "path": "BankReconciliationStack/BankReconciliationApi/Default/status",
                     "children": {
                       "Resource": {
                         "id": "Resource",
-                        "path": "IotPipelineStack/IotPipelineApi/Default/status/Resource",
+                        "path": "BankReconciliationStack/BankReconciliationApi/Default/status/Resource",
                         "attributes": {
                           "aws:cdk:cloudformation:type": "AWS::ApiGateway::Resource",
                           "aws:cdk:cloudformation:props": {
                             "parentId": {
                               "Fn::GetAtt": [
-                                "IotPipelineApi5220724E",
+                                "BankReconciliationApi24CDB576",
                                 "RootResourceId"
                               ]
                             },
                             "pathPart": "status",
                             "restApiId": {
-                              "Ref": "IotPipelineApi5220724E"
+                              "Ref": "BankReconciliationApi24CDB576"
                             }
                           }
                         },
@@ -3263,11 +2866,11 @@
                       },
                       "OPTIONS": {
                         "id": "OPTIONS",
-                        "path": "IotPipelineStack/IotPipelineApi/Default/status/OPTIONS",
+                        "path": "BankReconciliationStack/BankReconciliationApi/Default/status/OPTIONS",
                         "children": {
                           "Resource": {
                             "id": "Resource",
-                            "path": "IotPipelineStack/IotPipelineApi/Default/status/OPTIONS/Resource",
+                            "path": "BankReconciliationStack/BankReconciliationApi/Default/status/OPTIONS/Resource",
                             "attributes": {
                               "aws:cdk:cloudformation:type": "AWS::ApiGateway::Method",
                               "aws:cdk:cloudformation:props": {
@@ -3301,10 +2904,10 @@
                                   }
                                 ],
                                 "resourceId": {
-                                  "Ref": "IotPipelineApistatus29CE5035"
+                                  "Ref": "BankReconciliationApistatus8F6B34DB"
                                 },
                                 "restApiId": {
-                                  "Ref": "IotPipelineApi5220724E"
+                                  "Ref": "BankReconciliationApi24CDB576"
                                 }
                               }
                             },
@@ -3321,18 +2924,18 @@
                       },
                       "GET": {
                         "id": "GET",
-                        "path": "IotPipelineStack/IotPipelineApi/Default/status/GET",
+                        "path": "BankReconciliationStack/BankReconciliationApi/Default/status/GET",
                         "children": {
-                          "ApiPermission.IotPipelineStackIotPipelineApi65289365.GET..status": {
-                            "id": "ApiPermission.IotPipelineStackIotPipelineApi65289365.GET..status",
-                            "path": "IotPipelineStack/IotPipelineApi/Default/status/GET/ApiPermission.IotPipelineStackIotPipelineApi65289365.GET..status",
+                          "ApiPermission.BankReconciliationStackBankReconciliationApi48940206.GET..status": {
+                            "id": "ApiPermission.BankReconciliationStackBankReconciliationApi48940206.GET..status",
+                            "path": "BankReconciliationStack/BankReconciliationApi/Default/status/GET/ApiPermission.BankReconciliationStackBankReconciliationApi48940206.GET..status",
                             "attributes": {
                               "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
                               "aws:cdk:cloudformation:props": {
                                 "action": "lambda:InvokeFunction",
                                 "functionName": {
                                   "Fn::GetAtt": [
-                                    "iotgetstatus1B26DE32",
+                                    "recongetstatusE8F208D9",
                                     "Arn"
                                   ]
                                 },
@@ -3341,13 +2944,13 @@
                                   "Fn::Join": [
                                     "",
                                     [
-                                      "arn:aws:execute-api:us-east-1:008195334540:",
+                                      "arn:aws:execute-api:us-east-2:008195334540:",
                                       {
-                                        "Ref": "IotPipelineApi5220724E"
+                                        "Ref": "BankReconciliationApi24CDB576"
                                       },
                                       "/",
                                       {
-                                        "Ref": "IotPipelineApiDeploymentStageprodBCDA6F38"
+                                        "Ref": "BankReconciliationApiDeploymentStageprod4E84B801"
                                       },
                                       "/GET/status"
                                     ]
@@ -3360,16 +2963,16 @@
                               "version": "2.122.0"
                             }
                           },
-                          "ApiPermission.Test.IotPipelineStackIotPipelineApi65289365.GET..status": {
-                            "id": "ApiPermission.Test.IotPipelineStackIotPipelineApi65289365.GET..status",
-                            "path": "IotPipelineStack/IotPipelineApi/Default/status/GET/ApiPermission.Test.IotPipelineStackIotPipelineApi65289365.GET..status",
+                          "ApiPermission.Test.BankReconciliationStackBankReconciliationApi48940206.GET..status": {
+                            "id": "ApiPermission.Test.BankReconciliationStackBankReconciliationApi48940206.GET..status",
+                            "path": "BankReconciliationStack/BankReconciliationApi/Default/status/GET/ApiPermission.Test.BankReconciliationStackBankReconciliationApi48940206.GET..status",
                             "attributes": {
                               "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
                               "aws:cdk:cloudformation:props": {
                                 "action": "lambda:InvokeFunction",
                                 "functionName": {
                                   "Fn::GetAtt": [
-                                    "iotgetstatus1B26DE32",
+                                    "recongetstatusE8F208D9",
                                     "Arn"
                                   ]
                                 },
@@ -3378,9 +2981,9 @@
                                   "Fn::Join": [
                                     "",
                                     [
-                                      "arn:aws:execute-api:us-east-1:008195334540:",
+                                      "arn:aws:execute-api:us-east-2:008195334540:",
                                       {
-                                        "Ref": "IotPipelineApi5220724E"
+                                        "Ref": "BankReconciliationApi24CDB576"
                                       },
                                       "/test-invoke-stage/GET/status"
                                     ]
@@ -3395,7 +2998,7 @@
                           },
                           "Resource": {
                             "id": "Resource",
-                            "path": "IotPipelineStack/IotPipelineApi/Default/status/GET/Resource",
+                            "path": "BankReconciliationStack/BankReconciliationApi/Default/status/GET/Resource",
                             "attributes": {
                               "aws:cdk:cloudformation:type": "AWS::ApiGateway::Method",
                               "aws:cdk:cloudformation:props": {
@@ -3407,10 +3010,10 @@
                                     "Fn::Join": [
                                       "",
                                       [
-                                        "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/",
+                                        "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/",
                                         {
                                           "Fn::GetAtt": [
-                                            "iotgetstatus1B26DE32",
+                                            "recongetstatusE8F208D9",
                                             "Arn"
                                           ]
                                         },
@@ -3426,10 +3029,10 @@
                                   }
                                 ],
                                 "resourceId": {
-                                  "Ref": "IotPipelineApistatus29CE5035"
+                                  "Ref": "BankReconciliationApistatus8F6B34DB"
                                 },
                                 "restApiId": {
-                                  "Ref": "IotPipelineApi5220724E"
+                                  "Ref": "BankReconciliationApi24CDB576"
                                 }
                               }
                             },
@@ -3464,7 +3067,7 @@
           },
           "ApiUrl": {
             "id": "ApiUrl",
-            "path": "IotPipelineStack/ApiUrl",
+            "path": "BankReconciliationStack/ApiUrl",
             "constructInfo": {
               "fqn": "aws-cdk-lib.CfnOutput",
               "version": "2.122.0"
@@ -3472,7 +3075,7 @@
           },
           "BucketName": {
             "id": "BucketName",
-            "path": "IotPipelineStack/BucketName",
+            "path": "BankReconciliationStack/BucketName",
             "constructInfo": {
               "fqn": "aws-cdk-lib.CfnOutput",
               "version": "2.122.0"
@@ -3480,7 +3083,7 @@
           },
           "TableName": {
             "id": "TableName",
-            "path": "IotPipelineStack/TableName",
+            "path": "BankReconciliationStack/TableName",
             "constructInfo": {
               "fqn": "aws-cdk-lib.CfnOutput",
               "version": "2.122.0"
@@ -3488,7 +3091,7 @@
           },
           "TopicArn": {
             "id": "TopicArn",
-            "path": "IotPipelineStack/TopicArn",
+            "path": "BankReconciliationStack/TopicArn",
             "constructInfo": {
               "fqn": "aws-cdk-lib.CfnOutput",
               "version": "2.122.0"
@@ -3496,7 +3099,7 @@
           },
           "StateMachineArn": {
             "id": "StateMachineArn",
-            "path": "IotPipelineStack/StateMachineArn",
+            "path": "BankReconciliationStack/StateMachineArn",
             "constructInfo": {
               "fqn": "aws-cdk-lib.CfnOutput",
               "version": "2.122.0"
@@ -3504,7 +3107,7 @@
           },
           "JobQueueArn": {
             "id": "JobQueueArn",
-            "path": "IotPipelineStack/JobQueueArn",
+            "path": "BankReconciliationStack/JobQueueArn",
             "constructInfo": {
               "fqn": "aws-cdk-lib.CfnOutput",
               "version": "2.122.0"
@@ -3512,11 +3115,11 @@
           },
           "CDKMetadata": {
             "id": "CDKMetadata",
-            "path": "IotPipelineStack/CDKMetadata",
+            "path": "BankReconciliationStack/CDKMetadata",
             "children": {
               "Default": {
                 "id": "Default",
-                "path": "IotPipelineStack/CDKMetadata/Default",
+                "path": "BankReconciliationStack/CDKMetadata/Default",
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.CfnResource",
                   "version": "2.122.0"
@@ -3530,7 +3133,7 @@
           },
           "BootstrapVersion": {
             "id": "BootstrapVersion",
-            "path": "IotPipelineStack/BootstrapVersion",
+            "path": "BankReconciliationStack/BootstrapVersion",
             "constructInfo": {
               "fqn": "aws-cdk-lib.CfnParameter",
               "version": "2.122.0"
@@ -3538,7 +3141,7 @@
           },
           "CheckBootstrapVersion": {
             "id": "CheckBootstrapVersion",
-            "path": "IotPipelineStack/CheckBootstrapVersion",
+            "path": "BankReconciliationStack/CheckBootstrapVersion",
             "constructInfo": {
               "fqn": "aws-cdk-lib.CfnRule",
               "version": "2.122.0"

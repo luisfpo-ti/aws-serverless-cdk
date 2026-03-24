@@ -19,18 +19,17 @@ from aws_cdk import (
 from constructs import Construct
 
 
-class IotPipelineStack(Stack):
+class BankReconciliationStack(Stack):
 
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
         # ─────────────────────────────────────────────────────────────
-        # S3 Bucket  (recebe uploads de CSV via presigned URL)
+        # S3 Bucket  (recebe extratos bancários via presigned URL)
         # ─────────────────────────────────────────────────────────────
-        bucket = s3.Bucket(self, "IotDataBucket",
+        bucket = s3.Bucket(self, "ExtratoBucket",
             removal_policy=RemovalPolicy.DESTROY,
             auto_delete_objects=True,
-            # CORS liberado para o browser fazer PUT direto no S3
             cors=[s3.CorsRule(
                 allowed_methods=[
                     s3.HttpMethods.PUT,
@@ -44,10 +43,10 @@ class IotPipelineStack(Stack):
         )
 
         # ─────────────────────────────────────────────────────────────
-        # DynamoDB  (status e resultados de cada job)
+        # DynamoDB  (status e resultados de cada conciliação)
         # ─────────────────────────────────────────────────────────────
-        table = dynamodb.Table(self, "FileProcessingJobs",
-            table_name="FileProcessingJobs",
+        table = dynamodb.Table(self, "ConciliacaoJobs",
+            table_name="ConciliacaoJobs",
             partition_key=dynamodb.Attribute(
                 name="job_id",
                 type=dynamodb.AttributeType.STRING,
@@ -57,33 +56,21 @@ class IotPipelineStack(Stack):
         )
 
         # ─────────────────────────────────────────────────────────────
-        # SNS Topic  (notificação ao concluir processamento)
+        # SNS Topic  (notificação ao concluir conciliação)
         # ─────────────────────────────────────────────────────────────
         topic = sns.Topic(self, "Notifications",
-            topic_name="iot-pipeline-notifications",
+            topic_name="bank-reconciliation-notifications",
         )
 
         # ─────────────────────────────────────────────────────────────
-        # VPC  (necessária para AWS Batch / Fargate)
-        # Sem NAT Gateway para reduzir custo — subnets públicas com
-        # assign_public_ip=True nas tasks
+        # VPC  — usa a VPC default da conta (sem criar nova infra de rede)
         # ─────────────────────────────────────────────────────────────
-        vpc = ec2.Vpc(self, "BatchVpc",
-            max_azs=2,
-            nat_gateways=0,
-            subnet_configuration=[
-                ec2.SubnetConfiguration(
-                    name="Public",
-                    subnet_type=ec2.SubnetType.PUBLIC,
-                    cidr_mask=24,
-                )
-            ],
-        )
+        vpc = ec2.Vpc.from_lookup(self, "DefaultVpc", is_default=True)
 
         # ─────────────────────────────────────────────────────────────
         # Docker Image para o Batch Job  (ECR Asset gerenciado pelo CDK)
         # ─────────────────────────────────────────────────────────────
-        batch_image = ecr_assets.DockerImageAsset(self, "ProcessorImage",
+        batch_image = ecr_assets.DockerImageAsset(self, "ReconciliacaoImage",
             directory=os.path.join(os.path.dirname(__file__), "../batch"),
         )
 
@@ -103,6 +90,8 @@ class IotPipelineStack(Stack):
 
         # ─────────────────────────────────────────────────────────────
         # AWS Batch  — Compute Environment (Fargate) + Job Queue + Job Def
+        # Usa subnets públicas da VPC default + assign_public_ip para
+        # alcançar ECR e S3 sem NAT Gateway
         # ─────────────────────────────────────────────────────────────
         compute_env = batch.FargateComputeEnvironment(self, "ComputeEnv",
             vpc=vpc,
@@ -112,7 +101,7 @@ class IotPipelineStack(Stack):
         )
 
         job_queue = batch.JobQueue(self, "JobQueue",
-            job_queue_name="iot-pipeline-queue",
+            job_queue_name="bank-reconciliation-queue",
             compute_environments=[
                 batch.OrderedComputeEnvironment(
                     compute_environment=compute_env,
@@ -122,28 +111,32 @@ class IotPipelineStack(Stack):
         )
 
         job_definition = batch.EcsJobDefinition(self, "JobDefinition",
-            job_definition_name="iot-csv-processor",
+            job_definition_name="bank-reconciliation-processor",
             container=batch.EcsFargateContainerDefinition(self, "BatchContainer",
                 image=ecs.ContainerImage.from_docker_image_asset(batch_image),
                 cpu=1,
                 memory=Size.mebibytes(2048),
                 job_role=job_role,
                 assign_public_ip=True,
-                # Variáveis estáticas (deploy-time) — dinâmicas vêm do Step Functions
                 environment={
                     "DYNAMODB_TABLE": table.table_name,
                 },
                 logging=ecs.LogDrivers.aws_logs(
-                    stream_prefix="iot-batch",
-                    log_retention=logs.RetentionDays.ONE_WEEK,
+                    stream_prefix="bank-recon-batch",
                 ),
             ),
         )
 
         # ─────────────────────────────────────────────────────────────
         # Helper para criar Lambda functions com padrão consistente
+        # Usa LogGroup explícito (log_retention está depreciado no CDK v2)
         # ─────────────────────────────────────────────────────────────
         def make_lambda(name: str, handler_dir: str, timeout: int = 30, **env_vars):
+            log_group = logs.LogGroup(self, f"{name}-logs",
+                log_group_name=f"/aws/lambda/{name}",
+                retention=logs.RetentionDays.ONE_WEEK,
+                removal_policy=RemovalPolicy.DESTROY,
+            )
             return lambda_.Function(self, name,
                 function_name=name,
                 runtime=lambda_.Runtime.PYTHON_3_12,
@@ -152,42 +145,36 @@ class IotPipelineStack(Stack):
                 timeout=Duration.seconds(timeout),
                 tracing=lambda_.Tracing.ACTIVE,
                 environment=env_vars,
-                log_retention=logs.RetentionDays.ONE_WEEK,
+                log_group=log_group,
             )
 
         # ─────────────────────────────────────────────────────────────
         # Lambda Functions
         # ─────────────────────────────────────────────────────────────
 
-        # POST /upload → gera presigned URL + cria registro PENDING no DynamoDB
-        presigned_url_fn = make_lambda("iot-presigned-url", "presigned_url",
+        presigned_url_fn = make_lambda("banking-presigned-url", "presigned_url",
             BUCKET_NAME=bucket.bucket_name,
             TABLE_NAME=table.table_name,
         )
         bucket.grant_put(presigned_url_fn)
         table.grant_write_data(presigned_url_fn)
 
-        # GET /status → lista todos os jobs do DynamoDB
-        get_status_fn = make_lambda("iot-get-status", "get_status",
+        get_status_fn = make_lambda("banking-get-status", "get_status",
             TABLE_NAME=table.table_name,
         )
         table.grant_read_data(get_status_fn)
 
-        # S3 trigger → registra job como PROCESSING + inicia Step Functions
-        trigger_pipeline_fn = make_lambda("iot-trigger-pipeline", "trigger_pipeline",
+        trigger_pipeline_fn = make_lambda("banking-trigger-pipeline", "trigger_pipeline",
             TABLE_NAME=table.table_name,
-            # STATE_MACHINE_ARN adicionado depois de criar a state machine
         )
         table.grant_write_data(trigger_pipeline_fn)
 
-        # Chamado pelo Step Functions → atualiza status no DynamoDB (PROCESSED ou FAILED)
-        save_results_fn = make_lambda("iot-save-results", "save_results",
+        save_results_fn = make_lambda("banking-save-results", "save_results",
             TABLE_NAME=table.table_name,
         )
         table.grant_write_data(save_results_fn)
 
-        # Chamado pelo Step Functions → publica notificação no SNS
-        notify_fn = make_lambda("iot-notify", "notify",
+        notify_fn = make_lambda("banking-notify", "notify",
             TOPIC_ARN=topic.topic_arn,
             TABLE_NAME=table.table_name,
         )
@@ -199,10 +186,11 @@ class IotPipelineStack(Stack):
         # ─────────────────────────────────────────────────────────────
         state_machine_log_group = logs.LogGroup(self, "StateMachineLogs",
             retention=logs.RetentionDays.ONE_WEEK,
+            removal_policy=RemovalPolicy.DESTROY,
         )
 
         state_machine = sfn.StateMachine(self, "Pipeline",
-            state_machine_name="iot-pipeline",
+            state_machine_name="bank-reconciliation-pipeline",
             state_machine_type=sfn.StateMachineType.STANDARD,
             definition_body=sfn.DefinitionBody.from_file(
                 os.path.join(os.path.dirname(__file__), "../statemachine/pipeline.asl.json")
@@ -221,39 +209,25 @@ class IotPipelineStack(Stack):
             ),
         )
 
-        # Permissões para Step Functions invocar Lambdas
         save_results_fn.grant_invoke(state_machine)
         notify_fn.grant_invoke(state_machine)
 
-        # Permissões para Step Functions submeter e monitorar jobs do Batch
         state_machine.add_to_role_policy(iam.PolicyStatement(
             effect=iam.Effect.ALLOW,
-            actions=[
-                "batch:SubmitJob",
-                "batch:DescribeJobs",
-                "batch:TerminateJob",
-            ],
+            actions=["batch:SubmitJob", "batch:DescribeJobs", "batch:TerminateJob"],
             resources=["*"],
         ))
-        # Necessário para o padrão .sync:2 (usa EventBridge para detectar conclusão)
         state_machine.add_to_role_policy(iam.PolicyStatement(
             effect=iam.Effect.ALLOW,
-            actions=[
-                "events:PutTargets",
-                "events:PutRule",
-                "events:DescribeRule",
-            ],
-            resources=[
-                f"arn:aws:events:{self.region}:{self.account}:rule/StepFunctionsGetEventsForBatchJobsRule"
-            ],
+            actions=["events:PutTargets", "events:PutRule", "events:DescribeRule"],
+            resources=["*"],
         ))
 
-        # Conecta trigger_pipeline à state machine (depois de criada)
         state_machine.grant_start_execution(trigger_pipeline_fn)
         trigger_pipeline_fn.add_environment("STATE_MACHINE_ARN", state_machine.state_machine_arn)
 
         # ─────────────────────────────────────────────────────────────
-        # S3 Event → dispara trigger_pipeline ao chegar arquivo em input/
+        # S3 Event → dispara trigger_pipeline ao chegar extrato em input/
         # ─────────────────────────────────────────────────────────────
         trigger_pipeline_fn.add_event_source(
             lambda_es.S3EventSource(bucket,
@@ -263,11 +237,11 @@ class IotPipelineStack(Stack):
         )
 
         # ─────────────────────────────────────────────────────────────
-        # API Gateway  (ponto de entrada do portal)
+        # API Gateway
         # ─────────────────────────────────────────────────────────────
-        api = apigw.RestApi(self, "IotPipelineApi",
-            rest_api_name="iot-pipeline-api",
-            description="API Gateway do Portal de Processamento IoT — Demo Serverless AWS",
+        api = apigw.RestApi(self, "BankReconciliationApi",
+            rest_api_name="bank-reconciliation-api",
+            description="API Gateway do Portal de Conciliação Bancária — Demo Serverless AWS",
             default_cors_preflight_options=apigw.CorsOptions(
                 allow_origins=apigw.Cors.ALL_ORIGINS,
                 allow_methods=apigw.Cors.ALL_METHODS,
@@ -282,11 +256,8 @@ class IotPipelineStack(Stack):
             ),
         )
 
-        # POST /upload
         upload_resource = api.root.add_resource("upload")
-        upload_resource.add_method(
-            "POST",
-            apigw.LambdaIntegration(presigned_url_fn),
+        upload_resource.add_method("POST", apigw.LambdaIntegration(presigned_url_fn),
             method_responses=[
                 apigw.MethodResponse(status_code="200"),
                 apigw.MethodResponse(status_code="400"),
@@ -294,41 +265,17 @@ class IotPipelineStack(Stack):
             ],
         )
 
-        # GET /status
         status_resource = api.root.add_resource("status")
-        status_resource.add_method(
-            "GET",
-            apigw.LambdaIntegration(get_status_fn),
-            method_responses=[
-                apigw.MethodResponse(status_code="200"),
-            ],
+        status_resource.add_method("GET", apigw.LambdaIntegration(get_status_fn),
+            method_responses=[apigw.MethodResponse(status_code="200")],
         )
 
         # ─────────────────────────────────────────────────────────────
-        # CloudFormation Outputs  (usados pelo frontend via config.json)
+        # CloudFormation Outputs
         # ─────────────────────────────────────────────────────────────
-        CfnOutput(self, "ApiUrl",
-            value=api.url,
-            description="URL base da API Gateway",
-            export_name="IotPipelineApiUrl",
-        )
-        CfnOutput(self, "BucketName",
-            value=bucket.bucket_name,
-            description="Nome do bucket S3",
-        )
-        CfnOutput(self, "TableName",
-            value=table.table_name,
-            description="Nome da tabela DynamoDB",
-        )
-        CfnOutput(self, "TopicArn",
-            value=topic.topic_arn,
-            description="ARN do tópico SNS",
-        )
-        CfnOutput(self, "StateMachineArn",
-            value=state_machine.state_machine_arn,
-            description="ARN da Step Function",
-        )
-        CfnOutput(self, "JobQueueArn",
-            value=job_queue.job_queue_arn,
-            description="ARN da fila do AWS Batch",
-        )
+        CfnOutput(self, "ApiUrl",           value=api.url,                          export_name="BankReconciliationApiUrl")
+        CfnOutput(self, "BucketName",       value=bucket.bucket_name)
+        CfnOutput(self, "TableName",        value=table.table_name)
+        CfnOutput(self, "TopicArn",         value=topic.topic_arn)
+        CfnOutput(self, "StateMachineArn",  value=state_machine.state_machine_arn)
+        CfnOutput(self, "JobQueueArn",      value=job_queue.job_queue_arn)

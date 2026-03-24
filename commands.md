@@ -1,4 +1,4 @@
-# IoT Pipeline — Guia de Deploy e Demo
+# Conciliação Bancária — Guia de Deploy e Demo
 
 ## Pré-requisitos
 
@@ -24,7 +24,7 @@ python3 --version
 ## 1. Setup do projeto
 
 ```bash
-cd iot-pipeline
+cd bank-reconciliation
 
 # Cria virtualenv e instala dependências CDK
 python3 -m venv .venv
@@ -50,14 +50,14 @@ cdk deploy --outputs-file frontend/config.json
 O `--outputs-file` gera o `frontend/config.json` com a URL da API para o portal usar automaticamente.
 
 **Recursos criados:**
-- S3 Bucket (input de CSVs)
-- DynamoDB table `FileProcessingJobs`
-- API Gateway REST API (2 endpoints)
-- 5 Lambda functions
-- AWS Batch (Fargate Compute Env + Job Queue + Job Definition)
-- Step Functions state machine `iot-pipeline`
+- S3 Bucket (recebe extratos CSV via presigned URL)
+- DynamoDB table `ConciliacaoJobs`
+- API Gateway REST API (`POST /upload` e `GET /status`)
+- 5 Lambda functions (`recon-presigned-url`, `recon-get-status`, `recon-trigger-pipeline`, `recon-save-results`, `recon-notify`)
+- AWS Batch (Fargate Compute Env + Job Queue `bank-reconciliation-queue` + Job Definition `bank-reconciliation-processor`)
+- Step Functions state machine `bank-reconciliation-pipeline`
 - SNS Topic para notificações
-- VPC com subnets públicas (para o Batch)
+- VPC default da conta (sem criar nova infraestrutura de rede)
 - IAM Roles com least privilege
 
 ---
@@ -74,43 +74,57 @@ O portal carrega a API URL automaticamente do `config.json` gerado pelo `cdk dep
 
 ---
 
-## 4. Demo: Gerar CSV de teste
+## 4. Demo: Gerar CSV de extrato bancário
 
 ```bash
-# Gera CSV de 100k registros IoT (~12 MB)
+# Gera CSV de 100k transações (~10 MB)
 python3 - <<'EOF'
 import csv, random, datetime, os
 
 rows = 100_000
-filename = f"sensors_{rows//1000}k.csv"
+filename = f"extrato_{rows//1000}k.csv"
 
-with open(filename, 'w', newline='') as f:
+tipos = ['C', 'D']
+descricoes = [
+    'TEF RECEBIDO', 'TED ENVIADO', 'BOLETO PAGO', 'SALÁRIO DEPOSITADO',
+    'TARIFA BANCÁRIA', 'PIX RECEBIDO', 'PIX ENVIADO', 'DOC ENVIADO',
+    'RENDIMENTO POUPANÇA', 'DÉBITO AUTOMÁTICO', 'COMPRA CARTÃO',
+]
+
+with open(filename, 'w', newline='', encoding='utf-8') as f:
     writer = csv.writer(f)
-    writer.writerow(['timestamp','sensor_id','temperature','humidity','pressure'])
+    writer.writerow(['data', 'descricao', 'valor', 'tipo', 'referencia'])
     for i in range(rows):
-        ts = datetime.datetime.utcnow().isoformat()
+        tipo = random.choice(tipos)
+        valor = round(random.uniform(10, 50000), 2)
+        # ~3% de divergências: tipo C com valor negativo
+        if random.random() < 0.03:
+            valor = -valor
         writer.writerow([
-            ts,
-            f"sensor_{random.randint(1,500):04d}",
-            round(random.gauss(65, 15), 2),   # ~2% acima de 85°C = anomalia
-            round(random.uniform(30, 90), 2),
-            round(random.uniform(980, 1020), 2),
+            (datetime.date(2025, 1, 1) + datetime.timedelta(days=random.randint(0, 364))).isoformat(),
+            random.choice(descricoes),
+            valor,
+            tipo,
+            f"REF{i:08d}",
         ])
 
 print(f"Gerado: {filename} ({os.path.getsize(filename)/1024/1024:.1f} MB)")
 EOF
 ```
 
-Para simular arquivo grande (~500 MB):
+Para simular extrato grande (~500 MB, 5M de registros):
 ```bash
-# Gera 5M de registros
 python3 -c "
-import csv, random, sys
+import csv, random, sys, datetime
 w = csv.writer(sys.stdout)
-w.writerow(['timestamp','sensor_id','temperature','humidity'])
+w.writerow(['data','descricao','valor','tipo','referencia'])
+tipos = ['C','D']
 for i in range(5_000_000):
-    w.writerow(['2025-01-01T00:00:00', f'sensor_{i%1000:04d}', round(random.gauss(65,15),2), round(random.uniform(30,90),2)])
-" > sensors_5M.csv
+    w.writerow([
+        '2025-01-01', 'PIX', round(random.uniform(10,50000),2),
+        random.choice(tipos), f'REF{i:08d}'
+    ])
+" > extrato_5M.csv
 ```
 
 ---
@@ -124,7 +138,7 @@ API_URL=$(python3 -c "import json; d=json.load(open('frontend/config.json')); pr
 # 1. Solicita presigned URL
 RESPONSE=$(curl -s -X POST "$API_URL/upload" \
   -H "Content-Type: application/json" \
-  -d '{"file_name": "sensors_100k.csv", "file_size": 12000000}')
+  -d '{"file_name": "extrato_100k.csv", "file_size": 10000000}')
 
 echo $RESPONSE | python3 -m json.tool
 JOB_ID=$(echo $RESPONSE | python3 -c "import sys,json; print(json.load(sys.stdin)['job_id'])")
@@ -133,7 +147,7 @@ UPLOAD_URL=$(echo $RESPONSE | python3 -c "import sys,json; print(json.load(sys.s
 # 2. Upload direto no S3 via presigned URL (sem passar pelo Lambda/API)
 curl -X PUT "$UPLOAD_URL" \
   -H "Content-Type: text/csv" \
-  --upload-file sensors_100k.csv \
+  --upload-file extrato_100k.csv \
   --progress-bar
 
 # 3. Verifica status
@@ -145,16 +159,18 @@ curl -s "$API_URL/status" | python3 -m json.tool
 ## 6. Monitorar execução
 
 ```bash
-# Verifica status do job via API
+# Verifica status via API
 curl -s "$API_URL/status" | python3 -c "
 import sys, json
 jobs = json.load(sys.stdin)['jobs']
 for j in jobs:
-    print(f\"{j['job_id'][:8]} | {j['file_name']:<30} | {j['status']:<12} | records: {j.get('records_processed','—')}\")"
+    saldo = j.get('saldo', '—')
+    div   = j.get('divergencias', '—')
+    print(f\"{j['job_id'][:8]} | {j['file_name']:<30} | {j['status']:<12} | saldo: {saldo} | div: {div}\")"
 
-# Resultado no DynamoDB diretamente
+# Resultado no DynamoDB
 aws dynamodb get-item \
-  --table-name FileProcessingJobs \
+  --table-name ConciliacaoJobs \
   --key "{\"job_id\": {\"S\": \"$JOB_ID\"}}" \
   --output json | python3 -m json.tool
 
@@ -187,18 +203,28 @@ cdk destroy
 ```
 Portal (HTML)
   │
-  ├── POST /upload ──► API Gateway ──► Lambda presigned_url ──► DynamoDB (PENDING)
-  │                                                           └──► S3 presigned URL
+  ├── POST /upload ──► API Gateway ──► Lambda recon-presigned-url ──► DynamoDB (PENDING)
+  │                                                                └──► S3 presigned URL
   │
-  └── GET /status  ──► API Gateway ──► Lambda get_status ──► DynamoDB (scan)
+  └── GET /status  ──► API Gateway ──► Lambda recon-get-status ──► DynamoDB (scan)
 
-S3 (input/job_id/file.csv)
-  └──► [S3 Event] ──► Lambda trigger_pipeline ──► DynamoDB (PROCESSING)
-                                               └──► Step Functions (start)
+S3 (input/job_id/extrato.csv)
+  └──► [S3 Event] ──► Lambda recon-trigger-pipeline ──► DynamoDB (PROCESSING)
+                                                     └──► Step Functions (start)
 
-Step Functions: iot-pipeline
-  ├── SubmitBatchJob (.sync:2) ──► AWS Batch / Fargate
-  │     └── process_csv.py: download S3, conta rows, detecta anomalias, salva DynamoDB
-  ├── SaveResults ──► Lambda save_results ──► DynamoDB (PROCESSED)
-  └── Notify      ──► Lambda notify       ──► SNS
+Step Functions: bank-reconciliation-pipeline
+  ├── SubmitBatchJob (.sync) ──► AWS Batch / Fargate
+  │     └── process_csv.py: baixa CSV, concilia transações, calcula saldo/divergências
+  ├── SaveResults ──► Lambda recon-save-results ──► DynamoDB (PROCESSED)
+  └── Notify      ──► Lambda recon-notify       ──► SNS
+```
+
+---
+
+## Deletar stack em ROLLBACK_COMPLETE (se necessário)
+
+```bash
+aws cloudformation delete-stack --stack-name BankReconciliationStack
+aws cloudformation wait stack-delete-complete --stack-name BankReconciliationStack
+cdk deploy --outputs-file frontend/config.json
 ```

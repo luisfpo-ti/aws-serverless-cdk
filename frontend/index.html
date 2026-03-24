@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IoT Pipeline Portal — AWS Serverless Demo</title>
+  <title>Conciliação Bancária — AWS Serverless Demo</title>
   <style>
     :root {
       --bg:        #0D1B2A;
@@ -60,7 +60,7 @@
 
     /* ── Layout ──────────────────────────────────────── */
     main {
-      max-width: 1100px;
+      max-width: 1200px;
       margin: 40px auto;
       padding: 0 24px;
     }
@@ -123,10 +123,7 @@
       border-color: var(--orange);
       background: rgba(255,153,0,0.05);
     }
-    .upload-icon {
-      font-size: 42px;
-      margin-bottom: 12px;
-    }
+    .upload-icon { font-size: 42px; margin-bottom: 12px; }
     .upload-card h2 {
       font-size: 18px;
       color: var(--text);
@@ -137,12 +134,21 @@
       font-size: 13px;
       margin-bottom: 18px;
     }
+    .upload-hint {
+      margin-top: 14px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .upload-hint code {
+      background: rgba(255,153,0,0.1);
+      color: var(--orange);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 11px;
+    }
     #file-input { display: none; }
 
-    .upload-progress {
-      display: none;
-      margin-top: 16px;
-    }
+    .upload-progress { display: none; margin-top: 16px; }
     .progress-bar-wrap {
       background: var(--bg);
       border-radius: 4px;
@@ -156,15 +162,12 @@
       width: 0%;
       transition: width 0.3s;
     }
-    .progress-label {
-      color: var(--muted);
-      font-size: 12px;
-    }
+    .progress-label { color: var(--muted); font-size: 12px; }
 
     /* ── Stats Row ────────────────────────────────────── */
     .stats-row {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 16px;
       margin-bottom: 28px;
     }
@@ -183,7 +186,7 @@
       margin-bottom: 6px;
     }
     .stat-value {
-      font-size: 26px;
+      font-size: 22px;
       font-weight: 700;
       color: var(--text);
     }
@@ -191,6 +194,7 @@
     .stat-value.yellow { color: var(--yellow); }
     .stat-value.green  { color: var(--green);  }
     .stat-value.teal   { color: var(--teal);   }
+    .stat-value.red    { color: var(--red);    }
 
     /* ── Jobs Table ──────────────────────────────────── */
     .table-header {
@@ -199,10 +203,7 @@
       justify-content: space-between;
       margin-bottom: 14px;
     }
-    .table-header h3 {
-      font-size: 16px;
-      font-weight: 600;
-    }
+    .table-header h3 { font-size: 16px; font-weight: 600; }
     .refresh-indicator {
       display: flex;
       align-items: center;
@@ -252,7 +253,7 @@
     .file-name {
       font-weight: 600;
       color: var(--text);
-      max-width: 220px;
+      max-width: 200px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -271,34 +272,16 @@
       letter-spacing: 0.4px;
       text-transform: uppercase;
     }
-    .badge-pending {
-      background: rgba(245,158,11,0.15);
-      color: var(--yellow);
-      border: 1px solid rgba(245,158,11,0.3);
-    }
-    .badge-processing {
-      background: rgba(0,180,216,0.15);
-      color: var(--teal);
-      border: 1px solid rgba(0,180,216,0.3);
-    }
-    .badge-processed {
-      background: rgba(16,185,129,0.15);
-      color: var(--green);
-      border: 1px solid rgba(16,185,129,0.3);
-    }
-    .badge-failed {
-      background: rgba(239,68,68,0.15);
-      color: var(--red);
-      border: 1px solid rgba(239,68,68,0.3);
-    }
-    .badge-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: currentColor;
-    }
+    .badge-pending    { background: rgba(245,158,11,0.15);  color: var(--yellow); border: 1px solid rgba(245,158,11,0.3); }
+    .badge-processing { background: rgba(0,180,216,0.15);   color: var(--teal);   border: 1px solid rgba(0,180,216,0.3); }
+    .badge-processed  { background: rgba(16,185,129,0.15);  color: var(--green);  border: 1px solid rgba(16,185,129,0.3); }
+    .badge-failed     { background: rgba(239,68,68,0.15);   color: var(--red);    border: 1px solid rgba(239,68,68,0.3); }
+    .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
     .badge-processing .badge-dot { animation: pulse 1s infinite; }
 
-    .metric { color: var(--text); font-family: 'Consolas', monospace; font-size: 12px; }
+    .metric    { color: var(--text); font-family: 'Consolas', monospace; font-size: 12px; }
+    .metric-ok { color: var(--green); font-family: 'Consolas', monospace; font-size: 12px; font-weight: 700; }
+    .metric-warn { color: var(--yellow); font-family: 'Consolas', monospace; font-size: 12px; font-weight: 700; }
     .metric-na { color: var(--border); }
 
     .empty-state {
@@ -354,19 +337,25 @@
   <div class="logo">
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
       <rect width="32" height="32" rx="6" fill="#FF9900"/>
-      <path d="M8 22 L16 10 L24 22 M11 18 L21 18" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="7" y="9" width="18" height="14" rx="2" stroke="white" stroke-width="2"/>
+      <path d="M7 14h18" stroke="white" stroke-width="2"/>
+      <path d="M11 19h4M19 19h2" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
     </svg>
-    IoT Pipeline <span>Portal</span>
+    Conciliação <span>Bancária</span>
   </div>
   <div class="header-badge">AWS SERVERLESS DEMO</div>
 </header>
 
 <main>
 
-  <!-- Setup Banner (aparece quando config.json não existe) -->
+  <!-- Setup Banner -->
   <div id="setup-banner">
-    <h3>⚙️ Configuração necessária</h3>
-    <p>Cole a URL da API Gateway gerada pelo <code>cdk deploy</code>.</p>
+    <h3>⚙️ API URL não configurada</h3>
+    <p>
+      <strong>No Amplify:</strong> configure a variável de ambiente <code>API_URL</code> em
+      <em>App settings → Environment variables</em> e faça um novo deploy.<br/>
+      <strong>Localmente:</strong> cole a URL abaixo (gerada pelo <code>cdk deploy --outputs-file frontend/config.json</code>).
+    </p>
     <div class="api-input-row">
       <input type="text" id="api-url-input" placeholder="https://xxxxxxx.execute-api.us-east-1.amazonaws.com/prod" />
       <button class="btn-orange" onclick="saveApiUrl()">Salvar</button>
@@ -375,13 +364,16 @@
 
   <!-- Upload Area -->
   <div class="upload-card" id="drop-zone">
-    <div class="upload-icon">📂</div>
-    <h2>Upload de Arquivo CSV</h2>
-    <p>Arraste e solte um arquivo CSV de sensores IoT ou clique para selecionar</p>
+    <div class="upload-icon">🏦</div>
+    <h2>Upload de Extrato Bancário</h2>
+    <p>Arraste e solte um arquivo CSV de extrato bancário ou clique para selecionar</p>
     <button class="btn-orange" onclick="document.getElementById('file-input').click()">
-      Selecionar arquivo
+      Selecionar extrato
     </button>
     <input type="file" id="file-input" accept=".csv" />
+    <div class="upload-hint">
+      Colunas esperadas: <code>data</code> <code>descricao</code> <code>valor</code> <code>tipo</code> <code>referencia</code>
+    </div>
 
     <div class="upload-progress" id="upload-progress">
       <div class="progress-bar-wrap">
@@ -394,26 +386,30 @@
   <!-- Stats -->
   <div class="stats-row">
     <div class="stat-card">
-      <div class="stat-label">Total de Jobs</div>
+      <div class="stat-label">Conciliações</div>
       <div class="stat-value orange" id="stat-total">0</div>
     </div>
     <div class="stat-card">
-      <div class="stat-label">Pendente / Processando</div>
+      <div class="stat-label">Em Andamento</div>
       <div class="stat-value yellow" id="stat-pending">0</div>
     </div>
     <div class="stat-card">
-      <div class="stat-label">Processados</div>
+      <div class="stat-label">Conciliados</div>
       <div class="stat-value green" id="stat-processed">0</div>
     </div>
     <div class="stat-card">
-      <div class="stat-label">Registros Totais</div>
+      <div class="stat-label">Total Registros</div>
       <div class="stat-value teal" id="stat-records">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Divergências</div>
+      <div class="stat-value red" id="stat-divergencias">—</div>
     </div>
   </div>
 
   <!-- Jobs Table -->
   <div class="table-header">
-    <h3>Jobs de Processamento</h3>
+    <h3>Histórico de Conciliações</h3>
     <div class="refresh-indicator">
       <div class="dot-pulse" id="poll-dot"></div>
       <span id="poll-label">Conectando...</span>
@@ -423,21 +419,23 @@
   <table>
     <thead>
       <tr>
-        <th>Arquivo</th>
+        <th>Extrato</th>
         <th>Tamanho</th>
-        <th>Upload</th>
+        <th>Enviado em</th>
         <th>Status</th>
         <th>Registros</th>
-        <th>Anomalias</th>
-        <th>Tempo Batch</th>
+        <th>Saldo</th>
+        <th>Divergências</th>
+        <th>Duplicatas</th>
+        <th>Tempo</th>
       </tr>
     </thead>
     <tbody id="jobs-tbody">
       <tr>
-        <td colspan="7">
+        <td colspan="9">
           <div class="empty-state">
-            <div class="icon">🚀</div>
-            <p>Nenhum job ainda. Faça upload de um CSV para começar.</p>
+            <div class="icon">🏦</div>
+            <p>Nenhuma conciliação ainda. Faça upload de um extrato CSV para começar.</p>
           </div>
         </td>
       </tr>
@@ -448,8 +446,7 @@
 
 <footer>
   <p>
-    <span>IoT Pipeline</span> · AWS Lambda · AWS Batch · Step Functions · DynamoDB · API Gateway
-    · CDK Python
+    <span>Conciliação Bancária</span> · AWS Lambda · AWS Batch · Step Functions · DynamoDB · API Gateway · CDK Python
   </p>
 </footer>
 
@@ -461,17 +458,17 @@
   let pollInterval = null;
 
   async function loadConfig() {
+    // Prioridade 1: config.json gerado por `cdk deploy` ou pelo build do Amplify (via env var API_URL)
     try {
-      // Tenta carregar config.json gerado pelo `cdk deploy --outputs-file frontend/config.json`
       const cfg = await fetch('./config.json').then(r => {
         if (!r.ok) throw new Error('not found');
         return r.json();
       });
-      const stack = cfg['IotPipelineStack'] || Object.values(cfg)[0] || {};
-      API_URL = (stack['ApiUrl'] || stack['IotPipelineApiUrl'] || '').replace(/\/$/, '');
+      const stack = cfg['BankReconciliationStack'] || Object.values(cfg)[0] || {};
+      API_URL = (stack['ApiUrl'] || stack['BankReconciliationApiUrl'] || '').replace(/\/$/, '');
     } catch {
-      // Fallback: localStorage (usuário digitou manualmente)
-      API_URL = localStorage.getItem('iot_api_url') || '';
+      // Prioridade 2: salvo manualmente via setup banner (localStorage)
+      API_URL = localStorage.getItem('bank_recon_api_url') || '';
     }
 
     if (!API_URL) {
@@ -488,7 +485,7 @@
       return;
     }
     API_URL = input;
-    localStorage.setItem('iot_api_url', API_URL);
+    localStorage.setItem('bank_recon_api_url', API_URL);
     document.getElementById('setup-banner').style.display = 'none';
     toast('API URL configurada com sucesso!', 'success');
     startPolling();
@@ -528,18 +525,18 @@
     setProgress(10);
 
     try {
-      // 1. Solicita presigned URL
+      // 1. Solicita presigned URL via API Gateway → Lambda
       const res = await fetch(`${API_URL}/upload`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ file_name: file.name, file_size: file.size }),
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const { upload_url, job_id } = await res.json();
+      const { upload_url } = await res.json();
 
       setProgress(20, `Enviando ${formatBytes(file.size)} para o S3...`);
 
-      // 2. PUT direto no S3 com presigned URL (sem passar pelo Lambda/API)
+      // 2. PUT direto no S3 com presigned URL (sem trafegar pelo Lambda/API)
       const xhr = new XMLHttpRequest();
       xhr.upload.onprogress = e => {
         if (e.lengthComputable) {
@@ -555,10 +552,9 @@
         xhr.send(file);
       });
 
-      setProgress(100, 'Upload concluído! Pipeline iniciado...');
-      toast(`✅ ${file.name} enviado. Pipeline em execução!`, 'success');
+      setProgress(100, 'Upload concluído! Conciliação iniciada...');
+      toast(`✅ ${file.name} enviado. Conciliação em andamento!`, 'success');
 
-      // Aguarda 1s e recarrega a tabela
       await new Promise(r => setTimeout(r, 1000));
       showProgress(false);
       fileInput.value = '';
@@ -616,58 +612,75 @@
     const tbody = document.getElementById('jobs-tbody');
     if (!jobs || jobs.length === 0) {
       tbody.innerHTML = `
-        <tr><td colspan="7">
+        <tr><td colspan="9">
           <div class="empty-state">
-            <div class="icon">🚀</div>
-            <p>Nenhum job ainda. Faça upload de um CSV para começar.</p>
+            <div class="icon">🏦</div>
+            <p>Nenhuma conciliação ainda. Faça upload de um extrato CSV para começar.</p>
           </div>
         </td></tr>`;
       return;
     }
 
     tbody.innerHTML = jobs.map(job => {
-      const badge     = statusBadge(job.status);
-      const size      = job.file_size ? formatBytes(Number(job.file_size)) : '—';
-      const uploaded  = job.uploaded_at ? formatDate(job.uploaded_at) : '—';
-      const records   = job.records_processed != null
-        ? `<span class="metric">${Number(job.records_processed).toLocaleString('pt-BR')}</span>` : '<span class="metric-na">—</span>';
-      const anomalies = job.anomalies_detected != null
-        ? `<span class="metric">${Number(job.anomalies_detected).toLocaleString('pt-BR')}</span>` : '<span class="metric-na">—</span>';
-      const time      = job.processing_time_seconds != null
-        ? `<span class="metric">${Number(job.processing_time_seconds).toFixed(1)}s</span>` : '<span class="metric-na">—</span>';
+      const badge    = statusBadge(job.status);
+      const size     = job.file_size ? formatBytes(Number(job.file_size)) : '—';
+      const uploaded = job.uploaded_at ? formatDate(job.uploaded_at) : '—';
+
+      const total = job.total_registros != null
+        ? `<span class="metric">${Number(job.total_registros).toLocaleString('pt-BR')}</span>`
+        : '<span class="metric-na">—</span>';
+
+      const saldo = job.saldo != null
+        ? `<span class="metric ${Number(job.saldo) >= 0 ? 'metric-ok' : 'metric-warn'}">R$ ${Number(job.saldo).toLocaleString('pt-BR', {minimumFractionDigits:2})}</span>`
+        : '<span class="metric-na">—</span>';
+
+      const div = job.divergencias != null
+        ? `<span class="${Number(job.divergencias) > 0 ? 'metric-warn' : 'metric-ok'}">${Number(job.divergencias)}</span>`
+        : '<span class="metric-na">—</span>';
+
+      const dup = job.duplicatas != null
+        ? `<span class="${Number(job.duplicatas) > 0 ? 'metric-warn' : 'metric'}">${Number(job.duplicatas)}</span>`
+        : '<span class="metric-na">—</span>';
+
+      const time = job.processing_time_s != null
+        ? `<span class="metric">${Number(job.processing_time_s).toFixed(1)}s</span>`
+        : '<span class="metric-na">—</span>';
 
       return `<tr>
         <td><div class="file-name" title="${esc(job.file_name)}">${esc(job.file_name)}</div></td>
         <td class="file-size">${size}</td>
         <td style="color:var(--muted);font-size:12px">${uploaded}</td>
         <td>${badge}</td>
-        <td>${records}</td>
-        <td>${anomalies}</td>
+        <td>${total}</td>
+        <td>${saldo}</td>
+        <td>${div}</td>
+        <td>${dup}</td>
         <td>${time}</td>
       </tr>`;
     }).join('');
   }
 
   function updateStats(jobs) {
-    const pending   = jobs.filter(j => ['PENDING','PROCESSING'].includes(j.status)).length;
-    const processed = jobs.filter(j => j.status === 'PROCESSED').length;
-    const totalRec  = jobs.reduce((s, j) => s + Number(j.records_processed || 0), 0);
+    const pending      = jobs.filter(j => ['PENDING','PROCESSING'].includes(j.status)).length;
+    const processed    = jobs.filter(j => j.status === 'PROCESSED').length;
+    const totalRec     = jobs.reduce((s, j) => s + Number(j.total_registros || 0), 0);
+    const totalDiv     = jobs.reduce((s, j) => s + Number(j.divergencias || 0), 0);
 
-    document.getElementById('stat-total').textContent     = jobs.length;
-    document.getElementById('stat-pending').textContent   = pending;
-    document.getElementById('stat-processed').textContent = processed;
-    document.getElementById('stat-records').textContent   =
-      totalRec > 0 ? totalRec.toLocaleString('pt-BR') : '—';
+    document.getElementById('stat-total').textContent        = jobs.length;
+    document.getElementById('stat-pending').textContent      = pending;
+    document.getElementById('stat-processed').textContent    = processed;
+    document.getElementById('stat-records').textContent      = totalRec > 0 ? totalRec.toLocaleString('pt-BR') : '—';
+    document.getElementById('stat-divergencias').textContent = totalDiv > 0 ? totalDiv.toLocaleString('pt-BR') : '0';
   }
 
   function statusBadge(status) {
     const map = {
-      PENDING:    ['badge-pending',    '🟡', 'Pendente'],
-      PROCESSING: ['badge-processing', '🔵', 'Processando'],
-      PROCESSED:  ['badge-processed',  '🟢', 'Processado'],
-      FAILED:     ['badge-failed',     '🔴', 'Falha'],
+      PENDING:    ['badge-pending',    'Pendente'],
+      PROCESSING: ['badge-processing', 'Processando'],
+      PROCESSED:  ['badge-processed',  'Conciliado'],
+      FAILED:     ['badge-failed',     'Falha'],
     };
-    const [cls, , label] = map[status] || ['badge-pending', '⚪', status];
+    const [cls, label] = map[status] || ['badge-pending', status];
     return `<span class="badge ${cls}"><span class="badge-dot"></span>${label}</span>`;
   }
 
@@ -689,7 +702,6 @@
   function esc(str) {
     return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   }
-
   function toast(msg, type = 'success') {
     const el = document.createElement('div');
     el.className = `toast ${type === 'error' ? 'error' : type === 'info' ? 'info' : ''}`;

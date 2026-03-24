@@ -5,8 +5,8 @@
 
     "SubmitBatchJob": {
       "Type": "Task",
-      "Comment": "Submete o job para o AWS Batch e aguarda conclusão (.sync:2 usa EventBridge internamente)",
-      "Resource": "arn:aws:states:::batch:submitJob.sync:2",
+      "Comment": "Submete o job para o AWS Batch e aguarda conclusão (.sync usa polling via EventBridge)",
+      "Resource": "arn:aws:states:::batch:submitJob.sync",
       "Parameters": {
         "JobName.$":       "States.Format('iot-process-{}', $.job_id)",
         "JobDefinition":   "${JobDefinitionArn}",

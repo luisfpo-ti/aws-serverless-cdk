@@ -1,9 +1,9 @@
 """
-Lambda: iot-notify
+Lambda: recon-notify
 Chamado pelo Step Functions como último passo do pipeline.
 
 Lê o registro final do DynamoDB e publica uma notificação no SNS
-com o resumo do processamento (registros processados, anomalias, tempo).
+com o resumo da conciliação bancária (registros, saldo, divergências, tempo).
 """
 
 import json
@@ -38,27 +38,36 @@ def lambda_handler(event, context):
     response = table.get_item(Key={"job_id": job_id})
     item     = response.get("Item", {})
 
-    records    = item.get("records_processed", 0)
-    anomalies  = item.get("anomalies_detected", 0)
-    proc_time  = item.get("processing_time_seconds", 0)
+    total      = item.get("total_registros", 0)
+    ok         = item.get("registros_ok", 0)
+    credito    = item.get("total_credito", 0)
+    debito     = item.get("total_debito", 0)
+    saldo      = item.get("saldo", 0)
+    dup        = item.get("duplicatas", 0)
+    div        = item.get("divergencias", 0)
+    proc_time  = item.get("processing_time_s", 0)
     status     = item.get("status", "PROCESSED")
 
     message = (
-        f"✅ Processamento concluído!\n\n"
-        f"Arquivo:     {file_name}\n"
-        f"Status:      {status}\n"
-        f"Registros:   {int(records):,}\n"
-        f"Anomalias:   {int(anomalies):,}\n"
-        f"Tempo Batch: {float(proc_time):.1f}s\n\n"
+        f"✅ Conciliação Bancária Concluída!\n\n"
+        f"Arquivo:       {file_name}\n"
+        f"Status:        {status}\n"
+        f"Registros:     {int(total):,} total | {int(ok):,} OK\n"
+        f"Créditos:      R$ {float(credito):,.2f}\n"
+        f"Débitos:       R$ {float(debito):,.2f}\n"
+        f"Saldo:         R$ {float(saldo):,.2f}\n"
+        f"Duplicatas:    {int(dup)}\n"
+        f"Divergências:  {int(div)}\n"
+        f"Tempo Batch:   {float(proc_time):.1f}s\n\n"
         f"Job ID: {job_id}"
     )
 
     sns_client.publish(
         TopicArn=TOPIC_ARN,
-        Subject=f"IoT Pipeline — {file_name} processado",
+        Subject=f"Conciliação Bancária — {file_name} processado",
         Message=message,
     )
 
-    print(f"[INFO] Notificação enviada para job {job_id}: {records} registros em {proc_time}s")
+    print(f"[INFO] Notificação enviada para job {job_id}: {total} registros | saldo R$ {saldo}")
 
     return {"job_id": job_id, "notified": True}

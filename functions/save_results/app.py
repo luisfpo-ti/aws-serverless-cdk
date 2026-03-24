@@ -1,12 +1,12 @@
 """
-Lambda: iot-save-results
+Lambda: recon-save-results
 Chamado pelo Step Functions após conclusão do AWS Batch job.
 
 Recebe:
   { "job_id": "...", "file_name": "...", "status": "PROCESSED" | "FAILED", "error": {...} }
 
 Atualiza o registro no DynamoDB com status final e timestamp de conclusão.
-Os resultados detalhados (records_processed, processing_time) foram gravados
+Os resultados detalhados (total_registros, saldo, divergencias etc.) foram gravados
 diretamente pelo Batch job — este Lambda apenas finaliza o status.
 """
 

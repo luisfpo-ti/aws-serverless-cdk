@@ -1,0 +1,16 @@
+version: 1
+frontend:
+  phases:
+    build:
+      commands:
+        # Variável: API_URL
+        # Valor:    https://xxxxxxx.execute-api.us-east-1.amazonaws.com/prod
+        - |
+          echo "{\"BankReconciliationStack\":{\"ApiUrl\":\"${API_URL}\"}}" > frontend/config.json
+        - echo "config.json gerado com API_URL=${API_URL}"
+  artifacts:
+    baseDirectory: frontend
+    files:
+      - '**/*'
+  cache:
+    paths: []
