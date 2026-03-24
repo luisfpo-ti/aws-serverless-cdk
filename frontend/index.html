@@ -597,7 +597,7 @@
   function startPolling() {
     fetchStatus();
     if (pollInterval) clearInterval(pollInterval);
-    pollInterval = setInterval(fetchStatus, 3000);
+    pollInterval = setInterval(fetchStatus, 10000);
   }
 
   async function fetchStatus() {
@@ -609,6 +609,9 @@
       renderTable(jobs);
       updateStats(jobs);
       updatePollIndicator(jobs);
+      const hasPending = jobs.some(j => ['PENDING','PROCESSING'].includes(j.status));
+      if (pollInterval) clearInterval(pollInterval);
+      pollInterval = setInterval(fetchStatus, hasPending ? 5000 : 30000);
     } catch (err) {
       console.error('[poll]', err);
       document.getElementById('poll-label').textContent = 'Erro ao conectar';

@@ -72,6 +72,7 @@ class BankReconciliationStack(Stack):
         # ─────────────────────────────────────────────────────────────
         batch_image = ecr_assets.DockerImageAsset(self, "ReconciliacaoImage",
             directory=os.path.join(os.path.dirname(__file__), "../batch"),
+            platform=ecr_assets.Platform.LINUX_AMD64,
         )
 
         # ─────────────────────────────────────────────────────────────
