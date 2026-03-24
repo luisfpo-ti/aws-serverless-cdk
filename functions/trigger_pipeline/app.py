@@ -1,5 +1,5 @@
 """
-Lambda: iot-trigger-pipeline
+Lambda: banking-trigger-pipeline
 Trigger: S3 ObjectCreated em input/*
 
 Quando um arquivo CSV chega no S3:
