@@ -8,7 +8,7 @@ app = cdk.App()
 BankReconciliationStack(app, "BankReconciliationStack",
     env=cdk.Environment(
         account=os.environ.get("CDK_DEFAULT_ACCOUNT"),
-        region=os.environ.get("CDK_DEFAULT_REGION", "us-east-1"),
+        region=os.environ.get("CDK_DEFAULT_REGION", "us-east-2"),
     ),
     description="Pipeline de Conciliação Bancária — Serverless na AWS (Demo)",
 )

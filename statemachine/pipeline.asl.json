@@ -1,5 +1,5 @@
 {
-  "Comment": "IoT CSV Pipeline: S3 → AWS Batch → DynamoDB → SNS | Orquestrado pelo Step Functions",
+  "Comment": "Conciliação Bancária: S3 → AWS Batch → DynamoDB → SNS | Orquestrado pelo Step Functions",
   "StartAt": "SubmitBatchJob",
   "States": {
 
@@ -8,7 +8,7 @@
       "Comment": "Submete o job para o AWS Batch e aguarda conclusão (.sync usa polling via EventBridge)",
       "Resource": "arn:aws:states:::batch:submitJob.sync",
       "Parameters": {
-        "JobName.$":       "States.Format('iot-process-{}', $.job_id)",
+        "JobName.$":       "States.Format('bank-recon-{}', $.job_id)",
         "JobDefinition":   "${JobDefinitionArn}",
         "JobQueue":        "${JobQueueArn}",
         "ContainerOverrides": {

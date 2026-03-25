@@ -129,8 +129,7 @@ class BankReconciliationStack(Stack):
         )
 
         # ─────────────────────────────────────────────────────────────
-        # Helper para criar Lambda functions com padrão consistente
-        # Usa LogGroup explícito (log_retention está depreciado no CDK v2)
+        # Lambda Function Factory
         # ─────────────────────────────────────────────────────────────
         def make_lambda(name: str, handler_dir: str, timeout: int = 30, **env_vars):
             log_group = logs.LogGroup(self, f"{name}-logs",
